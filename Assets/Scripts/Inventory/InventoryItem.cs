@@ -6,10 +6,10 @@ using UnityEngine.EventSystems;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public Item item;
+
     [Header("UI")]
     public Image image;
-
-    [HideInInspector] public Item item;
 
     [HideInInspector] public Transform parentAfterDrag;
 
@@ -23,14 +23,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = false;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
+        print("DragBegin");
     }
 
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
+        print("Dragging");
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        print("DragEnd");
     }
 }

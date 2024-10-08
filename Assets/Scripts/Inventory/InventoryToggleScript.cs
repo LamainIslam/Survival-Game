@@ -13,8 +13,10 @@ public class InventoryToggleScript : MonoBehaviour
         {
             if(mainInventoryGroup.activeInHierarchy == false){
                 mainInventoryGroup.SetActive(true);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
             }else {
                 mainInventoryGroup.SetActive(false);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
             }
         }
     }

@@ -10,7 +10,7 @@ public class InventoryManager : MonoBehaviour
     public void AddItem(Item item) {
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
-            inventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot == null) {
                 SpawnNewItem(item, slot);
                 return;
