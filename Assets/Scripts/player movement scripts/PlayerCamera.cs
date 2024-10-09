@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,23 +10,32 @@ public class PlayerCamera : MonoBehaviour
     public Transform playerRotation;
     private float xRotation;
     private float yRotation;
-    // Start is called before the first frame update
+    public bool lockCursor;
+    
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        lockCursor = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSens;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySens;
+        // Toggle for cursor being locked or unclocked
+        if (lockCursor == true) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }else {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
 
+        // Mouse sensitivity
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSens * Convert.ToInt32(lockCursor);
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySens * Convert.ToInt32(lockCursor);
+
+        // Camera and player rotation
         xRotation -= mouseY;
         yRotation += mouseX;
-
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         playerRotation.rotation = Quaternion.Euler(0, yRotation, 0);
