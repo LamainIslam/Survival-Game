@@ -12,7 +12,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public TMP_Text countText;
 
     [HideInInspector] public Item item;
-    [HideInInspector] public int count = 1;
+    public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
 
     // Initialises item

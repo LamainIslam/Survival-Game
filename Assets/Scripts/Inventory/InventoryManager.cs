@@ -42,7 +42,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Changes selected slot
-    void ChangeSelectedSlot(int newValue) {
+    public void ChangeSelectedSlot(int newValue) {
         if (selectedSlot >= 0) {
             inventorySlots[selectedSlot].Deselect();
         }
