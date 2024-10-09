@@ -20,7 +20,7 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
-        // Toggle for cursor being locked or unclocked
+        // Toggle for cursor being locked or unlocked
         if (lockCursor == true) {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

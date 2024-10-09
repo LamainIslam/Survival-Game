@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6af4ed921f6de4d897be69322e5558, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
+  itemName: Wood
   type: 3
   actionType: 3
   stackable: 1

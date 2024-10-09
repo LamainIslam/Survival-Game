@@ -8,13 +8,15 @@ public class InventoryToggleScript : MonoBehaviour
 
     void Update()
     {
-        // Toggle inventory when clicking 'e'
+        // Toggles main inventory when you click 'e'
         if (Input.GetKeyDown("e"))
         {
             if(mainInventoryGroup.activeInHierarchy == false){
                 mainInventoryGroup.SetActive(true);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
             }else {
                 mainInventoryGroup.SetActive(false);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
             }
         }
     }

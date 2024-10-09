@@ -5,14 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable object/item")]
 public class Item : ScriptableObject
 {
-    [Header("Only gameplay")]
+    public string itemName;
     public ItemType type;
     public ActionType actionType;
-
-    [Header("Only UI")]
     public bool stackable = true;
-
-    [Header("Both")]
     public Sprite image;
 }
 

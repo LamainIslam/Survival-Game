@@ -20,6 +20,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         item = newItem;
         image.sprite = newItem.image;
         RefreshCount();
+        gameObject.name = item.itemName;
     }
 
     // Changes the count of the items, hides count if only 1
@@ -34,6 +35,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = false;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
+
+        // Split stack if more than 1 item
+        if (eventData.button == PointerEventData.InputButton.Right && count > 1) {
+            SplitStack();
+        }
     }
 
     // Moves item with mouse
@@ -45,5 +51,28 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData) {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+    }
+
+    // Function for splitting the stack
+    private void SplitStack() {
+        int splitCount = Mathf.FloorToInt(count / 2);
+
+        // Create a new item for the split stack
+        GameObject newItemObject = Instantiate(gameObject, transform.parent);
+        InventoryItem newInventoryItem = newItemObject.GetComponent<InventoryItem>();
+
+        // Initialise the new item with the same data but half the count
+        newInventoryItem.InitialiseItem(item);
+        newInventoryItem.count = splitCount;
+        newInventoryItem.RefreshCount();
+        newInventoryItem.image.raycastTarget = true;
+
+        // Update the current item's count
+        count -= splitCount;
+        RefreshCount();
+
+        // Set the parent of the new item to be the original parent
+        newInventoryItem.parentAfterDrag = parentAfterDrag;
+        newInventoryItem.transform.SetParent(parentAfterDrag);
     }
 }
