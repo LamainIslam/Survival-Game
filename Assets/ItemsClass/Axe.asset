@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   itemName: Axe
-  type: 0
+  type: 2
   actionType: 0
   stackable: 0
   image: {fileID: 21300000, guid: df8f1d97bbc437746a3bb8ce47ec5e7f, type: 3}
+  prefab: {fileID: 919132149155446097, guid: e7ca019caed097242a590eb91bc04b38, type: 3}

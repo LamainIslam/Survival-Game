@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Steak
   m_EditorClassIdentifier: 
   itemName: Steak
-  type: 2
+  type: 9
   actionType: 2
   stackable: 1
   image: {fileID: 21300000, guid: 3ad59b8e3c719ad47b83e5b1e70cbb3c, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 754b193072ab48c40b92e2c670cbaa02, type: 3}

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6af4ed921f6de4d897be69322e5558, type: 3}
-  m_Name: Pickaxe
+  m_Name: Empty
   m_EditorClassIdentifier: 
-  itemName: Pickaxe
-  type: 1
+  itemName: Empty
+  type: 11
   actionType: 0
   stackable: 0
-  image: {fileID: 21300000, guid: 4f7f49ea8b0b8f34fa078331e7e4a007, type: 3}
-  prefab: {fileID: 919132149155446097, guid: d60d48ce3963cd140ae8cc1742fb82ff, type: 3}
+  image: {fileID: 0}
+  prefab: {fileID: 0}

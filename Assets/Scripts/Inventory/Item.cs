@@ -10,11 +10,19 @@ public class Item : ScriptableObject
     public ActionType actionType;
     public bool stackable = true;
     public Sprite image;
+    public GameObject prefab;
 }
 
 public enum ItemType {
-    Tool,
-    Armour,
+    Weapon,
+    Pickaxe,
+    Axe,
+    Torch,
+    Sheild,
+    Helmet,
+    Chestplate,
+    Leggings,
+    Boots,
     Food,
     Resource,
     Other

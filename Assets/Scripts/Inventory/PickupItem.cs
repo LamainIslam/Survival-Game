@@ -47,7 +47,9 @@ public class PickupItem : MonoBehaviour
                 // Pick up the item
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    GameObject.Find("InventoryManager").GetComponent<InventoryManager>().AddItem(hit.collider.gameObject.GetComponent<ItemHolder>().item); 
+                    GameObject.Find("InventoryManager").GetComponent<InventoryManager>().AddItem(hit.collider.gameObject.GetComponent<ItemHolder>().item);
+                    GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = GameObject.Find("InventoryManager").GetComponent<InventoryManager>().GetSelectedItem(false);
+                    GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
                     Destroy(hit.collider.gameObject);
                     Destroy(activeCanvas);
                 }

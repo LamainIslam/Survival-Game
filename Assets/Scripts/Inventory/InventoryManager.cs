@@ -10,6 +10,8 @@ public class InventoryManager : MonoBehaviour
     
     int selectedSlot = -1;
 
+    public Item empty;
+
     private void Start() {
         ChangeSelectedSlot(0);
     }
@@ -49,16 +51,23 @@ public class InventoryManager : MonoBehaviour
 
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
+
+        // Display held item
+        if (inventorySlots[selectedSlot].transform.childCount > 0) {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
+        }else {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+        }
     }
 
     public bool AddItem(Item item) {
-        
         // Check if possible to add to an existing stack
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < stackSize && itemInSlot.item.stackable == true) {
-
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
                 return true;
@@ -74,7 +83,6 @@ public class InventoryManager : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
 
@@ -101,7 +109,6 @@ public class InventoryManager : MonoBehaviour
             }
             return item;
         }
-
         return null;
     }
 }
