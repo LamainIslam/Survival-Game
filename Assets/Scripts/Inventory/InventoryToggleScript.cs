@@ -6,9 +6,9 @@ public class InventoryToggleScript : MonoBehaviour
 {
     public GameObject mainInventoryGroup;
 
-    // Update is called once per frame
     void Update()
     {
+        // Toggles main inventory when you click 'e'
         if (Input.GetKeyDown("e"))
         {
             if(mainInventoryGroup.activeInHierarchy == false){
