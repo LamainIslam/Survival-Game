@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Othes")]
     public Transform playerRotation;
     
-    private float moveSpeed;
+    public float moveSpeed;
     private float horizontalInput;
     private float verticalInput;
     private float startScaleY;
@@ -96,25 +96,23 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void MovementStateHandler() {
-        if (Input.GetKeyDown(crouchKey)) {
+        if (isGrounded && Input.GetKey(crouchKey)) {
             movementState = MovementState.Crouching;
             moveSpeed = crouchSpeed;
+            Debug.Log("test");
         }
         
-        if (isGrounded && Input.GetKey(sprintKey))
+        else if (isGrounded && Input.GetKey(sprintKey))
         {
             movementState = MovementState.Sprinting;
             moveSpeed = runSpeed;
+            Debug.Log("test1");
         }
 
-        else if (isGrounded)
+        else
         {
             movementState = MovementState.Walking;
             moveSpeed = walkSpeed;
-        }
-
-        else {
-            movementState = MovementState.None;
         }
     }
 
