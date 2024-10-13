@@ -7,8 +7,6 @@ using TMPro;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Item item;
-
     [Header("UI")]
     public Image image;
     public TMP_Text countText;
@@ -49,7 +47,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     // Moves item with mouse
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
-        print("Dragging");
     }
 
     // Drops item where mouse is released

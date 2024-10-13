@@ -7616,6 +7616,8 @@ MonoBehaviour:
   sprintKey: 304
   crouchKey: 306
   playerRotation: {fileID: 319839765}
+  moveSpeed: 0
+  movementState: 0
 --- !u!114 &1073857162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13322,18 +13324,11 @@ SceneRoots:
   - {fileID: 1033537016}
   - {fileID: 7304147}
   - {fileID: 458122699}
-  - {fileID: 1645410362}
-  - {fileID: 1729301504}
-  - {fileID: 584724927}
   - {fileID: 505469651}
   - {fileID: 984698752}
   - {fileID: 1550550710}
   - {fileID: 1970350247}
-  - {fileID: 1669026578}
-  - {fileID: 1549749505}
-  - {fileID: 51425616}
   - {fileID: 848159896}
-  - {fileID: 691683571}
   - {fileID: 485903422}
   - {fileID: 401961852}
   - {fileID: 1073857160}
