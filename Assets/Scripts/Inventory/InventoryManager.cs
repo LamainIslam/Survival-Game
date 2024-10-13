@@ -20,16 +20,16 @@ public class InventoryManager : MonoBehaviour
         // Use number row to change toobar item selection
         if (Input.inputString != null) {
             bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number >= 1 && number <= 9) {
+            if (isNumber && number >= 1 && number <= 8) {
                 ChangeSelectedSlot(number - 1);
             }else if (isNumber && number == 0) {
-                ChangeSelectedSlot(9);
+                ChangeSelectedSlot(7);
             }
         }
 
         // Use scroll wheel to change toobar item selection
         if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            if (selectedSlot < 9) {
+            if (selectedSlot < 7) {
                 ChangeSelectedSlot(selectedSlot + 1);
             }else {
                 ChangeSelectedSlot(0);
@@ -38,7 +38,7 @@ public class InventoryManager : MonoBehaviour
             if (selectedSlot > 0) {
                 ChangeSelectedSlot(selectedSlot - 1);
             }else {
-                ChangeSelectedSlot(9);
+                ChangeSelectedSlot(7);
             }
         }
     }
@@ -110,5 +110,20 @@ public class InventoryManager : MonoBehaviour
             return item;
         }
         return null;
+    }
+
+    public void UpdateHeldItem()
+    {
+        // Display the new held item based on the currently selected slot
+        if (inventorySlots[selectedSlot].transform.childCount > 0)
+        {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
+        }
+        else
+        {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+        }
     }
 }

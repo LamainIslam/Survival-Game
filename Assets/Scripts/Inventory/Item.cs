@@ -18,7 +18,7 @@ public enum ItemType {
     Pickaxe,
     Axe,
     Torch,
-    Sheild,
+    Shield,
     Helmet,
     Chestplate,
     Leggings,
