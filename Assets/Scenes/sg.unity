@@ -320,7 +320,7 @@ Transform:
   m_GameObject: {fileID: 7304143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.1, y: 13.5, z: -2.90699}
+  m_LocalPosition: {x: -112.9, y: 13.5, z: 96.7}
   m_LocalScale: {x: 9.0345, y: 34.130535, z: 9.0345}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3043,8 +3043,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401961848}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7528172, z: -0.6582297, w: 0}
-  m_LocalPosition: {x: -59, y: -2.5, z: 71.1}
+  m_LocalRotation: {x: 0, y: 0.73786664, z: -0.6749466, w: 0}
+  m_LocalPosition: {x: -39.8, y: -3.5999997, z: -17.59999}
   m_LocalScale: {x: 9.0345, y: 34.130535, z: 9.0345}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3840,7 +3840,7 @@ Transform:
   m_GameObject: {fileID: 485903418}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.77051336, z: -0.63742393, w: 0}
-  m_LocalPosition: {x: -71.3, y: -1.6, z: 71.2}
+  m_LocalPosition: {x: -52.100002, y: -1.8999996, z: -17.699999}
   m_LocalScale: {x: 9.0345, y: 34.130535, z: 9.0345}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6234,7 +6234,7 @@ Transform:
   m_GameObject: {fileID: 848159892}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.82264054, z: -0.5685619, w: 0}
-  m_LocalPosition: {x: -84.5, y: 0.7, z: 71.6}
+  m_LocalPosition: {x: -65.3, y: 0.5, z: -16.799997}
   m_LocalScale: {x: 9.0345, y: 34.130535, z: 9.0345}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7598,18 +7598,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4625cbbf629ece1438de8e0793d79a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
-  jumpForce: 10
-  jumpCooldown: 1
+  walkSpeed: 15
+  runSpeed: 25
+  crouchSpeed: 10
+  jumpForce: 11
   drag: 5
-  airMultiplier: 0.09
+  airMultiplier: 0.07
+  jumpCooldown: 0.4
   playerHeight: 2
+  crouchScaleY: 0.5
   ground:
     serializedVersion: 2
     m_Bits: 8
   isGrounded: 0
   canJump: 0
   jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
   playerRotation: {fileID: 319839765}
 --- !u!114 &1073857162
 MonoBehaviour:
@@ -12370,7 +12375,7 @@ Transform:
   m_GameObject: {fileID: 1970350243}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.8690636, z: -0.4947004, w: 0}
-  m_LocalPosition: {x: -96.2, y: 4.2, z: 72.9}
+  m_LocalPosition: {x: -77, y: 3.7000008, z: -16.799997}
   m_LocalScale: {x: 9.0345, y: 34.130535, z: 9.0345}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13317,11 +13322,18 @@ SceneRoots:
   - {fileID: 1033537016}
   - {fileID: 7304147}
   - {fileID: 458122699}
+  - {fileID: 1645410362}
+  - {fileID: 1729301504}
+  - {fileID: 584724927}
   - {fileID: 505469651}
   - {fileID: 984698752}
   - {fileID: 1550550710}
   - {fileID: 1970350247}
+  - {fileID: 1669026578}
+  - {fileID: 1549749505}
+  - {fileID: 51425616}
   - {fileID: 848159896}
+  - {fileID: 691683571}
   - {fileID: 485903422}
   - {fileID: 401961852}
   - {fileID: 1073857160}

@@ -4,23 +4,48 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
+    [Header("Movement Adjusments")]
+    public float walkSpeed;
+    public float runSpeed;
+    public float crouchSpeed;
     public float jumpForce;
-    public float jumpCooldown;
     public float drag;
     public float airMultiplier;
+    public float jumpCooldown;
     public float playerHeight;
+    public float crouchScaleY;
+    
+
+    [Header("Layers")]
     public LayerMask ground;
+
+    [Header("Booleans")]
     public bool isGrounded;
     public bool canJump;
-    public KeyCode jumpKey = KeyCode.Space;
 
+    [Header("Keybinds")]
+    public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
+
+    [Header("Othes")]
     public Transform playerRotation;
+    
+    public float moveSpeed;
     private float horizontalInput;
     private float verticalInput;
+    private float startScaleY;
     private Vector3 moveDirection;
-
+    
     Rigidbody rb;
+
+    public MovementState movementState;
+    public enum MovementState { 
+        Walking,
+        Sprinting,
+        Crouching,
+        None
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         canJump = true;
+
+        startScaleY = transform.localScale.y;
     }
 
     private void FixedUpdate()
@@ -42,7 +69,8 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
         
         if (isGrounded) { rb.drag = drag; } else { rb.drag = 0; }
-        
+
+        MovementStateHandler();
         PlayerInput();
         SpeedCap();
     }
@@ -55,6 +83,36 @@ public class PlayerMovement : MonoBehaviour
             canJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        //Crouch
+        if (Input.GetKeyDown(crouchKey)) {
+            transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+        if (Input.GetKeyUp(crouchKey)){
+            transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z); 
+        }
+    }
+
+    private void MovementStateHandler() {
+        if (isGrounded && Input.GetKey(crouchKey)) {
+            movementState = MovementState.Crouching;
+            moveSpeed = crouchSpeed;
+            Debug.Log("test");
+        }
+        
+        else if (isGrounded && Input.GetKey(sprintKey))
+        {
+            movementState = MovementState.Sprinting;
+            moveSpeed = runSpeed;
+            Debug.Log("test1");
+        }
+
+        else
+        {
+            movementState = MovementState.Walking;
+            moveSpeed = walkSpeed;
         }
     }
 
@@ -75,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Jump() {
+    private void Jump() {
         //resets y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         //add y velocity
