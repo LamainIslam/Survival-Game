@@ -112,6 +112,7 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
+    // Updates the held item to the current held item
     public void UpdateHeldItem()
     {
         // Display the new held item based on the currently selected slot
@@ -124,6 +125,22 @@ public class InventoryManager : MonoBehaviour
         {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+        }
+    }
+
+    // Toggles main inventory
+    public void ToggleInventory()
+    {
+        GameObject mainInventoryGroup = GameObject.Find("Canvas").transform.GetChild(0).gameObject;
+        if (Input.GetKeyDown("e"))
+        {
+            if(mainInventoryGroup.activeInHierarchy == false){
+                mainInventoryGroup.SetActive(true);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
+            }else {
+                mainInventoryGroup.SetActive(false);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
+            }
         }
     }
 }

@@ -9,14 +9,16 @@ public class PickupItem : MonoBehaviour
 
     public GameObject itemNameCanvasPrefab;
     private GameObject activeCanvas;
-    private GameObject lastHitItem; // Store reference to the last hit item
+    private GameObject lastHitItem;
 
     private InventoryManager inventoryManager;
     private HeldItem heldItemComponent;
 
+    private RaycastHit hit;
+
     void Start()
     {
-        // Cache references to camera, inventory manager, and held item
+        // Assign variables
         mainCamera = Camera.main;
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         heldItemComponent = GameObject.Find("HeldItem").GetComponent<HeldItem>();
@@ -24,13 +26,13 @@ public class PickupItem : MonoBehaviour
 
     void Update()
     {
-        HandleItemPickup();
+        DisplayItemInfo();
     }
 
-    void HandleItemPickup()
+    // Display item information without handling input for pickup
+    void DisplayItemInfo()
     {
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
@@ -38,11 +40,6 @@ public class PickupItem : MonoBehaviour
             {
                 // Show canvas and update item name if a different item is hit
                 ShowItemNameCanvas(hit);
-
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    PickupAndDestroyItem(hit);
-                }
             }
             else
             {
@@ -55,20 +52,18 @@ public class PickupItem : MonoBehaviour
         }
     }
 
+    // Show item name canvas
     void ShowItemNameCanvas(RaycastHit hit)
     {
-        // If the hit item is different from the last hit item
         if (lastHitItem != hit.collider.gameObject)
         {
-            DestroyActiveCanvas();  // Destroy old canvas
+            DestroyActiveCanvas();
 
-            // Instantiate canvas and set item name for the new hit item
             activeCanvas = Instantiate(itemNameCanvasPrefab, hit.transform.position + Vector3.up * 0.5f, Quaternion.identity);
             activeCanvas.transform.SetParent(hit.transform);
             TMP_Text itemText = activeCanvas.transform.GetChild(0).GetComponent<TMP_Text>();
             itemText.text = hit.collider.gameObject.name;
 
-            // Update the reference to the current item
             lastHitItem = hit.collider.gameObject;
         }
 
@@ -78,25 +73,32 @@ public class PickupItem : MonoBehaviour
         activeCanvas.transform.rotation = Quaternion.LookRotation(-direction);
     }
 
-    void PickupAndDestroyItem(RaycastHit hit)
+    // Handle item pickup logic (called externally by PlayerInputHandler)
+    public void TryPickupItem()
     {
-        // Add item to inventory and update held item
-        var itemHolder = hit.collider.gameObject.GetComponent<ItemHolder>();
-        inventoryManager.AddItem(itemHolder.item);
-        heldItemComponent.heldItem = inventoryManager.GetSelectedItem(false);
-        heldItemComponent.HoldItem(heldItemComponent.heldItem);
+        Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
-        // Destroy item and canvas
-        Destroy(hit.collider.gameObject);
-        Destroy(activeCanvas);
+        if (Physics.Raycast(ray, out hit, maxDistance) && hit.collider.CompareTag("Item"))
+        {
+            // Add item to inventory and update held item
+            var itemHolder = hit.collider.gameObject.GetComponent<ItemHolder>();
+            inventoryManager.AddItem(itemHolder.item);
+            heldItemComponent.heldItem = inventoryManager.GetSelectedItem(false);
+            heldItemComponent.HoldItem(heldItemComponent.heldItem);
+
+            // Destroy item and canvas
+            Destroy(hit.collider.gameObject);
+            Destroy(activeCanvas);
+        }
     }
 
+    // Destroys the active canvas
     void DestroyActiveCanvas()
     {
         if (activeCanvas != null)
         {
             Destroy(activeCanvas);
-            lastHitItem = null;  // Reset the last hit item reference
+            lastHitItem = null;
         }
     }
 }
