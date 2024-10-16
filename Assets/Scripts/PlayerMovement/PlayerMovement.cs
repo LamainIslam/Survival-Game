@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float playerHeight;
     public float crouchScaleY;
+    public float maxSlopeAngle;
     
 
     [Header("Layers")]
@@ -22,20 +25,26 @@ public class PlayerMovement : MonoBehaviour
     [Header("Booleans")]
     public bool isGrounded;
     public bool canJump;
+    public bool jumped;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
+    
+
     [Header("Othes")]
     public Transform playerRotation;
-    
+    public TMP_Text speedText;
+
     public float moveSpeed;
+
     private float horizontalInput;
     private float verticalInput;
     private float startScaleY;
     private Vector3 moveDirection;
+    private RaycastHit slopeHit;
     
     Rigidbody rb;
 
@@ -73,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
         MovementStateHandler();
         PlayerInput();
         SpeedCap();
+
+        speedText.text = ("Speed: ") + (rb.velocity.magnitude * 1.0f).ToString("0");
     }
 
     private void PlayerInput() {
@@ -96,12 +107,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void MovementStateHandler() {
-        if (isGrounded && Input.GetKey(crouchKey)) {
+        if (isGrounded && Input.GetKey(crouchKey))
+        {
             movementState = MovementState.Crouching;
             moveSpeed = crouchSpeed;
             Debug.Log("test");
         }
-        
+
         else if (isGrounded && Input.GetKey(sprintKey))
         {
             movementState = MovementState.Sprinting;
@@ -109,31 +121,51 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("test1");
         }
 
-        else
+        else if (isGrounded)
         {
             movementState = MovementState.Walking;
             moveSpeed = walkSpeed;
         }
+        else { movementState = MovementState.None; }
     }
 
     private void Move()
     {
         moveDirection = playerRotation.forward * verticalInput + playerRotation.right * horizontalInput;
+
+        if (OnSlope() && !jumped) {
+            rb.AddForce(GetSlopeDirection() * moveSpeed * 20f, ForceMode.Force);
+
+            if (rb.velocity.y > 0) { rb.AddForce(Vector3.down * 120f, ForceMode.Force); }
+        }
+
         if (isGrounded) { rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); }
         else if (!isGrounded) { rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force); }
+
+        rb.useGravity = !OnSlope();
     }
 
     private void SpeedCap() {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if(flatVel.magnitude > moveSpeed)
+        if (OnSlope() && !jumped)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (rb.velocity.magnitude > moveSpeed) { rb.velocity = rb.velocity.normalized * moveSpeed; }
+        }
+        else
+        {
+
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            if (flatVel.magnitude > (moveSpeed))
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
         }
     }
 
     private void Jump() {
+        jumped = true;
+
         //resets y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         //add y velocity
@@ -142,5 +174,23 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
+
+        jumped = false;
     }
+
+    private bool OnSlope() {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+
+    private Vector3 GetSlopeDirection() {
+        Debug.Log(Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized);
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+    
 }
