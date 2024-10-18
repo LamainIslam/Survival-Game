@@ -7027,7 +7027,7 @@ Transform:
   m_GameObject: {fileID: 817244537}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 57.71, y: 5.49, z: -76.26}
+  m_LocalPosition: {x: 57.71, y: 5.66, z: -76.26}
   m_LocalScale: {x: 9.0345, y: 34.130535, z: 9.0345}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8809,9 +8809,9 @@ MonoBehaviour:
   jumpCooldown: 0.4
   playerHeight: 2
   crouchScaleY: 0.5
-  maxSlideTime: 5
-  slideForce: 200
-  slideScaleY: 0.5
+  maxSlideTime: 0.75
+  slideForce: 10
+  slideScaleY: 0.1
   ground:
     serializedVersion: 2
     m_Bits: 4294967295

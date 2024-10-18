@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
         MovementStateHandler();
         PlayerInput();
-        SpeedCap();
+        //SpeedCap();
 
         speedText.text = ("Speed: ") + (rb.velocity.magnitude * 1.0f).ToString("0");
     }
@@ -171,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else { movementState = MovementState.None; }
 
-        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 6f && moveSpeed != 0)
+        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 6f && moveSpeed != 0 && !isLerping)
         {
             StartCoroutine(LerpMoveSpeed());
         }
@@ -229,7 +229,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             if (flatVel.magnitude > (moveSpeed))
@@ -284,7 +283,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void SlidingMovement() 
     {
-        if (!OnSlope() || rb.velocity.y > -0.1f)
+        if (!OnSlope() || rb.velocity.y > 0)
         {
             rb.AddForce(moveDirection.normalized * slideForce, ForceMode.Force);
             slideTimer -= Time.deltaTime;
