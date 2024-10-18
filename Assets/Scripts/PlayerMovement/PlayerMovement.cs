@@ -10,14 +10,29 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float runSpeed;
     public float crouchSpeed;
-    public float jumpForce;
+    public float slideSpeed;
     public float drag;
+
+    private float moveSpeed;
+    private float desiredSpeed;
+    private float lastDesiredSpeed;
+    public float slopeIncreaseMultiplier;
+    public float speedIncreaseMultiplier;
+
+    [Header("Jump Adjusments")]
+    public float jumpForce;
     public float airMultiplier;
     public float jumpCooldown;
+
+    [Header("Crouch Adjusments")]
     public float playerHeight;
     public float crouchScaleY;
-    public float maxSlopeAngle;
-    
+
+    [Header("Slide Adjustments")]
+    public float maxSlideTime;
+    public float slideForce;
+    public float slideScaleY;
+    private float slideTimer;
 
     [Header("Layers")]
     public LayerMask ground;
@@ -26,20 +41,21 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool canJump;
     public bool jumped;
+    public bool isSliding;
+    private bool isLerping;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
-    
-
     [Header("Othes")]
     public Transform playerRotation;
     public TMP_Text speedText;
+    
+    public float maxSlopeAngle;
 
-    public float moveSpeed;
-
+    
     private float horizontalInput;
     private float verticalInput;
     private float startScaleY;
@@ -53,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
         Walking,
         Sprinting,
         Crouching,
+        Sliding,
         None
     }
 
@@ -67,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    {  
         Move();
     }
 
@@ -90,43 +107,104 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        //jumping
         if (Input.GetKey(jumpKey) && canJump && isGrounded) {
             canJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
+        //sliding
+        if ((rb.velocity.magnitude > walkSpeed) && Input.GetKeyDown(crouchKey))
+        {
+            StartSlide();
+            isSliding = true;
+        }
+        if (isSliding)
+        {
+            SlidingMovement();
+        }
+        if (Input.GetKeyUp(crouchKey) && isSliding)
+        {
+            EndSlide();
+        }
+
         //Crouch
-        if (Input.GetKeyDown(crouchKey)) {
-            transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        if (!isSliding)
+        {
+            if (Input.GetKeyDown(crouchKey)) {
+                transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
+                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            }
+            if (Input.GetKeyUp(crouchKey)){
+                transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z); 
+            }
         }
-        if (Input.GetKeyUp(crouchKey)){
-            transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z); 
-        }
+       
     }
 
     private void MovementStateHandler() {
-        if (isGrounded && Input.GetKey(crouchKey))
-        {
-            movementState = MovementState.Crouching;
-            moveSpeed = crouchSpeed;
-            Debug.Log("test");
+        if (isSliding) {
+            movementState = MovementState.Sliding;
+            if (OnSlope() && rb.velocity.y < 0.1f) {
+                desiredSpeed = slideSpeed;
+            }
+            else { desiredSpeed = runSpeed; }
         }
 
-        else if (isGrounded && Input.GetKey(sprintKey))
+        else if ((isGrounded && Input.GetKey(crouchKey)) && !isSliding)
+        {
+            movementState = MovementState.Crouching;
+            desiredSpeed = crouchSpeed;
+        }
+
+        else if (Input.GetKey(sprintKey))
         {
             movementState = MovementState.Sprinting;
-            moveSpeed = runSpeed;
-            Debug.Log("test1");
+            desiredSpeed = runSpeed;
         }
 
         else if (isGrounded)
         {
             movementState = MovementState.Walking;
-            moveSpeed = walkSpeed;
+            desiredSpeed = walkSpeed;
         }
         else { movementState = MovementState.None; }
+
+        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 6f && moveSpeed != 0)
+        {
+            StartCoroutine(LerpMoveSpeed());
+        }
+        else {
+            moveSpeed = desiredSpeed;
+        }
+        lastDesiredSpeed = desiredSpeed;
+    }
+
+    private IEnumerator LerpMoveSpeed()
+    {
+        isLerping = true;
+        float time = 0f;
+        float duration = 3f;
+        float startVal = moveSpeed;
+
+        while (time < duration)
+        {
+            moveSpeed = Mathf.Lerp(startVal, desiredSpeed, time / duration);
+            time += Time.deltaTime;
+
+            // Adjust speed for slopes
+            if (OnSlope())
+            {
+                float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                float slopeMultiplier = 1 + (slopeAngle / 90f);
+                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeMultiplier;
+            }
+            yield return null;
+        }
+
+        moveSpeed = desiredSpeed;
+        isLerping = false;
     }
 
     private void Move()
@@ -135,7 +213,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (OnSlope() && !jumped) {
             rb.AddForce(GetSlopeDirection() * moveSpeed * 20f, ForceMode.Force);
-
             if (rb.velocity.y > 0) { rb.AddForce(Vector3.down * 120f, ForceMode.Force); }
         }
 
@@ -189,8 +266,35 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private Vector3 GetSlopeDirection() {
-        Debug.Log(Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized);
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
-    
+
+    private void StartSlide() 
+    {
+        isSliding = true;
+        slideTimer = maxSlideTime;
+
+        transform.localScale = new Vector3(transform.localScale.x, slideScaleY, transform.localScale.z);
+        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+    }
+    private void EndSlide()
+    {
+        transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
+        isSliding = false;
+    }
+    private void SlidingMovement() 
+    {
+        if (!OnSlope() || rb.velocity.y > -0.1f)
+        {
+            rb.AddForce(moveDirection.normalized * slideForce, ForceMode.Force);
+            slideTimer -= Time.deltaTime;
+        }
+        else {
+            rb.AddForce( GetSlopeDirection() * slideForce, ForceMode.Force);
+            rb.AddForce(Vector3.down * 20f, ForceMode.Impulse);
+        }
+        
+        if (slideTimer <= 0) { EndSlide(); }
+    }
+
 }
