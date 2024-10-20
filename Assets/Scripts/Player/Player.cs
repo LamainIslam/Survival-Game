@@ -48,12 +48,14 @@ public class Player : MonoBehaviour
             currentHealth = 0;
         }
         healthBar.SetHealth(currentHealth);
-        Debug.Log("Player took damage, current health: " + currentHealth);
+        //Debug.Log("Player took damage, current health: " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            Die();
-            StopHealing();
+            //Die();
+            //StopHealing();
+
+            PlayerDeath.shouldDie = true;
         }
     }
 
@@ -77,7 +79,7 @@ public class Player : MonoBehaviour
             currentHealth = maxHealth;
         }
         healthBar.SetHealth(currentHealth);
-        Debug.Log("Player healed, current health: " + currentHealth);
+        //Debug.Log("Player healed, current health: " + currentHealth);
     }
 
     IEnumerator DecreaseHungerOverTime()
@@ -88,7 +90,7 @@ public class Player : MonoBehaviour
             {
                 currentHunger--;
                 hungerBar.SetHealth(currentHunger);
-                Debug.Log("Hunger decreased, current hunger: " + currentHunger);
+                //Debug.Log("Hunger decreased, current hunger: " + currentHunger);
             }
             yield return new WaitForSeconds(hungerInterval);
         }
@@ -102,7 +104,7 @@ public class Player : MonoBehaviour
             currentHunger = maxHunger;
         }
         hungerBar.SetHealth(currentHunger);
-        Debug.Log("Hunger increased, current hunger: " + currentHunger);
+        //Debug.Log("Hunger increased, current hunger: " + currentHunger);
     }
 
     void Die()
