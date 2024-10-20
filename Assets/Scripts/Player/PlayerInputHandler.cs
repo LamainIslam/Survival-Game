@@ -5,14 +5,12 @@ using UnityEngine;
 public class PlayerInputHandler : MonoBehaviour
 {
     private PickupItem pickupItem;
-    private UseItem useItem;
     private InventoryManager inventoryManager;
 
     void Start()
     {
         // Assign variables
         pickupItem = GetComponent<PickupItem>();
-        useItem = GetComponent<UseItem>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
@@ -36,12 +34,6 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             inventoryManager.ToggleInventory();
-        }
-
-        // Check for the E key to toggle the inventory
-        if (Input.GetMouseButtonDown(0))
-        {
-            useItem.TryUseItem();
         }
     }
 }

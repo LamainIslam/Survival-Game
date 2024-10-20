@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Base class
-[CreateAssetMenu(menuName = "Scriptable object/Item")]
 public class Item : ScriptableObject
 {
     public string itemName;
@@ -12,15 +10,11 @@ public class Item : ScriptableObject
     public bool stackable = true;
     public Sprite image;
     public GameObject prefab;
-
-    public float damagePoints;
-    public float defencePoints;
-    public float healthRestored;
-    public float hungerRestored;
 }
 
 public enum ItemType
 {
+public enum ItemType {
     Weapon,
     Pickaxe,
     Axe,
@@ -37,8 +31,8 @@ public enum ItemType
 
 public enum ActionType
 {
+public enum ActionType {
     Attack,
     Equip,
     Eat,
     Nothing
-}
