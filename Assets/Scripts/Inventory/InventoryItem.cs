@@ -7,8 +7,6 @@ using TMPro;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Item item;
-
     [Header("UI")]
     public Image image;
     public TMP_Text countText;
@@ -49,14 +47,16 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     // Moves item with mouse
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
-        print("Dragging");
     }
 
     // Drops item where mouse is released
     public void OnEndDrag(PointerEventData eventData) {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
-        print("DragEnd");
+
+        // Update held item
+        InventoryManager inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        inventoryManager.UpdateHeldItem();
     }
 
     // Function for splitting the stack
@@ -80,5 +80,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // Set the parent of the new item to be the original parent
         newInventoryItem.parentAfterDrag = parentAfterDrag;
         newInventoryItem.transform.SetParent(parentAfterDrag);
+
+        // Update held item
+        InventoryManager inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        inventoryManager.UpdateHeldItem();
     }
 }

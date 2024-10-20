@@ -6,6 +6,9 @@ TagManager:
   tags:
   - InventorySlot
   - Item
+  - Enemy
+  - Tree
+  - Rock
   layers:
   - Default
   - TransparentFX
@@ -13,7 +16,9 @@ TagManager:
   - Ground
   - Water
   - UI
+
   - Death pit
+
   - 
   - 
   - 
