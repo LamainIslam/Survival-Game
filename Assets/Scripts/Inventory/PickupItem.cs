@@ -86,7 +86,6 @@ public class PickupItem : MonoBehaviour
             heldItemComponent.heldItem = inventoryManager.GetSelectedItem(false);
             heldItemComponent.HoldItem(heldItemComponent.heldItem);
 
-            // Destroy item
             // Destroy item and canvas
             Destroy(hit.collider.gameObject);
             Destroy(activeCanvas);

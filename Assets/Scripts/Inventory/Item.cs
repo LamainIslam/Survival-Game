@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Scriptable object/item")]
 public class Item : ScriptableObject
 {
     public string itemName;
@@ -12,8 +13,6 @@ public class Item : ScriptableObject
     public GameObject prefab;
 }
 
-public enum ItemType
-{
 public enum ItemType {
     Weapon,
     Pickaxe,
@@ -29,10 +28,9 @@ public enum ItemType {
     Other
 }
 
-public enum ActionType
-{
 public enum ActionType {
     Attack,
     Equip,
     Eat,
     Nothing
+}

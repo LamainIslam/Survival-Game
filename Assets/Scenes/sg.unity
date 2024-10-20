@@ -8902,6 +8902,7 @@ GameObject:
   - component: {fileID: 1113728339}
   m_Layer: 0
   m_Name: Capsule
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16382,6 +16383,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4537c19d5d83e5644bc1080fad1345d5, type: 3}
 --- !u!1001 &3466864547820208431
 PrefabInstance:
@@ -16449,6 +16451,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b72c38f457b4c6f49af81768776bafda, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
