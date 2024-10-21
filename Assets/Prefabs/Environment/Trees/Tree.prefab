@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 54c147bd7c969cd49bc6722d601855bf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Tree
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -76,6 +81,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6562708993951008529}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 54c147bd7c969cd49bc6722d601855bf,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3672161720942604773}
   m_SourcePrefab: {fileID: 100100000, guid: 54c147bd7c969cd49bc6722d601855bf, type: 3}
 --- !u!1 &6247470700556105496 stripped
 GameObject:
@@ -106,3 +115,19 @@ CapsuleCollider:
   m_Height: 3.9761252
   m_Direction: 1
   m_Center: {x: -0.00000029802322, y: 1.72, z: -0.00000035762787}
+--- !u!114 &3672161720942604773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6247470700556105496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb8dc7edfa808c42ad864c4a034fe29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  health: 0
+  resource: {fileID: 8333028582084459102, guid: 554ec7aa4d83be64ea937cbfabc09566,
+    type: 3}

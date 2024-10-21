@@ -6,9 +6,10 @@ public class InventoryManager : MonoBehaviour
 {
     public int stackSize = 10;
     public InventorySlot[] inventorySlots;
+    public GameObject[] armourSlots;
     public GameObject inventoryItemPrefab;
 
-    int selectedSlot = -1;
+    public int selectedSlot = -1;
 
     public Item empty;
 
