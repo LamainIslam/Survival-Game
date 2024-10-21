@@ -165,7 +165,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
-    private InventoryItem GetItemInSlot()
+    public InventoryItem GetItemInSlot()
     {
         // Loop through children to find the InventoryItem component
         foreach (Transform child in transform)
@@ -178,4 +178,20 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
         return null;  // No InventoryItem found
     }
+
+    public void SetItem(InventoryItem itemPrefab, string itemName, int quantity)
+    {
+        // Clear existing item if any
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Instantiate the new item
+        InventoryItem newItem = Instantiate(itemPrefab, transform);
+        newItem.item.itemName = itemName;
+        newItem.count = quantity;
+        newItem.RefreshCount();
+    }
+
 }
