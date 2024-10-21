@@ -1,75 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class PickupItem : MonoBehaviour
 {
-    public float maxDistance = 2.5f;  
+    public float maxDistance = 2.5f;
     private Camera mainCamera;
-
-    public GameObject worldSpaceCanvasPrefab;
-    private GameObject activeCanvas;
+    private InventoryManager inventoryManager;
+    private HeldItem heldItemComponent;
+    private RaycastHit hit;
 
     void Start()
     {
-        // Initialise camera
+        // Assign variables
         mainCamera = Camera.main;
+        inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        heldItemComponent = GameObject.Find("HeldItem").GetComponent<HeldItem>();
     }
 
-    void Update() 
+    // Handle item pickup logic (called externally by PlayerInputHandler)
+    public void TryPickupItem()
     {
-        // Create a ray from the center of screen
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
 
-        // Check if ray hits object with "Item" tag
-        if (Physics.Raycast(ray, out hit, maxDistance))
+        if (Physics.Raycast(ray, out hit, maxDistance) && hit.collider.CompareTag("Item"))
         {
-            if (hit.collider.CompareTag("Item"))
-            {
-                if (activeCanvas == null)
-                {
-                    // Create the canvas next to the item
-                    activeCanvas = Instantiate(worldSpaceCanvasPrefab, hit.transform.position + Vector3.up * 0.5f, Quaternion.identity);
-                    activeCanvas.transform.SetParent(hit.transform);
-                    
-                    TMP_Text itemText = activeCanvas.transform.GetChild(0).GetComponent<TMP_Text>();
-                    itemText.text = hit.collider.gameObject.name;
-                }
-                
-                // Make text face camera
-                activeCanvas.transform.position = hit.transform.position + Vector3.up * 0.5f;
-                Vector3 direction = (mainCamera.transform.position - activeCanvas.transform.position).normalized;
-                activeCanvas.transform.rotation = Quaternion.LookRotation(-direction);
-                
-                // Pick up the item
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    GameObject.Find("InventoryManager").GetComponent<InventoryManager>().AddItem(hit.collider.gameObject.GetComponent<ItemHolder>().item);
-                    GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = GameObject.Find("InventoryManager").GetComponent<InventoryManager>().GetSelectedItem(false);
-                    GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
-                    Destroy(hit.collider.gameObject);
-                    Destroy(activeCanvas);
-                }
-            }
-            else
-            {
-                // Destroy canvas when looking away
-                if (activeCanvas != null)
-                {
-                    Destroy(activeCanvas);
-                }
-            }
-        }
-        else
-        {
-            // Destroy canvas if nothing is hit
-            if (activeCanvas != null)
-            {
-                Destroy(activeCanvas);
-            }
+            // Add item to inventory and update held item
+            var itemHolder = hit.collider.gameObject.GetComponent<ItemHolder>();
+            inventoryManager.AddItem(itemHolder.item);
+            heldItemComponent.heldItem = inventoryManager.GetSelectedItem(false);
+            heldItemComponent.HoldItem(heldItemComponent.heldItem);
+
+            // Destroy item
+            Destroy(hit.collider.gameObject);
         }
     }
 }

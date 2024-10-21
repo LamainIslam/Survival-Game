@@ -7,46 +7,62 @@ public class InventoryManager : MonoBehaviour
     public int stackSize = 10;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
-    
+
     int selectedSlot = -1;
 
     public Item empty;
 
-    private void Start() {
+    private void Start()
+    {
         ChangeSelectedSlot(0);
     }
 
-    private void Update() {
+    private void Update()
+    {
         // Use number row to change toobar item selection
-        if (Input.inputString != null) {
+        if (Input.inputString != null)
+        {
             bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number >= 1 && number <= 9) {
+            if (isNumber && number >= 1 && number <= 8)
+            {
                 ChangeSelectedSlot(number - 1);
-            }else if (isNumber && number == 0) {
-                ChangeSelectedSlot(9);
+            }
+            else if (isNumber && number == 0)
+            {
+                ChangeSelectedSlot(7);
             }
         }
 
         // Use scroll wheel to change toobar item selection
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            if (selectedSlot < 9) {
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            if (selectedSlot < 7)
+            {
                 ChangeSelectedSlot(selectedSlot + 1);
-            }else {
+            }
+            else
+            {
                 ChangeSelectedSlot(0);
             }
-        }else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-            if (selectedSlot > 0) {
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            if (selectedSlot > 0)
+            {
                 ChangeSelectedSlot(selectedSlot - 1);
-            }else {
-                ChangeSelectedSlot(9);
-
+            }
+            else
+            {
+                ChangeSelectedSlot(7);
             }
         }
     }
 
     // Changes selected slot
-    public void ChangeSelectedSlot(int newValue) {
-        if (selectedSlot >= 0) {
+    public void ChangeSelectedSlot(int newValue)
+    {
+        if (selectedSlot >= 0)
+        {
             inventorySlots[selectedSlot].Deselect();
         }
 
@@ -54,21 +70,27 @@ public class InventoryManager : MonoBehaviour
         selectedSlot = newValue;
 
         // Display held item
-        if (inventorySlots[selectedSlot].transform.childCount > 0) {
+        if (inventorySlots[selectedSlot].transform.childCount > 0)
+        {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
-        }else {
+        }
+        else
+        {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
         }
     }
 
-    public bool AddItem(Item item) {
+    public bool AddItem(Item item)
+    {
         // Check if possible to add to an existing stack
-        for (int i = 0; i < inventorySlots.Length; i++) {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < stackSize && itemInSlot.item.stackable == true) {
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < stackSize && itemInSlot.item.stackable == true)
+            {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
                 return true;
@@ -76,10 +98,12 @@ public class InventoryManager : MonoBehaviour
         }
 
         // Find the next empty slot
-        for (int i = 0; i < inventorySlots.Length; i++) {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null) {
+            if (itemInSlot == null)
+            {
                 SpawnNewItem(item, slot);
                 return true;
             }
@@ -88,28 +112,70 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Spawns item into inventory
-    void SpawnNewItem(Item item, InventorySlot slot) {
+    void SpawnNewItem(Item item, InventorySlot slot)
+    {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
     }
 
     // Returns selected item and decreases count by 1 if use == true. Returns null if empty
-    public Item GetSelectedItem(bool use) {
+    public Item GetSelectedItem(bool use)
+    {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-        if (itemInSlot != null) {
+        if (itemInSlot != null)
+        {
             Item item = itemInSlot.item;
-            if (use == true) {
+            if (use == true)
+            {
                 itemInSlot.count--;
-                if (itemInSlot.count <= 0) {
+                if (itemInSlot.count <= 0)
+                {
                     Destroy(itemInSlot.gameObject);
-                }else {
+                }
+                else
+                {
                     itemInSlot.RefreshCount();
                 }
             }
             return item;
         }
         return null;
+    }
+
+    // Updates the held item to the current held item
+    public void UpdateHeldItem()
+    {
+        // Display the new held item based on the currently selected slot
+        if (inventorySlots[selectedSlot].transform.childCount > 0)
+        {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
+        }
+        else
+        {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+        }
+    }
+
+    // Toggles main inventory
+    public void ToggleInventory()
+    {
+        GameObject mainInventoryGroup = GameObject.Find("Canvas").transform.GetChild(0).gameObject;
+        if (Input.GetKeyDown("e"))
+        {
+            if (mainInventoryGroup.activeInHierarchy == false)
+            {
+                mainInventoryGroup.SetActive(true);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
+            }
+            else
+            {
+                mainInventoryGroup.SetActive(false);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
+            }
+        }
     }
 }

@@ -171,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else { movementState = MovementState.None; }
 
-        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 6f && moveSpeed != 0)
+        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 6f && moveSpeed != 0 && !isLerping)
         {
             StartCoroutine(LerpMoveSpeed());
         }

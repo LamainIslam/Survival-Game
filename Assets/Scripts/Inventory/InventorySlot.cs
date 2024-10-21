@@ -8,70 +8,174 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     public Image image;
     public Color selectedColor, notSelectedColor;
+    public SlotType slotType;
+
+    public enum SlotType
+    {
+        None,
+        Helmet,
+        Chestplate,
+        Leggings,
+        Boots,
+        OffHand
+    }
 
     [HideInInspector] public InventoryManager inventoryManager;
 
-    private void Awake() {
-        // Starts every slot as deselected colour
+    private void Awake()
+    {
         Deselect();
     }
 
-    private void Start() {
-        // Initialise inventoryManager
+    private void Start()
+    {
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
-    // Detects if mouse clicks this slot
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Change slot if it's in toolbar
-        if (gameObject.transform.parent.name == "Toolbar") {
-            inventoryManager.ChangeSelectedSlot(gameObject.transform.GetSiblingIndex());
+        if (transform.parent.name == "Toolbar")
+        {
+            inventoryManager.ChangeSelectedSlot(transform.GetSiblingIndex());
         }
     }
 
-    // Change to selected colour
-    public void Select() {
+    public void Select()
+    {
         image.color = selectedColor;
     }
 
-    // Change to deselected colour
-    public void Deselect() {
+    public void Deselect()
+    {
         image.color = notSelectedColor;
     }
 
-    // Changes parent of item when mouse is released
-    public void OnDrop(PointerEventData eventData) {
-        if (transform.childCount == 0) {
-            // Move item to empty slot
-            InventoryItem heldItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-            heldItem.parentAfterDrag = transform;
-        }else {
-            // Check held item and hovered item
-            InventoryItem heldItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-            InventoryItem hoveredItem = transform.GetChild(0).GetComponent<InventoryItem>();
+    public void OnDrop(PointerEventData eventData)
+    {
+        InventoryItem heldItem = eventData.pointerDrag.GetComponent<InventoryItem>();
 
-            if (heldItem.item != hoveredItem.item) {
-                // Swap items if different items
-                Transform heldItemParent = heldItem.parentAfterDrag;
-                heldItem.parentAfterDrag = transform;
-                heldItem.transform.SetParent(transform);
-                hoveredItem.transform.SetParent(heldItemParent);
-            }else {
-                // Merge stacks if stackable
-                if (heldItem.item.stackable == true && hoveredItem.count < inventoryManager.stackSize) {
-                    if (inventoryManager.stackSize - hoveredItem.count >= heldItem.count) {
-                        hoveredItem.count += heldItem.count;
-                        hoveredItem.RefreshCount();
-                        Destroy(heldItem.gameObject);
-                    }else {
-                        heldItem.count += hoveredItem.count - inventoryManager.stackSize;
-                        hoveredItem.count = inventoryManager.stackSize;
-                        hoveredItem.RefreshCount();
-                        heldItem.RefreshCount();
-                    }
-                }
+        if (heldItem == null) return;
+
+        switch (slotType)
+        {
+            case SlotType.None:
+                HandleGenericSlot(heldItem);
+                break;
+            case SlotType.Helmet:
+                HandleArmorSlot(heldItem, ItemType.Helmet);
+                break;
+            case SlotType.Chestplate:
+                HandleArmorSlot(heldItem, ItemType.Chestplate);
+                break;
+            case SlotType.Leggings:
+                HandleArmorSlot(heldItem, ItemType.Leggings);
+                break;
+            case SlotType.Boots:
+                HandleArmorSlot(heldItem, ItemType.Boots);
+                break;
+            case SlotType.OffHand:
+                HandleOffHandSlot(heldItem);
+                break;
+        }
+    }
+
+    private void HandleGenericSlot(InventoryItem heldItem)
+    {
+        InventoryItem hoveredItem = GetItemInSlot();  // Get the actual InventoryItem in the slot
+
+        if (hoveredItem == null)
+        {
+            heldItem.parentAfterDrag = transform;
+        }
+        else
+        {
+            if (heldItem.item != hoveredItem.item)
+            {
+                SwapItems(heldItem, hoveredItem);
+            }
+            else
+            {
+                MergeStacks(heldItem, hoveredItem);
             }
         }
+    }
+
+    private void HandleArmorSlot(InventoryItem heldItem, ItemType expectedType)
+    {
+        if (heldItem.item.type == expectedType)
+        {
+            InventoryItem hoveredItem = GetItemInSlot();  // Get the actual InventoryItem in the slot
+
+            if (hoveredItem == null)
+            {
+                heldItem.parentAfterDrag = transform;
+            }
+            else
+            {
+                SwapItems(heldItem, hoveredItem);
+            }
+        }
+    }
+
+    private void HandleOffHandSlot(InventoryItem heldItem)
+    {
+        // Check if the item is one of the allowed types for the OffHand slot
+        if (heldItem.item.type == ItemType.Torch || 
+            heldItem.item.type == ItemType.Shield || 
+            heldItem.item.type == ItemType.Food)
+        {
+            InventoryItem hoveredItem = GetItemInSlot();  // Get the actual InventoryItem in the slot
+
+            if (hoveredItem == null)
+            {
+                heldItem.parentAfterDrag = transform;  // Equip off-hand item in empty slot
+            }
+            else
+            {
+                SwapItems(heldItem, hoveredItem);  // Swap off-hand item
+            }
+        }
+    }
+
+    private void SwapItems(InventoryItem heldItem, InventoryItem hoveredItem)
+    {
+        Transform originalParent = heldItem.parentAfterDrag;
+        heldItem.parentAfterDrag = hoveredItem.transform.parent;
+        hoveredItem.transform.SetParent(originalParent);
+    }
+
+    private void MergeStacks(InventoryItem heldItem, InventoryItem hoveredItem)
+    {
+        if (heldItem.item.stackable && hoveredItem.count < inventoryManager.stackSize)
+        {
+            int remainingSpace = inventoryManager.stackSize - hoveredItem.count;
+            if (remainingSpace >= heldItem.count)
+            {
+                hoveredItem.count += heldItem.count;
+                hoveredItem.RefreshCount();
+                Destroy(heldItem.gameObject);  // Destroy held item after merging
+            }
+            else
+            {
+                heldItem.count -= remainingSpace;
+                hoveredItem.count = inventoryManager.stackSize;
+                hoveredItem.RefreshCount();
+                heldItem.RefreshCount();
+            }
+        }
+    }
+
+    private InventoryItem GetItemInSlot()
+    {
+        // Loop through children to find the InventoryItem component
+        foreach (Transform child in transform)
+        {
+            InventoryItem item = child.GetComponent<InventoryItem>();
+            if (item != null)
+            {
+                return item;  // Return the first found InventoryItem
+            }
+        }
+        return null;  // No InventoryItem found
     }
 }
