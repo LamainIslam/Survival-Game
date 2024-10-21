@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.9467626
+      value: -0.615
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000015258789
+      value: 0.49953517
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.327452
+      value: 4.952852
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 794bc553ccfc444429e7ff3e6e8e0594,
         type: 3}
@@ -156,4 +156,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19215c56d8a29747899dfcba59ea9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: cb00174605b3707418f7da738b842ed3, type: 2}
+  item: {fileID: 11400000, guid: 2ed0b3a18ce277747a6d59beba953504, type: 2}
