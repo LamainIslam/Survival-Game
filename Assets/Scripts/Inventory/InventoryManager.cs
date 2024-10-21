@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public int selectedSlot = -1;
 
     public Item empty;
+    public float punchDamage;
 
     private void Start()
     {
@@ -158,6 +159,7 @@ public class InventoryManager : MonoBehaviour
         {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+            Debug.Log("Empty");
         }
     }
 

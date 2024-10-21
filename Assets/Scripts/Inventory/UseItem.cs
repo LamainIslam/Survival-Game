@@ -11,7 +11,6 @@ public class UseItem : MonoBehaviour
     {
         // Assign variables
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
-        
     }
 
     // Uses your item
@@ -39,8 +38,25 @@ public class UseItem : MonoBehaviour
                 }
                 if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance) {
                     // Weapons damage enemies
-                    // Link to enemy script with health, decrease as shown in example below
-                    // hit.collider.GetComponent<Enemy>().health -= usedItem.damagePoints;
+                    var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
+                    if (hostileScript != null)
+                    {
+                        hostileScript.TakeDamage(usedItem.damagePoints);
+                        return;
+                    }
+
+                    var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
+                    if (neutralScript != null)
+                    {
+                        neutralScript.TakeDamage(usedItem.damagePoints);
+                        return;
+                    }
+
+                    var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
+                    if (passiveScript != null)
+                    {
+                        passiveScript.TakeDamage(usedItem.damagePoints);
+                    }
                 }
             } else if (usedItem.actionType == ActionType.Equip) {
                 // Armour can be equipped
@@ -66,11 +82,35 @@ public class UseItem : MonoBehaviour
                 }
                 hungerBar.GetComponent<HungerBar>().SetHunger(newHunger);
                 player.currentHunger = newHunger;
+                inventoryManager.GetSelectedItem(true);
+                inventoryManager.UpdateHeldItem();
             } else {
                 Debug.Log("Do Nothing");
             }
         } else {
-            Debug.Log("Empty");
+            // Damage enemy
+            if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance) {
+                // Weapons damage enemies
+                var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
+                if (hostileScript != null)
+                {
+                    hostileScript.TakeDamage(inventoryManager.punchDamage);
+                    return;
+                }
+
+                var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
+                if (neutralScript != null)
+                {
+                    neutralScript.TakeDamage(inventoryManager.punchDamage);
+                    return;
+                }
+
+                var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
+                if (passiveScript != null)
+                {
+                    passiveScript.TakeDamage(inventoryManager.punchDamage);
+                }
+            }
         }
     }
 }

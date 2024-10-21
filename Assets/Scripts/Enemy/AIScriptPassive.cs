@@ -7,6 +7,7 @@ public class AIScriptPassive : MonoBehaviour
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
     public float health;
+    public float maxHealth;
     public Vector3 spawnLocation;
     
 
@@ -23,6 +24,7 @@ public class AIScriptPassive : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         spawnLocation = this.gameObject.transform.position;
+        player = GameObject.Find("Player").transform;
     }
 
     private void Update()
@@ -71,13 +73,11 @@ public class AIScriptPassive : MonoBehaviour
     {
         Vector3 newPosition = new Vector3(2 * transform.position.x - player.position.x, transform.position.y, 2 * transform.position.z - player.position.z);
         agent.SetDestination(newPosition);
-
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
-        if (health <= 0) Destroy(gameObject);
     }
 
 

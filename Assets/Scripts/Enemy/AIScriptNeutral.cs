@@ -7,8 +7,10 @@ public class AIScriptNeutral : MonoBehaviour
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
     public float health;
+    public float maxHealth;
     public Vector3 spawnLocation;
     public bool aggressive;
+    public Material aggressiveMaterial;
 
     //Patroling
     public Vector3 walkPoint;
@@ -29,6 +31,7 @@ public class AIScriptNeutral : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         spawnLocation = this.gameObject.transform.position;
         aggressive = false;
+        player = GameObject.Find("Player").transform;
     }
 
     private void Update()
@@ -98,11 +101,14 @@ public class AIScriptNeutral : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
-        aggressive = true;
-        if (health <= 0) Destroy(gameObject);
+        if (aggressive == false)
+        {
+            aggressive = true;
+            GetComponent<Renderer>().material = aggressiveMaterial;
+        }
     }
 
     private void OnDrawGizmosSelected()

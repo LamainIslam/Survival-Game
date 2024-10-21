@@ -7,6 +7,7 @@ public class AIScriptHostile : MonoBehaviour
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
     public float health;
+    public float maxHealth;
     public Vector3 spawnLocation;
 
     //Patroling
@@ -27,6 +28,7 @@ public class AIScriptHostile : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         spawnLocation = this.gameObject.transform.position;
+        player = GameObject.Find("Player").transform;
     }
 
     private void Update()
@@ -94,11 +96,9 @@ public class AIScriptHostile : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
-
-        if (health <= 0) Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
