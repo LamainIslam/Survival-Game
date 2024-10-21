@@ -22,8 +22,8 @@ public class Crafting : MonoBehaviour
 
     void Start()
     {
-        AddRecipe("Stone", 1, "Wood", 2, "", 0, "axe", 1);
-        AddRecipe("Stone", 2, "Wood", 1, "", 0, "pickaxe", 1);
+        AddRecipe("Stone", 1, "Wood", 2, "", 0, "Axe", 1);
+        AddRecipe("Stone", 2, "Wood", 1, "", 0, "Pickaxe", 1);
 
         left.onClick.AddListener(PreviousRecipe);
         right.onClick.AddListener(NextRecipe);
@@ -55,14 +55,12 @@ public class Crafting : MonoBehaviour
         DisplayCurrentRecipe();
     }
 
-    void NextRecipe()
-    {
+    void NextRecipe(){
         currentRecipeIndex = (currentRecipeIndex + 1) % recipes.Count;
         DisplayCurrentRecipe();
     }
 
-    void DisplayCurrentRecipe()
-    {
+    void DisplayCurrentRecipe(){
         var recipe = recipes[currentRecipeIndex];
         string requirementText = "";
 
@@ -116,7 +114,7 @@ public class Crafting : MonoBehaviour
             }
         }
 
-        // Validate if all required items are present with sufficient quantity
+        // Validate required items and quantity
         foreach (var requiredItem in requiredItems)
         {
             Debug.Log($"Checking required item: {requiredItem.Key}, needed: {requiredItem.Value}, available: {(itemsInSlots.ContainsKey(requiredItem.Key) ? itemsInSlots[requiredItem.Key].ToString() : "0")}");
@@ -132,23 +130,35 @@ public class Crafting : MonoBehaviour
 
         if (canCraft)
         {
-            //Instantiate the crafted item in the output slot
+            // Get the ItemManager
+            ItemManager itemManager = FindAnyObjectByType<ItemManager>();
+            if (itemManager == null)
+            {
+                Debug.LogError("ItemManager not found.");
+                return; // Exit if the ItemManager is not found
+            }
+
+            // Retrieve the crafted item from the ItemManager
+            Item craftedItem = itemManager.GetItemByName(result.item);
+            if (craftedItem == null)
+            {
+                Debug.LogError($"Crafted item '{result.item}' does not exist in ItemManager.");
+                return; // Exit if the item does not exist
+            }
+
+            // Instantiate the crafted item in the output slot
             GameObject newItemObject = Instantiate(itemPrefab.gameObject, outputSlot.transform);
             InventoryItem newInventoryItem = newItemObject.GetComponent<InventoryItem>();
 
             // Initialise the new item with the output data
-            newInventoryItem.InitialiseItem(new Item
-            {
-                itemName = result.item,
-                // Assign sprite and other properties as needed
-            });
+            newInventoryItem.InitialiseItem(craftedItem);
             newInventoryItem.count = result.quantity;
             newInventoryItem.RefreshCount();
 
             Debug.Log($"Crafted: {result.quantity}x {result.item}");
 
             //Reduce the items from the crafting slots
-            // ReduceItemsInSlots(requiredItems);
+            ReduceItemsInSlots(requiredItems);
         }
         else
         {
