@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b43468747b92d14aa7c82048b5489c7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.4718785
+      value: 5.512871
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b43468747b92d14aa7c82048b5489c7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000015258789
+      value: -0.0000038146973
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b43468747b92d14aa7c82048b5489c7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.982325
+      value: -4.077324
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b43468747b92d14aa7c82048b5489c7,
         type: 3}
@@ -31,7 +31,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b43468747b92d14aa7c82048b5489c7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b43468747b92d14aa7c82048b5489c7,
         type: 3}
@@ -156,4 +156,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19215c56d8a29747899dfcba59ea9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 914347466026e2e47bd236ae39d1eb5c, type: 2}
+  item: {fileID: 11400000, guid: afbc13c9981b66a4f87de1059feb2fed, type: 2}
