@@ -16,8 +16,15 @@ TagManager:
   - Ground
   - Water
   - UI
+
   - InWorldUI
+  - player
+
+
+  - Death pit
+
   - 
+
   - 
   - 
   - 

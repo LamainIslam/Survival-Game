@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UseItem : MonoBehaviour
 {
@@ -41,6 +42,10 @@ public class UseItem : MonoBehaviour
                 Debug.Log("Equip");
             } else if(usedItem.actionType == ActionType.Eat) {
                 Debug.Log("Eat");
+                GameObject hungerBar = GameObject.Find("HungerBar");
+                int newHunger = (int)hungerBar.GetComponent<Slider>().value + (int)usedItem.hungerRestored;
+                
+                hungerBar.GetComponent<HungerBar>().SetHunger(newHunger);
             } else {
                 Debug.Log("Do Nothing");
             }
