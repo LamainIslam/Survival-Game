@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1658,10 +1658,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a8b17ec9e8657240ba36c75fb1802b3, type: 2}
   - {fileID: 11400000, guid: 566dfc79450dd704aa1f0e7f5aed4aee, type: 2}
   - {fileID: 11400000, guid: 912064ab326de434ea7e576e4a52a673, type: 2}
-  - {fileID: 11400000, guid: 0b229ce80c9994247a25a72bf11a5bce, type: 2}
-  - {fileID: 11400000, guid: cb00174605b3707418f7da738b842ed3, type: 2}
-  - {fileID: 11400000, guid: 914347466026e2e47bd236ae39d1eb5c, type: 2}
-  - {fileID: 11400000, guid: 5faba1f9529f3b343b52c33e2577fb92, type: 2}
+  - {fileID: 11400000, guid: cde8af849ea37c840be894c50a79fd67, type: 2}
+  - {fileID: 11400000, guid: 2ed0b3a18ce277747a6d59beba953504, type: 2}
+  - {fileID: 11400000, guid: afbc13c9981b66a4f87de1059feb2fed, type: 2}
+  - {fileID: 11400000, guid: b2eea036f3e990245b8c8abd4032e4ef, type: 2}
 --- !u!114 &53092173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17810,56 +17810,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4537c19d5d83e5644bc1080fad1345d5, type: 3}
---- !u!1 &635846729
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 635846730}
-  - component: {fileID: 635846731}
-  m_Layer: 0
-  m_Name: DayNightCycle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &635846730
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635846729}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1336401896}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &635846731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635846729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ef60033aa3ba044968095f2675a4fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalLight: {fileID: 2120920627}
-  dayColor: {r: 1, g: 0.96303165, b: 0.7877358, a: 1}
-  nightColor: {r: 0.1424318, g: 0.041651838, b: 0.2264151, a: 1}
-  dayDuration: 5
-  transitionDuration: 5
-  nightDuration: 5
 --- !u!1001 &636170053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36086,7 +36036,6 @@ Transform:
   - {fileID: 597200853}
   - {fileID: 1998331999}
   - {fileID: 1120006822}
-  - {fileID: 635846730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1337846602
@@ -56446,8 +56395,9 @@ GameObject:
   - component: {fileID: 2120920628}
   - component: {fileID: 2120920627}
   - component: {fileID: 2120920626}
+  - component: {fileID: 2120920629}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: SunLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56546,13 +56496,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120920625}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &2120920629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120920625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ef60033aa3ba044968095f2675a4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 10
 --- !u!1001 &2120972207
 PrefabInstance:
   m_ObjectHideFlags: 0

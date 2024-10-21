@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   actionType: 0
   stackable: 0
-  image: {fileID: 21300000, guid: 4f7f49ea8b0b8f34fa078331e7e4a007, type: 3}
+  image: {fileID: 21300000, guid: 81a8e3835d435a7489d06f03dc548609, type: 3}
   prefab: {fileID: 919132149155446097, guid: d60d48ce3963cd140ae8cc1742fb82ff, type: 3}
   damagePoints: 5
   defencePoints: 0

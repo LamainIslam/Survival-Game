@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
 {
+    /*
     // Initialise variables
     public Light globalLight;
     public Color dayColor;
@@ -60,5 +61,12 @@ public class DayNightCycle : MonoBehaviour
         }
         globalLight.color = dayColor;
         globalLight.intensity = 1f;
+    }*/
+
+    public float rotationSpeed;
+    
+    void Update()
+    {
+        transform.Rotate(rotationSpeed * Time.deltaTime, 0f, 0f);
     }
 }
