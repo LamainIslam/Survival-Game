@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
             if (currentHunger > 0)
             {
                 currentHunger--;
-                hungerBar.SetHealth(currentHunger);
+                hungerBar.SetHunger(currentHunger);
                 //Debug.Log("Hunger decreased, current hunger: " + currentHunger);
             }
             yield return new WaitForSeconds(hungerInterval);
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
         {
             currentHunger = maxHunger;
         }
-        hungerBar.SetHealth(currentHunger);
+        hungerBar.SetHunger(currentHunger);
         //Debug.Log("Hunger increased, current hunger: " + currentHunger);
     }
 
