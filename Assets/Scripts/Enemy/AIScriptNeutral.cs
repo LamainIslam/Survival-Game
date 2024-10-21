@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TerritorialEnemyAI : MonoBehaviour
+public class AIScriptNeutral : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
     public float health;
+    public Vector3 spawnLocation;
+    public bool aggressive;
 
     //Patroling
     public Vector3 walkPoint;
@@ -24,8 +26,9 @@ public class TerritorialEnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
         agent = GetComponent<NavMeshAgent>();
+        spawnLocation = this.gameObject.transform.position;
+        aggressive = false;
     }
 
     private void Update()
@@ -35,8 +38,10 @@ public class TerritorialEnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (aggressive) { 
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        }
     }
 
     private void Patroling()
@@ -59,7 +64,7 @@ public class TerritorialEnemyAI : MonoBehaviour
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        walkPoint = new Vector3(spawnLocation[0] + randomX, spawnLocation[1], spawnLocation[2] + randomZ);
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
@@ -96,7 +101,7 @@ public class TerritorialEnemyAI : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-
+        aggressive = true;
         if (health <= 0) Destroy(gameObject);
     }
 
