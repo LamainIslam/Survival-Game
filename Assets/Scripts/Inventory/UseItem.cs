@@ -44,8 +44,13 @@ public class UseItem : MonoBehaviour
                 Debug.Log("Eat");
                 GameObject hungerBar = GameObject.Find("HungerBar");
                 int newHunger = (int)hungerBar.GetComponent<Slider>().value + (int)usedItem.hungerRestored;
-                
+                Player player = GameObject.Find("Player").GetComponent<Player>();
+                if (newHunger > player.maxHunger)
+                {
+                    newHunger = player.maxHunger;
+                }
                 hungerBar.GetComponent<HungerBar>().SetHunger(newHunger);
+                player.currentHunger = newHunger;
             } else {
                 Debug.Log("Do Nothing");
             }
