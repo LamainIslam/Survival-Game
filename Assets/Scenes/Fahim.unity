@@ -17855,11 +17855,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLight: {fileID: 2120920627}
-  dayColor: {r: 0.9811321, g: 0.9632467, b: 0.1804913, a: 1}
-  nightColor: {r: 0.46157867, g: 0.10453011, b: 0.764151, a: 1}
-  dayDuration: 10
+  dayColor: {r: 1, g: 0.96303165, b: 0.7877358, a: 1}
+  nightColor: {r: 0.1424318, g: 0.041651838, b: 0.2264151, a: 1}
+  dayDuration: 5
   transitionDuration: 5
-  nightDuration: 10
+  nightDuration: 5
 --- !u!1001 &636170053
 PrefabInstance:
   m_ObjectHideFlags: 0
