@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
             IncreaseHunger(20);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        TakeDamage(20);
+    }
 
     public void TakeDamage(int damage)
     {
@@ -58,6 +62,7 @@ public class Player : MonoBehaviour
             PlayerDeath.shouldDie = true;
         }
     }
+   
 
     IEnumerator HealOverTime()
     {
