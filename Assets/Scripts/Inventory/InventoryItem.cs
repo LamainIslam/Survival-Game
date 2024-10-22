@@ -45,7 +45,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             SplitStack();
         }
-
     }
 
     // Moves item with mouse
