@@ -9,15 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Adjusments")]
     public float walkSpeed;
     public float runSpeed;
-    public float crouchSpeed;
-    public float slideSpeed;
     public float drag;
-
     private float moveSpeed;
     private float desiredSpeed;
     private float lastDesiredSpeed;
-    public float slopeIncreaseMultiplier;
-    public float speedIncreaseMultiplier;
+    
 
     [Header("Jump Adjusments")]
     public float jumpForce;
@@ -25,14 +21,18 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
 
     [Header("Crouch Adjusments")]
+    public float crouchSpeed;
     public float playerHeight;
     public float crouchScaleY;
 
     [Header("Slide Adjustments")]
+    public float slideSpeed;
     public float maxSlideTime;
     public float slideForce;
     public float slideScaleY;
     private float slideTimer;
+    public float slopeIncreaseMultiplier;
+    public float speedIncreaseMultiplier;
 
     [Header("Layers")]
     public LayerMask ground;
@@ -95,13 +95,16 @@ public class PlayerMovement : MonoBehaviour
         //raycast to find ground
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
         
-        if (isGrounded) { rb.drag = drag; } else { rb.drag = 0; }
+        if (isGrounded) { 
+            rb.drag = drag; 
+        } 
+        else { 
+            rb.drag = 0; 
+        }
 
         MovementStateHandler();
         PlayerInput();
         SpeedCap();
-
-        speedText.text = ("Speed: ") + (rb.velocity.magnitude * 1.0f).ToString("0");
     }
 
     private void PlayerInput() {
@@ -153,7 +156,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 desiredSpeed = slideSpeed;
             }
-            else { desiredSpeed = runSpeed; }
+            else { 
+                desiredSpeed = runSpeed; 
+            }
         }
         else if (isGrounded && Input.GetKey(crouchKey) && !isSliding)
         {
@@ -219,14 +224,20 @@ public class PlayerMovement : MonoBehaviour
     {
         moveDirection = playerRotation.forward * verticalInput + playerRotation.right * horizontalInput;
 
+        //add force in the slope direction to make move feel better while going up slopes
         if (OnSlope() && !jumped) {
-            rb.AddForce(GetSlopeDirection() * moveSpeed * 20f, ForceMode.Force);
-            if (rb.velocity.y > 0) { rb.AddForce(Vector3.down * 120f, ForceMode.Force); }
+            rb.AddForce(GetSlopeDirection() * moveSpeed * 10f, ForceMode.Force);
         }
 
-        if (isGrounded) { rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); }
-        else if (!isGrounded) { rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force); }
+        if (isGrounded) { 
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); 
+        }
+        //make it harder to move on air, air movement/air strafe can be turned off by making airMultiplier == 0
+        else if (!isGrounded) { 
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force); 
+        }
 
+        //no gravity on slope results in more fluid movement on sloped surfaces
         rb.useGravity = !OnSlope();
     }
 
@@ -237,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
+            //checks current velocity
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             if (flatVel.magnitude > (moveSpeed))
@@ -259,7 +270,6 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
-
         jumped = false;
     }
 
@@ -300,7 +310,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else {
             rb.AddForce( GetSlopeDirection() * slideForce, ForceMode.Force);
-            //rb.AddForce(Vector3.down * 20f, ForceMode.Impulse);
+            rb.AddForce(Vector3.down * 1f, ForceMode.Impulse);
         }
         
         if (slideTimer <= 0) { EndSlide(); }
