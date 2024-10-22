@@ -64,5 +64,5 @@ The game features a dynamic day and night cycle, where the light rotates to simu
 - **Slide**: After running, crouch or hold `Alt`
 - **Pick up Items**: `F`
 - **Open Inventory**: `E`
-- **Switch Toolbar Items**: Scroll wheel
+- **Switch Toolbar Items**: Scroll wheel / Number row
 - **Crafting**: Use arrows to select recipes
