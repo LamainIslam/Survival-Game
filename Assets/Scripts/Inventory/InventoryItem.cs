@@ -7,19 +7,15 @@ using TMPro;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Item item;
-
-    [Header("UI")]
     public Image image;
     public TMP_Text countText;
-
-
-    /*[HideInInspector] public Item item;*/
+    public Item item;
     public int count = 1;
-    [HideInInspector] public Transform parentAfterDrag;
+    public Transform parentAfterDrag;
 
     // Initialises item
-    public void InitialiseItem(Item newItem) {
+    public void InitialiseItem(Item newItem)
+    {
         item = newItem;
         image.sprite = newItem.image;
         RefreshCount();
@@ -27,40 +23,55 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     // Changes the count of the items, hides count if only 1
-    public void RefreshCount() {
+    public void RefreshCount()
+    {
         countText.text = count.ToString();
-        bool textActive = count>1;
-        countText.gameObject.SetActive(textActive);
+        if (count > 1) {
+            countText.gameObject.SetActive(true);
+        }else {
+            countText.gameObject.SetActive(false);
+        }
     }
 
     // Finds item under cursor
-    public void OnBeginDrag(PointerEventData eventData) {
+    public void OnBeginDrag(PointerEventData eventData)
+    {
         image.raycastTarget = false;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
 
-        // Split stack if more than 1 item
-        if (eventData.button == PointerEventData.InputButton.Right && count > 1) {
+        // Split stack if using right mouse button and more than 1 item
+        if (eventData.button == PointerEventData.InputButton.Right && count > 1)
+        {
             SplitStack();
         }
-
     }
 
     // Moves item with mouse
-    public void OnDrag(PointerEventData eventData) {
+    public void OnDrag(PointerEventData eventData)
+    {
         transform.position = Input.mousePosition;
-        print("Dragging");
     }
 
     // Drops item where mouse is released
-    public void OnEndDrag(PointerEventData eventData) {
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        // Set items parent to new slot
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
-        print("DragEnd");
+
+        // Update held item
+        InventoryManager inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        inventoryManager.UpdateHeldItem();
+
+        // Update defence
+        Player player = GameObject.Find("Player").GetComponent<Player>();
+        player.UpdateDefence();
     }
 
     // Function for splitting the stack
-    private void SplitStack() {
+    private void SplitStack()
+    {
         int splitCount = Mathf.FloorToInt(count / 2);
 
         // Create a new item for the split stack
@@ -77,8 +88,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         count -= splitCount;
         RefreshCount();
 
-        // Set the parent of the new item to be the original parent
+        // Set the new items parent to the original parent
         newInventoryItem.parentAfterDrag = parentAfterDrag;
         newInventoryItem.transform.SetParent(parentAfterDrag);
+
+        // Update held item
+        InventoryManager inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        inventoryManager.UpdateHeldItem();
     }
+
 }

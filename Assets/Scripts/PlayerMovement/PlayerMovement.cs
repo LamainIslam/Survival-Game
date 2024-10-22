@@ -9,15 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Adjusments")]
     public float walkSpeed;
     public float runSpeed;
-    public float crouchSpeed;
-    public float slideSpeed;
     public float drag;
-
     private float moveSpeed;
     private float desiredSpeed;
     private float lastDesiredSpeed;
-    public float slopeIncreaseMultiplier;
-    public float speedIncreaseMultiplier;
+    
 
     [Header("Jump Adjusments")]
     public float jumpForce;
@@ -25,14 +21,18 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
 
     [Header("Crouch Adjusments")]
+    public float crouchSpeed;
     public float playerHeight;
     public float crouchScaleY;
 
     [Header("Slide Adjustments")]
+    public float slideSpeed;
     public float maxSlideTime;
     public float slideForce;
     public float slideScaleY;
     private float slideTimer;
+    public float slopeIncreaseMultiplier;
+    public float speedIncreaseMultiplier;
 
     [Header("Layers")]
     public LayerMask ground;
@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode slideKey = KeyCode.LeftAlt;
 
     [Header("Othes")]
     public Transform playerRotation;
@@ -94,13 +95,16 @@ public class PlayerMovement : MonoBehaviour
         //raycast to find ground
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
         
-        if (isGrounded) { rb.drag = drag; } else { rb.drag = 0; }
+        if (isGrounded) { 
+            rb.drag = drag; 
+        } 
+        else { 
+            rb.drag = 0; 
+        }
 
         MovementStateHandler();
         PlayerInput();
         SpeedCap();
-
-        speedText.text = ("Speed: ") + (rb.velocity.magnitude * 1.0f).ToString("0");
     }
 
     private void PlayerInput() {
@@ -115,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //sliding
-        if ((rb.velocity.magnitude > walkSpeed) && Input.GetKeyDown(crouchKey))
+        if (((rb.velocity.magnitude > walkSpeed) && Input.GetKeyDown(crouchKey)) || (Input.GetKeyDown(slideKey)))
         {
             StartSlide();
             isSliding = true;
@@ -124,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SlidingMovement();
         }
-        if (Input.GetKeyUp(crouchKey) && isSliding)
+        if (Input.GetKeyUp(crouchKey) || Input.GetKeyUp(slideKey) && isSliding)
         {
             EndSlide();
         }
@@ -143,82 +147,97 @@ public class PlayerMovement : MonoBehaviour
        
     }
 
-    private void MovementStateHandler() {
-        if (isSliding) {
+    private void MovementStateHandler()
+    {
+        if (isSliding)
+        {
             movementState = MovementState.Sliding;
-            if (OnSlope() && rb.velocity.y < 0.1f) {
+            if (OnSlope() && rb.velocity.y < 0.1f)
+            {
                 desiredSpeed = slideSpeed;
             }
-            else { desiredSpeed = runSpeed; }
+            else { 
+                desiredSpeed = runSpeed; 
+            }
         }
-
-        else if ((isGrounded && Input.GetKey(crouchKey)) && !isSliding)
+        else if (isGrounded && Input.GetKey(crouchKey) && !isSliding)
         {
             movementState = MovementState.Crouching;
             desiredSpeed = crouchSpeed;
         }
-
         else if (Input.GetKey(sprintKey))
         {
             movementState = MovementState.Sprinting;
             desiredSpeed = runSpeed;
         }
-
         else if (isGrounded)
         {
             movementState = MovementState.Walking;
             desiredSpeed = walkSpeed;
         }
-        else { movementState = MovementState.None; }
+        else
+        {
+            movementState = MovementState.None;
+        }
 
-        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 6f && moveSpeed != 0)
+        // Start Lerp if speed difference is significant and no Lerp is in progress
+        if (Mathf.Abs(desiredSpeed - lastDesiredSpeed) > 1f && moveSpeed != 0 && !isLerping)
         {
             StartCoroutine(LerpMoveSpeed());
         }
-        else {
-            moveSpeed = desiredSpeed;
+        else
+        {
+            moveSpeed = desiredSpeed;  // Set speed directly if no Lerp is needed
         }
-        lastDesiredSpeed = desiredSpeed;
+
+        lastDesiredSpeed = desiredSpeed;  // Store the last desired speed for next frame
     }
 
     private IEnumerator LerpMoveSpeed()
     {
         isLerping = true;
-        float time = 0f;
-        float duration = 3f;
         float startVal = moveSpeed;
+        float dif = Mathf.Abs(desiredSpeed - startVal);  // Difference in speed
 
-        while (time < duration)
+        while (Mathf.Abs(moveSpeed - desiredSpeed) > 0.1f)  // Continue until close enough to desired speed
         {
-            moveSpeed = Mathf.Lerp(startVal, desiredSpeed, time / duration);
-            time += Time.deltaTime;
+            float speedLerpFactor = Time.deltaTime * speedIncreaseMultiplier;  // Speed factor
+            moveSpeed = Mathf.Lerp(moveSpeed, desiredSpeed, speedLerpFactor);  // Lerp based on speed difference
 
             // Adjust speed for slopes
             if (OnSlope())
             {
                 float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
                 float slopeMultiplier = 1 + (slopeAngle / 90f);
-                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeMultiplier;
+                moveSpeed *= slopeMultiplier;  // Adjust for slope
             }
-            yield return null;
+
+            yield return null;  // Wait for the next frame
         }
 
-        moveSpeed = desiredSpeed;
+        moveSpeed = desiredSpeed;  // Ensure we end exactly at the desired speed
         isLerping = false;
     }
+
 
     private void Move()
     {
         moveDirection = playerRotation.forward * verticalInput + playerRotation.right * horizontalInput;
 
+        //add force in the slope direction to make move feel better while going up slopes
         if (OnSlope() && !jumped) {
-            rb.AddForce(GetSlopeDirection() * moveSpeed * 20f, ForceMode.Force);
-            if (rb.velocity.y > 0) { rb.AddForce(Vector3.down * 120f, ForceMode.Force); }
+            rb.AddForce(GetSlopeDirection() * moveSpeed * 10f, ForceMode.Force);
         }
 
-        if (isGrounded) { rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); }
-        else if (!isGrounded) { rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force); }
+        if (isGrounded) { 
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); 
+        }
+        //make it harder to move on air, air movement/air strafe can be turned off by making airMultiplier == 0
+        else if (!isGrounded) { 
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force); 
+        }
 
+        //no gravity on slope results in more fluid movement on sloped surfaces
         rb.useGravity = !OnSlope();
     }
 
@@ -229,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
+            //checks current velocity
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             if (flatVel.magnitude > (moveSpeed))
@@ -251,7 +270,6 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
-
         jumped = false;
     }
 
@@ -279,7 +297,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void EndSlide()
     {
-        transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
+        if (Input.GetKey(crouchKey)) { transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z); }
+        else{ transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z); }
         isSliding = false;
     }
     private void SlidingMovement() 
@@ -291,7 +310,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else {
             rb.AddForce( GetSlopeDirection() * slideForce, ForceMode.Force);
-            rb.AddForce(Vector3.down * 20f, ForceMode.Impulse);
+            rb.AddForce(Vector3.down * 1f, ForceMode.Impulse);
         }
         
         if (slideTimer <= 0) { EndSlide(); }

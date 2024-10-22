@@ -6,30 +6,34 @@ public class InventoryManager : MonoBehaviour
 {
     public int stackSize = 10;
     public InventorySlot[] inventorySlots;
+    public GameObject[] armourSlots;
     public GameObject inventoryItemPrefab;
-    
-    int selectedSlot = -1;
-
+    public GameObject crossHair;
+    public GameObject mainInventoryGroup;
+    public int selectedSlot = -1;
     public Item empty;
+    public float punchDamage;
 
-    private void Start() {
+    private void Start()
+    {
         ChangeSelectedSlot(0);
     }
 
-    private void Update() {
+    private void Update()
+    {
         // Use number row to change toobar item selection
         if (Input.inputString != null) {
             bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number >= 1 && number <= 9) {
+            if (isNumber && number >= 1 && number <= 8) {
                 ChangeSelectedSlot(number - 1);
             }else if (isNumber && number == 0) {
-                ChangeSelectedSlot(9);
+                ChangeSelectedSlot(7);
             }
         }
 
         // Use scroll wheel to change toobar item selection
         if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            if (selectedSlot < 9) {
+            if (selectedSlot < 7) {
                 ChangeSelectedSlot(selectedSlot + 1);
             }else {
                 ChangeSelectedSlot(0);
@@ -38,18 +42,18 @@ public class InventoryManager : MonoBehaviour
             if (selectedSlot > 0) {
                 ChangeSelectedSlot(selectedSlot - 1);
             }else {
-                ChangeSelectedSlot(9);
-
+                ChangeSelectedSlot(7);
             }
         }
     }
 
     // Changes selected slot
-    public void ChangeSelectedSlot(int newValue) {
+    public void ChangeSelectedSlot(int newValue)
+    {
+        // Sets slot colours
         if (selectedSlot >= 0) {
             inventorySlots[selectedSlot].Deselect();
         }
-
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
 
@@ -63,7 +67,8 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public bool AddItem(Item item) {
+    public bool AddItem(Item item)
+    {
         // Check if possible to add to an existing stack
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
@@ -88,28 +93,75 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Spawns item into inventory
-    void SpawnNewItem(Item item, InventorySlot slot) {
+    void SpawnNewItem(Item item, InventorySlot slot)
+    {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
     }
 
-    // Returns selected item and decreases count by 1 if use == true. Returns null if empty
-    public Item GetSelectedItem(bool use) {
+    // Returns selected item
+    public Item GetSelectedItem()
+    {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null) {
             Item item = itemInSlot.item;
-            if (use == true) {
-                itemInSlot.count--;
-                if (itemInSlot.count <= 0) {
-                    Destroy(itemInSlot.gameObject);
-                }else {
-                    itemInSlot.RefreshCount();
-                }
-            }
             return item;
         }
         return null;
+    }
+
+    // Decreases count of selected item by 1
+    public void ConsumeSelectedItem()
+    {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null) {
+            Item item = itemInSlot.item;
+            itemInSlot.count--;
+            if (itemInSlot.count <= 0) {
+                Destroy(itemInSlot.gameObject);
+            }else {
+                itemInSlot.RefreshCount();
+            }
+        }
+        StartCoroutine(UpdateHeldItemNextFrame());
+    }
+
+    // Updates the held item to the current held item
+    public void UpdateHeldItem()
+    {
+        // Display the new held item based on the currently selected slot
+        if (inventorySlots[selectedSlot].transform.childCount > 0) {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
+        }else {
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
+            GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+        }
+    }
+
+    // Update held item on the next frame
+    private IEnumerator UpdateHeldItemNextFrame()
+    {
+        yield return null;
+        UpdateHeldItem();
+    }
+
+    // Toggles main inventory
+    public void ToggleInventory()
+    {
+        if (Input.GetKeyDown("e")) {
+            if (mainInventoryGroup.activeInHierarchy == false) {
+                mainInventoryGroup.SetActive(true);
+                crossHair.SetActive(false);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
+            }else {
+                mainInventoryGroup.SetActive(false);
+                crossHair.SetActive(true);
+                GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
+            }
+        }
     }
 }

@@ -10,15 +10,11 @@ public class HeldItem : MonoBehaviour
     // Hold selected item
     public void HoldItem(Item newItem)
     {
-        if (heldItemInstance != null)
-        {
+        if (heldItemInstance != null) {
             Destroy(heldItemInstance);
         }
-
         heldItem = newItem;
-
-        if (heldItem != null)
-        {
+        if (heldItem != null) {
             heldItemInstance = Instantiate(heldItem.prefab, transform); 
             heldItemInstance.transform.SetParent(gameObject.transform);
         }
