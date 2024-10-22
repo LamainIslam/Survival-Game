@@ -26,9 +26,11 @@ public class AIScriptHostile : MonoBehaviour
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+
+        agent = GetComponent<NavMeshAgent>();     //asigns a nav mesh agent for ground interaction
         spawnLocation = this.gameObject.transform.position;
         player = GameObject.Find("Player").transform;
+        this.gameObject.name = "Hostile Enemy"; //asigns enemy name
     }
 
     private void Update()
@@ -37,8 +39,8 @@ public class AIScriptHostile : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        if (!playerInSightRange) Patroling();    
+        if (playerInSightRange && !playerInAttackRange) ChasePlayer(); 
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
@@ -62,7 +64,7 @@ public class AIScriptHostile : MonoBehaviour
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(spawnLocation[0] + randomX, spawnLocation[1], spawnLocation[2] + randomZ);
+        walkPoint = new Vector3(spawnLocation[0] + randomX, spawnLocation[1], spawnLocation[2] + randomZ);  //sets the movement of the enemy to random directions w/ random x,y,z values
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
@@ -101,9 +103,9 @@ public class AIScriptHostile : MonoBehaviour
         health -= damage;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()    
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.red;  //changes the gizmos.color to red and draws a red/yellow wireframe sphere at the enemy's position with radius equal to attackRange.
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);

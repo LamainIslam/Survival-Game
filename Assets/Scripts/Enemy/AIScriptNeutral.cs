@@ -9,110 +9,122 @@ public class AIScriptNeutral : MonoBehaviour
     public float health;
     public float maxHealth;
     public Vector3 spawnLocation;
-    public bool aggressive;
-    public Material aggressiveMaterial;
+    public bool aggressive;  // Determines if the neutral enemy has become aggressive
+    public Material aggressiveMaterial;  // Material to visually indicate the aggressive state
 
-    //Patroling
+    // Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
 
-    //Attacking
+    // Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
 
-    //States
+    // States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        spawnLocation = this.gameObject.transform.position;
-        aggressive = false;
-        player = GameObject.Find("Player").transform;
+        agent = GetComponent<NavMeshAgent>();  // Assign NavMeshAgent to control movement
+        spawnLocation = this.gameObject.transform.position;  // Set the spawn point for patrols
+        aggressive = false;  // Neutral state by default
+        player = GameObject.Find("Player").transform;  // Find and reference the player object
+        this.gameObject.name = "Neutral Enemy";  // Name the game object for identification
     }
 
     private void Update()
     {
-        //Check for sight and attack range
+        // Check for player within sight and attack range using spheres
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange) Patroling();
-        if (aggressive) { 
-            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (!playerInSightRange)
+            Patroling();  // Patrol if the player is not in sight
+
+        // If aggressive, start attacking behaviour when player is in sight
+        if (aggressive)
+        {
+            if (playerInSightRange && !playerInAttackRange)
+                ChasePlayer();  // Chase if in sight but not within attack range
+            if (playerInAttackRange && playerInSightRange)
+                AttackPlayer();  // Attack when within attack range
         }
     }
 
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkPoint();
+        if (!walkPointSet)
+            SearchWalkPoint();  // Find a new patrol point if none is set
 
         if (walkPointSet)
-            agent.SetDestination(walkPoint);
+            agent.SetDestination(walkPoint);  // Move towards the patrol point
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        //Walkpoint reached
+        // Reset walk point when the enemy reaches its destination
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
     }
 
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
+        // Generate random patrol points within the set range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(spawnLocation[0] + randomX, spawnLocation[1], spawnLocation[2] + randomZ);
 
+        // Ensure the walk point is on the ground before setting it
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
     }
 
     private void ChasePlayer()
     {
+        // Move towards the player if in sight
         agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
-        agent.SetDestination(transform.position); // Stop moving
-
-        transform.LookAt(player);
+        agent.SetDestination(transform.position);  // Stop moving while attacking
+        transform.LookAt(player);  // Face the player before attacking
 
         if (!alreadyAttacked)
         {
-            //Attack code
+            // Instantiate projectile and add force for attack
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);  // Forward force
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);  // Upward force for trajectory
 
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);  // Set a cooldown between attacks
         }
     }
 
     private void ResetAttack()
     {
-        alreadyAttacked = false;
+        alreadyAttacked = false;  // Reset the attack state to allow for future attacks
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        health -= damage;  // Reduce health when damage is taken
+
+        // If the enemy was neutral, it becomes aggressive when damaged
         if (aggressive == false)
         {
-            aggressive = true;
-            GetComponent<Renderer>().material = aggressiveMaterial;
+            aggressive = true;  // Set to aggressive
+            GetComponent<Renderer>().material = aggressiveMaterial;  // Change material to indicate aggression
         }
     }
 
     private void OnDrawGizmosSelected()
     {
+        // Draw a red wire sphere for the attack range and yellow for sight range in the editor
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
