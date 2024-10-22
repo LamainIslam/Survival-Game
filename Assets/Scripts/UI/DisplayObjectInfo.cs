@@ -31,6 +31,7 @@ public class DisplayObjectInfo : MonoBehaviour
 
     void Update()
     {
+        // Constantly try to run the function
         DetectAndDisplayObjectInfo();
     }
 
@@ -40,8 +41,7 @@ public class DisplayObjectInfo : MonoBehaviour
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
         // Cast the ray and check if it hits anything within the appropriate distance for each tag
-        if (Physics.Raycast(ray, out hit))
-        {
+        if (Physics.Raycast(ray, out hit)) {
             // Handle object based on tag and check if it's within the respective max distance
             if (hit.collider.CompareTag("Item") && hit.distance <= itemMaxDistance) {
                 ShowCanvas(hit, itemCanvasPrefab, "Item");
@@ -62,10 +62,8 @@ public class DisplayObjectInfo : MonoBehaviour
     // Show canvas based on object type
     void ShowCanvas(RaycastHit hit, GameObject canvasPrefab, string type)
     {
-        if (lastHitObject != hit.collider.gameObject)
-        {
+        if (lastHitObject != hit.collider.gameObject) {
             DestroyActiveCanvas();
-
             lastHitObject = hit.collider.gameObject;
 
             // Instantiate the canvas at the object's position
@@ -81,7 +79,6 @@ public class DisplayObjectInfo : MonoBehaviour
                 slider.value = lastHitObject.GetComponent<Resource>().health;
             }
         }
-
         // Make the canvas face the camera
         activeCanvas.transform.position = hit.transform.position + Vector3.up * 0.5f;
         Vector3 direction = (mainCamera.transform.position - activeCanvas.transform.position).normalized;
@@ -91,8 +88,7 @@ public class DisplayObjectInfo : MonoBehaviour
     // Destroys the active canvas
     void DestroyActiveCanvas()
     {
-        if (activeCanvas != null)
-        {
+        if (activeCanvas != null) {
             Destroy(activeCanvas);
             lastHitObject = null;
         }

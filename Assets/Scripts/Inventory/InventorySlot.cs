@@ -24,24 +24,25 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     private void Awake()
     {
+        // Start all slots as deselected
         Deselect();
     }
 
     private void Start()
     {
+        // Assign inventoryManager
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
     // Changes selected slot to the slot clicked if in toolbar
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (transform.parent.name == "Toolbar")
-        {
+        if (transform.parent.name == "Toolbar") {
             inventoryManager.ChangeSelectedSlot(transform.GetSiblingIndex());
         }
     }
 
-    // Changes slot to seleted colour
+    // Changes slot to selected colour
     public void Select()
     {
         image.color = selectedColor;
@@ -57,8 +58,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem heldItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-
-        if (heldItem == null) return;
+        if (heldItem == null) {
+            return;
+        }
 
         switch (slotType)
         {
@@ -87,19 +89,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     private void HandleGenericSlot(InventoryItem heldItem)
     {
         InventoryItem hoveredItem = GetItemInSlot();
-
-        if (hoveredItem == null)
-        {
+        if (hoveredItem == null) {
             heldItem.parentAfterDrag = transform;
-        }
-        else
-        {
-            if (heldItem.item != hoveredItem.item)
-            {
+        }else {
+            if (heldItem.item != hoveredItem.item) {
                 SwapItems(heldItem, hoveredItem);
-            }
-            else
-            {
+            }else {
                 MergeStacks(heldItem, hoveredItem);
             }
         }
@@ -108,16 +103,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     // Handles armour item slots
     private void HandleArmorSlot(InventoryItem heldItem, ItemType expectedType)
     {
-        if (heldItem.item.type == expectedType)
-        {
+        if (heldItem.item.type == expectedType) {
             InventoryItem hoveredItem = GetItemInSlot();
-
-            if (hoveredItem == null)
-            {
+            if (hoveredItem == null) {
                 heldItem.parentAfterDrag = transform;
-            }
-            else
-            {
+            }else {
                 SwapItems(heldItem, hoveredItem);
             }
         }
@@ -126,18 +116,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     // Handles offhand item slot
     private void HandleOffHandSlot(InventoryItem heldItem)
     {
-        if (heldItem.item.type == ItemType.Torch || 
-            heldItem.item.type == ItemType.Shield || 
-            heldItem.item.type == ItemType.Food)
-        {
+        if (heldItem.item.type == ItemType.Torch || heldItem.item.type == ItemType.Shield || heldItem.item.type == ItemType.Food) {
             InventoryItem hoveredItem = GetItemInSlot(); 
-
-            if (hoveredItem == null)
-            {
+            if (hoveredItem == null) {
                 heldItem.parentAfterDrag = transform; 
-            }
-            else
-            {
+            }else {
                 SwapItems(heldItem, hoveredItem);
             }
         }
@@ -154,17 +137,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     // Merges the stakcs of items
     private void MergeStacks(InventoryItem heldItem, InventoryItem hoveredItem)
     {
-        if (heldItem.item.stackable && hoveredItem.count < inventoryManager.stackSize)
-        {
+        if (heldItem.item.stackable && hoveredItem.count < inventoryManager.stackSize) {
             int remainingSpace = inventoryManager.stackSize - hoveredItem.count;
-            if (remainingSpace >= heldItem.count)
-            {
+            if (remainingSpace >= heldItem.count) {
                 hoveredItem.count += heldItem.count;
                 hoveredItem.RefreshCount();
                 Destroy(heldItem.gameObject); 
-            }
-            else
-            {
+            }else {
                 heldItem.count -= remainingSpace;
                 hoveredItem.count = inventoryManager.stackSize;
                 hoveredItem.RefreshCount();
@@ -172,14 +151,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
             }
         }
     }
-    public InventoryItem GetItemInSlot()
 
+    // Returns the item that is in this slot
+    public InventoryItem GetItemInSlot()
     {
-        foreach (Transform child in transform)
-        {
+        foreach (Transform child in transform) {
             InventoryItem item = child.GetComponent<InventoryItem>();
-            if (item != null)
-            {
+            if (item != null) {
                 return item;
             }
         }

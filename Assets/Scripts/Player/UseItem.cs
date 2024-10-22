@@ -9,11 +9,11 @@ public class UseItem : MonoBehaviour
 
     void Start()
     {
-        // Assign variables
+        // Assign inventoryManager
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
-    // Uses your item
+    // Attempts to use selected item
     public void TryUseItem()
     {
         // Assign variables
@@ -69,10 +69,12 @@ public class UseItem : MonoBehaviour
                 Player player = GameObject.Find("Player").GetComponent<Player>();
                 player.UpdateDefence();
             } else if(usedItem.actionType == ActionType.Eat) {
+                // Food increases hunger
                 Player player = GameObject.Find("Player").GetComponent<Player>();
                 player.IncreaseHunger(usedItem.hungerRestored);
                 inventoryManager.ConsumeSelectedItem();
             } else {
+                // Anything else (e.g. resources) do nothing
                 Debug.Log("Do Nothing");
             }
         } else {

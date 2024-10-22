@@ -5,11 +5,11 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public List<Item> listOfItems= new List<Item>();
-    private Dictionary<string, Item> itemDictionary; // Dictionary for quick access by item name
+    private Dictionary<string, Item> itemDictionary;
 
     void Awake()
     {
-        // Initialize the dictionary
+        // Initialise the dictionary
         itemDictionary = new Dictionary<string, Item>();
         foreach (var item in listOfItems)
         {

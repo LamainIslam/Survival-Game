@@ -11,6 +11,7 @@ public class Resource : MonoBehaviour
 
     void Start ()
     {
+        // Start health to be maxHealth
         health = maxHealth;
     }
 

@@ -26,8 +26,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void RefreshCount()
     {
         countText.text = count.ToString();
-        bool textActive = count > 1;
-        countText.gameObject.SetActive(textActive);
+        if (count > 1) {
+            countText.gameObject.SetActive(true);
+        }else {
+            countText.gameObject.SetActive(false);
+        }
     }
 
     // Finds item under cursor
@@ -37,7 +40,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
 
-        // Split stack if more than 1 item
+        // Split stack if using right mouse button and more than 1 item
         if (eventData.button == PointerEventData.InputButton.Right && count > 1)
         {
             SplitStack();
@@ -85,7 +88,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         count -= splitCount;
         RefreshCount();
 
-        // Set the parent of the new item to be the original parent
+        // Set the new items parent to the original parent
         newInventoryItem.parentAfterDrag = parentAfterDrag;
         newInventoryItem.transform.SetParent(parentAfterDrag);
 
