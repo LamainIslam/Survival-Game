@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5722,7 +5722,7 @@ RectTransform:
   m_LocalScale: {x: 0.056875, y: 0.01421875, z: 0.56875}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 609213103}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8455,7 +8455,7 @@ RectTransform:
   m_LocalScale: {x: 0.01421875, y: 0.056875, z: 0.56875}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 609213103}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9476,8 +9476,10 @@ MonoBehaviour:
   currentHealth: 0
   maxHunger: 100
   currentHunger: 0
+  defence: 0
   healthBar: {fileID: 1006386410}
   hungerBar: {fileID: 580939849}
+  defenceStat: {fileID: 0}
   respawnDelay: 1
   healInterval: 1
   hungerInterval: 1
@@ -10344,8 +10346,10 @@ MonoBehaviour:
   armourSlots: []
   inventoryItemPrefab: {fileID: 6635565734954345447, guid: 25cd7c2339dd157478104cc40b985f66,
     type: 3}
+  crossHair: {fileID: 0}
   selectedSlot: -1
   empty: {fileID: 11400000, guid: 3cd446078cb71234aa67382384010c06, type: 2}
+  punchDamage: 0
 --- !u!4 &1226497827
 Transform:
   m_ObjectHideFlags: 0
@@ -10888,7 +10892,7 @@ RectTransform:
   m_LocalScale: {x: 0.01421875, y: 0.056875, z: 0.56875}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 609213103}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14362,7 +14366,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 609213103}
   - {fileID: 446255992}
   - {fileID: 251054697}
   - {fileID: 1527320}
@@ -17004,3 +17007,7 @@ SceneRoots:
   - {fileID: 3466864547820208431}
   - {fileID: 2279124132882079927}
   - {fileID: 624940060}
+  - {fileID: 651812520}
+  - {fileID: 972465634}
+  - {fileID: 1474440169}
+  - {fileID: 1863866470}

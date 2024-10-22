@@ -63,7 +63,10 @@ public class Crafting : MonoBehaviour
     void DisplayCurrentRecipe(){
         var recipe = recipes[currentRecipeIndex];
         string requirementText = "";
+        string outputItem = $"{recipe[recipe.Count-1].item}";
 
+        requirementText += $"{outputItem}:\n";
+        
         for (int i = 0; i < recipe.Count - 1; i++) // Exclude the result item
         {
             if (!string.IsNullOrEmpty(recipe[i].item))

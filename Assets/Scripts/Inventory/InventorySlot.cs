@@ -172,5 +172,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
             }
         }
     }
+    public InventoryItem GetItemInSlot()
+
+    {
+        foreach (Transform child in transform)
+        {
+            InventoryItem item = child.GetComponent<InventoryItem>();
+            if (item != null)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
 
 }
