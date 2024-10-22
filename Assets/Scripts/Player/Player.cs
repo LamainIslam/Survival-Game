@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void IncreaseHunger(int amount)
+    public void IncreaseHunger(int amount)
     {
         currentHunger += amount;
         if (currentHunger > maxHunger)
