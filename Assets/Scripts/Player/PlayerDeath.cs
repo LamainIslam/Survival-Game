@@ -5,28 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class PlayerDeath : MonoBehaviour
 {
-    //can be accesed from other scripts to kill thge player
+    // Public variable to allow other scripts to kill player
     static public bool shouldDie;
     Rigidbody rb;
-    // Start is called before the first frame update
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //change should die to true to kill the player
         shouldDie = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Kills player if they should die or if they have fallen off map
         if (shouldDie || rb.position.y < -100) {
             Debug.Log("Died!");
             KillPlayer();
         }
     }
 
+    // Code for killing player (for prototype it just resets scene)
     private void KillPlayer(){
-        //currently just retarts the game
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

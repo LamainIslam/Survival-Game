@@ -18,30 +18,26 @@ public class PlayerInputHandler : MonoBehaviour
 
     void Update()
     {
+        // Constantly calls functions
         HandleInput();
     }
 
     void HandleInput()
     {
         // Check for the F key to pick up items
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (pickupItem != null)
-            {
+        if (Input.GetKeyDown(KeyCode.F)) {
+            if (pickupItem != null) {
                 pickupItem.TryPickupItem();
             }
         }
 
         // Check for the E key to toggle the inventory
-        if (Input.GetKeyDown(KeyCode.E))
-        {
+        if (Input.GetKeyDown(KeyCode.E)) {
             inventoryManager.ToggleInventory();
         }
 
         // Check for left mouse button down to use item
-        if (Input.GetMouseButtonDown(0) && inventoryManager.mainInventoryGroup.activeInHierarchy == false)
-        {
-
+        if (Input.GetMouseButtonDown(0) && inventoryManager.mainInventoryGroup.activeInHierarchy == false) {
             useItem.TryUseItem();
         }
     }
