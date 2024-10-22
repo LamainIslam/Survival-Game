@@ -22,39 +22,26 @@ public class InventoryManager : MonoBehaviour
     private void Update()
     {
         // Use number row to change toobar item selection
-        if (Input.inputString != null)
-        {
+        if (Input.inputString != null) {
             bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number >= 1 && number <= 8)
-            {
+            if (isNumber && number >= 1 && number <= 8) {
                 ChangeSelectedSlot(number - 1);
-            }
-            else if (isNumber && number == 0)
-            {
+            }else if (isNumber && number == 0) {
                 ChangeSelectedSlot(7);
             }
         }
 
         // Use scroll wheel to change toobar item selection
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            if (selectedSlot < 7)
-            {
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+            if (selectedSlot < 7) {
                 ChangeSelectedSlot(selectedSlot + 1);
-            }
-            else
-            {
+            }else {
                 ChangeSelectedSlot(0);
             }
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            if (selectedSlot > 0)
-            {
+        }else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+            if (selectedSlot > 0) {
                 ChangeSelectedSlot(selectedSlot - 1);
-            }
-            else
-            {
+            }else {
                 ChangeSelectedSlot(7);
             }
         }
@@ -63,22 +50,18 @@ public class InventoryManager : MonoBehaviour
     // Changes selected slot
     public void ChangeSelectedSlot(int newValue)
     {
-        if (selectedSlot >= 0)
-        {
+        // Sets slot colours
+        if (selectedSlot >= 0) {
             inventorySlots[selectedSlot].Deselect();
         }
-
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
 
         // Display held item
-        if (inventorySlots[selectedSlot].transform.childCount > 0)
-        {
+        if (inventorySlots[selectedSlot].transform.childCount > 0) {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
-        }
-        else
-        {
+        }else {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
         }
@@ -87,12 +70,10 @@ public class InventoryManager : MonoBehaviour
     public bool AddItem(Item item)
     {
         // Check if possible to add to an existing stack
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
+        for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < stackSize && itemInSlot.item.stackable == true)
-            {
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < stackSize && itemInSlot.item.stackable == true) {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
                 return true;
@@ -100,12 +81,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         // Find the next empty slot
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
+        for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null)
-            {
+            if (itemInSlot == null) {
                 SpawnNewItem(item, slot);
                 return true;
             }
@@ -121,34 +100,29 @@ public class InventoryManager : MonoBehaviour
         inventoryItem.InitialiseItem(item);
     }
 
-    // Returns selected item and decreases count by 1 if use == true. Returns null if empty
+    // Returns selected item
     public Item GetSelectedItem()
     {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-        if (itemInSlot != null)
-        {
+        if (itemInSlot != null) {
             Item item = itemInSlot.item;
             return item;
         }
         return null;
     }
 
-    // Decreases count by 1
+    // Decreases count of selected item by 1
     public void ConsumeSelectedItem()
     {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-        if (itemInSlot != null)
-        {
+        if (itemInSlot != null) {
             Item item = itemInSlot.item;
             itemInSlot.count--;
-            if (itemInSlot.count <= 0)
-            {
+            if (itemInSlot.count <= 0) {
                 Destroy(itemInSlot.gameObject);
-            }
-            else
-            {
+            }else {
                 itemInSlot.RefreshCount();
             }
         }
@@ -159,13 +133,10 @@ public class InventoryManager : MonoBehaviour
     public void UpdateHeldItem()
     {
         // Display the new held item based on the currently selected slot
-        if (inventorySlots[selectedSlot].transform.childCount > 0)
-        {
+        if (inventorySlots[selectedSlot].transform.childCount > 0) {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = inventorySlots[selectedSlot].transform.GetChild(0).GetComponent<InventoryItem>().item;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem);
-        }
-        else
-        {
+        }else {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
         }
@@ -181,16 +152,12 @@ public class InventoryManager : MonoBehaviour
     // Toggles main inventory
     public void ToggleInventory()
     {
-        if (Input.GetKeyDown("e"))
-        {
-            if (mainInventoryGroup.activeInHierarchy == false)
-            {
+        if (Input.GetKeyDown("e")) {
+            if (mainInventoryGroup.activeInHierarchy == false) {
                 mainInventoryGroup.SetActive(true);
                 crossHair.SetActive(false);
                 GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
-            }
-            else
-            {
+            }else {
                 mainInventoryGroup.SetActive(false);
                 crossHair.SetActive(true);
                 GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
