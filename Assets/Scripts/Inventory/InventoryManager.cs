@@ -8,9 +8,8 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] inventorySlots;
     public GameObject[] armourSlots;
     public GameObject inventoryItemPrefab;
-
+    public GameObject crossHair;
     public int selectedSlot = -1;
-
     public Item empty;
     public float punchDamage;
 
@@ -187,11 +186,13 @@ public class InventoryManager : MonoBehaviour
             if (mainInventoryGroup.activeInHierarchy == false)
             {
                 mainInventoryGroup.SetActive(true);
+                crossHair.SetActive(false);
                 GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
             }
             else
             {
                 mainInventoryGroup.SetActive(false);
+                crossHair.SetActive(true);
                 GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
             }
         }

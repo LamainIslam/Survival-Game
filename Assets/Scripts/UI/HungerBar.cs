@@ -7,13 +7,13 @@ public class HungerBar : MonoBehaviour
 {
     public Slider slider;
 
-    public void SetMaxHunger(int hunger)
+    public void SetMaxHunger(float hunger)
     {
         slider.maxValue = hunger;
         slider.value = hunger;
     }
 
-    public void SetHunger(int hunger)
+    public void SetHunger(float hunger)
     {
         slider.value = hunger;
     }

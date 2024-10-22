@@ -66,9 +66,11 @@ public class UseItem : MonoBehaviour
                     toolbar.transform.GetChild(inventoryManager.selectedSlot).transform.GetChild(0).transform.SetParent(inventoryManager.armourSlots[3].transform);
                 }
                 inventoryManager.UpdateHeldItem();
+                Player player = GameObject.Find("Player").GetComponent<Player>();
+                player.UpdateDefence();
             } else if(usedItem.actionType == ActionType.Eat) {
                 Player player = GameObject.Find("Player").GetComponent<Player>();
-                player.IncreaseHunger((int)usedItem.hungerRestored);
+                player.IncreaseHunger(usedItem.hungerRestored);
                 inventoryManager.ConsumeSelectedItem();
             } else {
                 Debug.Log("Do Nothing");
