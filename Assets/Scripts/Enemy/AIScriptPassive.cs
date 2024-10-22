@@ -25,6 +25,7 @@ public class AIScriptPassive : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         spawnLocation = this.gameObject.transform.position;
         player = GameObject.Find("Player").transform;
+        this.gameObject.name = "Passive Enemy";
     }
 
     private void Update()

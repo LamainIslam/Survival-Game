@@ -9,6 +9,7 @@ public class Crafting : MonoBehaviour
     public List<InventorySlot> craftingSlots = new List<InventorySlot>();
     //public List<string[,]> recipe = new List<string[,]>();
     //public List<(string item, int quantity)>[] recipe = new List<(string item, int quantity)>[];
+    //List of List of how much of whats need
     public List<List<(string item, int quantity)>> recipes = new List<List<(string item, int quantity)>>();
     public InventorySlot outputSlot;
     public Button left;

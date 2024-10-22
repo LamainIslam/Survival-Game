@@ -29,6 +29,7 @@ public class AIScriptHostile : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         spawnLocation = this.gameObject.transform.position;
         player = GameObject.Find("Player").transform;
+        this.gameObject.name = "Hostile Enemy";
     }
 
     private void Update()

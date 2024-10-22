@@ -32,6 +32,7 @@ public class AIScriptNeutral : MonoBehaviour
         spawnLocation = this.gameObject.transform.position;
         aggressive = false;
         player = GameObject.Find("Player").transform;
+        this.gameObject.name = "Neutral Enemy";
     }
 
     private void Update()
