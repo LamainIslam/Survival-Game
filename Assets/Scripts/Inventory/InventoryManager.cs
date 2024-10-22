@@ -6,11 +6,12 @@ public class InventoryManager : MonoBehaviour
 {
     public int stackSize = 10;
     public InventorySlot[] inventorySlots;
+    public GameObject[] armourSlots;
     public GameObject inventoryItemPrefab;
-
-    int selectedSlot = -1;
-
+    public GameObject crossHair;
+    public int selectedSlot = -1;
     public Item empty;
+    public float punchDamage;
 
     private void Start()
     {
@@ -120,28 +121,37 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Returns selected item and decreases count by 1 if use == true. Returns null if empty
-    public Item GetSelectedItem(bool use)
+    public Item GetSelectedItem()
     {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null)
         {
             Item item = itemInSlot.item;
-            if (use == true)
-            {
-                itemInSlot.count--;
-                if (itemInSlot.count <= 0)
-                {
-                    Destroy(itemInSlot.gameObject);
-                }
-                else
-                {
-                    itemInSlot.RefreshCount();
-                }
-            }
             return item;
         }
         return null;
+    }
+
+    // Decreases count by 1
+    public void ConsumeSelectedItem()
+    {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null)
+        {
+            Item item = itemInSlot.item;
+            itemInSlot.count--;
+            if (itemInSlot.count <= 0)
+            {
+                Destroy(itemInSlot.gameObject);
+            }
+            else
+            {
+                itemInSlot.RefreshCount();
+            }
+        }
+        StartCoroutine(UpdateHeldItemNextFrame());
     }
 
     // Updates the held item to the current held item
@@ -160,6 +170,13 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // Update held item on the next frame
+    private IEnumerator UpdateHeldItemNextFrame()
+    {
+        yield return null;
+        UpdateHeldItem();
+    }
+
     // Toggles main inventory
     public void ToggleInventory()
     {
@@ -169,11 +186,13 @@ public class InventoryManager : MonoBehaviour
             if (mainInventoryGroup.activeInHierarchy == false)
             {
                 mainInventoryGroup.SetActive(true);
+                crossHair.SetActive(false);
                 GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
             }
             else
             {
                 mainInventoryGroup.SetActive(false);
+                crossHair.SetActive(true);
                 GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
             }
         }

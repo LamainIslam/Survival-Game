@@ -32,6 +32,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
+    // Changes selected slot to the slot clicked if in toolbar
     public void OnPointerClick(PointerEventData eventData)
     {
         if (transform.parent.name == "Toolbar")
@@ -40,16 +41,19 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    // Changes slot to seleted colour
     public void Select()
     {
         image.color = selectedColor;
     }
 
+    // Changes slot to non selected colour
     public void Deselect()
     {
         image.color = notSelectedColor;
     }
 
+    // Lets you drop item in correct slot
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem heldItem = eventData.pointerDrag.GetComponent<InventoryItem>();
@@ -79,9 +83,10 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    // Handles generic item slots
     private void HandleGenericSlot(InventoryItem heldItem)
     {
-        InventoryItem hoveredItem = GetItemInSlot();  // Get the actual InventoryItem in the slot
+        InventoryItem hoveredItem = GetItemInSlot();
 
         if (hoveredItem == null)
         {
@@ -100,11 +105,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    // Handles armour item slots
     private void HandleArmorSlot(InventoryItem heldItem, ItemType expectedType)
     {
         if (heldItem.item.type == expectedType)
         {
-            InventoryItem hoveredItem = GetItemInSlot();  // Get the actual InventoryItem in the slot
+            InventoryItem hoveredItem = GetItemInSlot();
 
             if (hoveredItem == null)
             {
@@ -117,26 +123,27 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    // Handles offhand item slot
     private void HandleOffHandSlot(InventoryItem heldItem)
     {
-        // Check if the item is one of the allowed types for the OffHand slot
         if (heldItem.item.type == ItemType.Torch || 
             heldItem.item.type == ItemType.Shield || 
             heldItem.item.type == ItemType.Food)
         {
-            InventoryItem hoveredItem = GetItemInSlot();  // Get the actual InventoryItem in the slot
+            InventoryItem hoveredItem = GetItemInSlot(); 
 
             if (hoveredItem == null)
             {
-                heldItem.parentAfterDrag = transform;  // Equip off-hand item in empty slot
+                heldItem.parentAfterDrag = transform; 
             }
             else
             {
-                SwapItems(heldItem, hoveredItem);  // Swap off-hand item
+                SwapItems(heldItem, hoveredItem);
             }
         }
     }
 
+    // Swaps any 2 items
     private void SwapItems(InventoryItem heldItem, InventoryItem hoveredItem)
     {
         Transform originalParent = heldItem.parentAfterDrag;
@@ -144,6 +151,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         hoveredItem.transform.SetParent(originalParent);
     }
 
+    // Merges the stakcs of items
     private void MergeStacks(InventoryItem heldItem, InventoryItem hoveredItem)
     {
         if (heldItem.item.stackable && hoveredItem.count < inventoryManager.stackSize)
@@ -153,7 +161,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
             {
                 hoveredItem.count += heldItem.count;
                 hoveredItem.RefreshCount();
-                Destroy(heldItem.gameObject);  // Destroy held item after merging
+                Destroy(heldItem.gameObject); 
             }
             else
             {
@@ -163,20 +171,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
                 heldItem.RefreshCount();
             }
         }
-    }
-
-    public InventoryItem GetItemInSlot()
-    {
-        // Loop through children to find the InventoryItem component
-        foreach (Transform child in transform)
-        {
-            InventoryItem item = child.GetComponent<InventoryItem>();
-            if (item != null)
-            {
-                return item;  // Return the first found InventoryItem
-            }
-        }
-        return null;  // No InventoryItem found
     }
 
 }

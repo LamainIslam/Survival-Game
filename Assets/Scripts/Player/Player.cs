@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float maxHealth = 100;
+    public float currentHealth;
 
-    public int maxHunger = 100;
-    public int currentHunger;
+    public float maxHunger = 100;
+    public float currentHunger;
+
+    public float defence;
 
     public HealthBar healthBar;
     public HungerBar hungerBar;
+    public TMP_Text defenceStat;
     public float respawnDelay = 1f;
     public float healInterval = 1f;
     public float hungerInterval = 1f;
@@ -39,6 +43,10 @@ public class Player : MonoBehaviour
             IncreaseHunger(20);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        TakeDamage(20);
+    }
 
     public void TakeDamage(int damage)
     {
@@ -58,7 +66,7 @@ public class Player : MonoBehaviour
             PlayerDeath.shouldDie = true;
         }
     }
-
+   
     IEnumerator HealOverTime()
     {
         while (true)
@@ -71,7 +79,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         currentHealth += amount;
         if (currentHealth > maxHealth)
@@ -89,22 +97,36 @@ public class Player : MonoBehaviour
             if (currentHunger > 0)
             {
                 currentHunger--;
-                hungerBar.SetHealth(currentHunger);
+                hungerBar.SetHunger(currentHunger);
                 //Debug.Log("Hunger decreased, current hunger: " + currentHunger);
             }
             yield return new WaitForSeconds(hungerInterval);
         }
     }
 
-    void IncreaseHunger(int amount)
+    public void IncreaseHunger(float amount)
     {
         currentHunger += amount;
         if (currentHunger > maxHunger)
         {
             currentHunger = maxHunger;
         }
-        hungerBar.SetHealth(currentHunger);
+        hungerBar.SetHunger(currentHunger);
         //Debug.Log("Hunger increased, current hunger: " + currentHunger);
+    }
+
+    // Updates current defence
+    public void UpdateDefence()
+    {
+        InventoryManager inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        defence = 0;
+        for (int i = 0; i < inventoryManager.armourSlots.Length; i++) {
+            InventoryItem itemInSlot = inventoryManager.armourSlots[i].GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null) {
+                defence += itemInSlot.item.defencePoints;
+            }
+        }
+        defenceStat.SetText($"Defence: {defence}");
     }
 
     void Die()
