@@ -122,28 +122,37 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Returns selected item and decreases count by 1 if use == true. Returns null if empty
-    public Item GetSelectedItem(bool use)
+    public Item GetSelectedItem()
     {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null)
         {
             Item item = itemInSlot.item;
-            if (use == true)
-            {
-                itemInSlot.count--;
-                if (itemInSlot.count <= 0)
-                {
-                    Destroy(itemInSlot.gameObject);
-                }
-                else
-                {
-                    itemInSlot.RefreshCount();
-                }
-            }
             return item;
         }
         return null;
+    }
+
+    // Decreases count by 1
+    public void ConsumeSelectedItem()
+    {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null)
+        {
+            Item item = itemInSlot.item;
+            itemInSlot.count--;
+            if (itemInSlot.count <= 0)
+            {
+                Destroy(itemInSlot.gameObject);
+            }
+            else
+            {
+                itemInSlot.RefreshCount();
+            }
+        }
+        StartCoroutine(UpdateHeldItemNextFrame());
     }
 
     // Updates the held item to the current held item
@@ -159,8 +168,14 @@ public class InventoryManager : MonoBehaviour
         {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
-            Debug.Log("Empty");
         }
+    }
+
+    // Update held item on the next frame
+    private IEnumerator UpdateHeldItemNextFrame()
+    {
+        yield return null;
+        UpdateHeldItem();
     }
 
     // Toggles main inventory

@@ -27,7 +27,7 @@ public class PickupItem : MonoBehaviour
             // Add item to inventory and update held item
             var itemHolder = hit.collider.gameObject.GetComponent<ItemHolder>();
             inventoryManager.AddItem(itemHolder.item);
-            heldItemComponent.heldItem = inventoryManager.GetSelectedItem(false);
+            heldItemComponent.heldItem = inventoryManager.GetSelectedItem();
             heldItemComponent.HoldItem(heldItemComponent.heldItem);
 
             // Destroy item

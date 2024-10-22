@@ -17,7 +17,7 @@ public class UseItem : MonoBehaviour
     public void TryUseItem()
     {
         // Assign variables
-        Item usedItem = inventoryManager.GetSelectedItem(false);
+        Item usedItem = inventoryManager.GetSelectedItem();
         RaycastHit hit = GetComponent<DisplayObjectInfo>().hit;
         float enemyMaxDistance = GetComponent<DisplayObjectInfo>().enemyMaxDistance;
         float resourceMaxDistance = GetComponent<DisplayObjectInfo>().resourceMaxDistance;
@@ -39,22 +39,17 @@ public class UseItem : MonoBehaviour
                 if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance) {
                     // Weapons damage enemies
                     var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
-                    if (hostileScript != null)
-                    {
+                    if (hostileScript != null) {
                         hostileScript.TakeDamage(usedItem.damagePoints);
                         return;
                     }
-
                     var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
-                    if (neutralScript != null)
-                    {
+                    if (neutralScript != null) {
                         neutralScript.TakeDamage(usedItem.damagePoints);
                         return;
                     }
-
                     var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
-                    if (passiveScript != null)
-                    {
+                    if (passiveScript != null) {
                         passiveScript.TakeDamage(usedItem.damagePoints);
                     }
                 }
@@ -72,42 +67,27 @@ public class UseItem : MonoBehaviour
                 }
                 inventoryManager.UpdateHeldItem();
             } else if(usedItem.actionType == ActionType.Eat) {
-                // Food increases hunger
-                GameObject hungerBar = GameObject.Find("HungerBar");
-                int newHunger = (int)hungerBar.GetComponent<Slider>().value + (int)usedItem.hungerRestored;
                 Player player = GameObject.Find("Player").GetComponent<Player>();
-                if (newHunger > player.maxHunger)
-                {
-                    newHunger = player.maxHunger;
-                }
-                hungerBar.GetComponent<HungerBar>().SetHunger(newHunger);
-                player.currentHunger = newHunger;
-                inventoryManager.GetSelectedItem(true);
-                inventoryManager.UpdateHeldItem();
+                player.IncreaseHunger((int)usedItem.hungerRestored);
+                inventoryManager.ConsumeSelectedItem();
             } else {
                 Debug.Log("Do Nothing");
             }
         } else {
-            // Damage enemy
+            // Damage enemy when unarmed
             if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance) {
-                // Weapons damage enemies
                 var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
-                if (hostileScript != null)
-                {
+                if (hostileScript != null) {
                     hostileScript.TakeDamage(inventoryManager.punchDamage);
                     return;
                 }
-
                 var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
-                if (neutralScript != null)
-                {
+                if (neutralScript != null) {
                     neutralScript.TakeDamage(inventoryManager.punchDamage);
                     return;
                 }
-
                 var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
-                if (passiveScript != null)
-                {
+                if (passiveScript != null) {
                     passiveScript.TakeDamage(inventoryManager.punchDamage);
                 }
             }
