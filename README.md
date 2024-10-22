@@ -17,9 +17,9 @@ Welcome to our survival game prototype. This project demonstrates the core mecha
 ### Picking Up Items
 - **Pick up Items**: When in range and looking at an item, press `F` to pick it up.
   - Items include wood, stone, torches, and armor.
-- **Toolbar**: Use the scroll wheel to switch between items in your toolbar.
 
 ### Inventory Management
+- **Toolbar**: Use the scroll wheel to switch between items in your toolbar.
 - **Open Inventory**: Press `E` to open the inventory.
 - **Item Movement**: Drag and drop items into different slots using the left mouse button.
   - To split a stack of items, use the right mouse button while dragging.
@@ -38,16 +38,15 @@ Welcome to our survival game prototype. This project demonstrates the core mecha
 ### Enemies
 - **Green Capsules**: Passive enemies that flee when they see you. Can be killed to drop resources.
 - **Yellow Capsules**: Neutral enemies that won't attack unless provoked. Once attacked, they become aggressive and chase you.
-- **Red Capsules**: Hostile enemies that will attack on sight. Their attacks decrease your health, which regenerates slowly over time.
+- **Red Capsules**: Hostile enemies that will attack on sight. Their attacks decrease your health.
 
 ### Health and Hunger
 - **Health**: Your health is displayed in the top left. It regenerates over time unless you’re attacked.
 - **Hunger**: Eat steak to increase your hunger, displayed in the yellow bar on the top left.
 
 ### Death
-- **Player Death**: Your character dies when health reaches zero or less.
+- **Player Death**: Your character dies when health reaches zero or less, or falls off the map
   - In this prototype, death resets the scene.
-  - Falling off the map also results in death.
 
 ### Biomes and Environment
 - **Plains Biome**: Green surface with many trees and few rocks. Passive and neutral enemies spawn here.
