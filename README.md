@@ -2,7 +2,7 @@
  Product of Washed Studio
 
 ## Introduction
-Welcome to our survival game prototype. This project demonstrates the core mechanics of player movement, resource collection, crafting, combat, and interaction with a dynamic environment.
+Welcome to our survival game prototype. This project demonstrates the core mechanics of player movement, resource collection, crafting, combat, and interaction with the environment.
 
 ## How to Play
 
