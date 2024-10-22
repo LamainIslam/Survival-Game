@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(20);
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             IncreaseHunger(20);
-        }
+        }*/
     }
     private void OnTriggerEnter(Collider other)
     {

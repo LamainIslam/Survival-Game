@@ -38,9 +38,10 @@ public class PlayerInputHandler : MonoBehaviour
             inventoryManager.ToggleInventory();
         }
 
-        // Check for the E key to toggle the inventory
-        if (Input.GetMouseButtonDown(0))
+        // Check for left mouse button down to use item
+        if (Input.GetMouseButtonDown(0) && inventoryManager.mainInventoryGroup.activeInHierarchy == false)
         {
+
             useItem.TryUseItem();
         }
     }

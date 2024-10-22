@@ -33578,6 +33578,7 @@ MonoBehaviour:
   inventoryItemPrefab: {fileID: 6635565734954345447, guid: 25cd7c2339dd157478104cc40b985f66,
     type: 3}
   crossHair: {fileID: 163939875}
+  mainInventoryGroup: {fileID: 446255991}
   selectedSlot: -1
   empty: {fileID: 11400000, guid: 3cd446078cb71234aa67382384010c06, type: 2}
   punchDamage: 1
@@ -36989,7 +36990,7 @@ PrefabInstance:
     - target: {fileID: 95442651879843062, guid: b72c38f457b4c6f49af81768776bafda,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 59.041718
+      value: 60.01
       objectReference: {fileID: 0}
     - target: {fileID: 95442651879843062, guid: b72c38f457b4c6f49af81768776bafda,
         type: 3}

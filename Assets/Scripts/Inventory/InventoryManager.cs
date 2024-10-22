@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject[] armourSlots;
     public GameObject inventoryItemPrefab;
     public GameObject crossHair;
+    public GameObject mainInventoryGroup;
     public int selectedSlot = -1;
     public Item empty;
     public float punchDamage;
@@ -180,7 +181,6 @@ public class InventoryManager : MonoBehaviour
     // Toggles main inventory
     public void ToggleInventory()
     {
-        GameObject mainInventoryGroup = GameObject.Find("Canvas").transform.GetChild(0).gameObject;
         if (Input.GetKeyDown("e"))
         {
             if (mainInventoryGroup.activeInHierarchy == false)
