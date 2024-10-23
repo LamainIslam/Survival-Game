@@ -7,8 +7,6 @@ using TMPro;
 public class Crafting : MonoBehaviour
 {
     public List<InventorySlot> craftingSlots = new List<InventorySlot>();
-    //public List<string[,]> recipe = new List<string[,]>();
-    //public List<(string item, int quantity)>[] recipe = new List<(string item, int quantity)>[];
     //List of List of how much of whats need
     public List<List<(string item, int quantity)>> recipes = new List<List<(string item, int quantity)>>();
     public InventorySlot outputSlot;
@@ -23,6 +21,7 @@ public class Crafting : MonoBehaviour
 
     void Start()
     {
+        //new recipe can added like below, the last item is the result item
         AddRecipe("Stone", 1, "Wood", 2, "", 0, "Axe", 1);
         AddRecipe("Stone", 2, "Wood", 1, "", 0, "Pickaxe", 1);
 
@@ -64,8 +63,8 @@ public class Crafting : MonoBehaviour
     void DisplayCurrentRecipe(){
         var recipe = recipes[currentRecipeIndex];
         string requirementText = "";
+        //the result item
         string outputItem = $"{recipe[recipe.Count-1].item}";
-
         requirementText += $"{outputItem}:\n";
         
         for (int i = 0; i < recipe.Count - 1; i++) // Exclude the result item

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    //holdes all the existing in game item
     public List<Item> listOfItems= new List<Item>();
     private Dictionary<string, Item> itemDictionary;
 
