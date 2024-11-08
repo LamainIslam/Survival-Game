@@ -92,6 +92,80 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+
+
+
+
+
+
+
+
+
+
+    // Drops held item
+    public void DropItem()
+    {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+        // Check if there is an item in the selected slot to drop
+        if (itemInSlot != null)
+        {
+            // Get the item details
+            Item item = itemInSlot.item;
+
+            // Remove the item from the inventory
+            Destroy(itemInSlot.gameObject);
+
+            // Spawn the item in the world
+            SpawnDroppedItem(item);
+            
+            // Update the held item in the inventory UI
+            StartCoroutine(UpdateHeldItemNextFrame());
+        }
+    }
+
+    // Spawns the dropped item in front of the player
+    void SpawnDroppedItem(Item item)
+    {
+        // Find the held item GameObject
+        GameObject hand = GameObject.Find("HeldItem");
+        GameObject heldItemTransform = hand.transform.GetChild(0).gameObject;
+
+        if (heldItemTransform != null)
+        {
+            // Destroy the held item in hand
+            Destroy(heldItemTransform);
+
+            // Instantiate the item prefab at a position in front of the player
+            GameObject droppedItem = Instantiate(item.prefab, hand.transform.position, Quaternion.identity);
+
+            // Add Rigidbody and BoxCollider components
+            Rigidbody rb = droppedItem.GetComponent<Rigidbody>();
+            if (rb == null) rb = droppedItem.AddComponent<Rigidbody>();
+            if (droppedItem.GetComponent<BoxCollider>() == null) droppedItem.AddComponent<BoxCollider>();
+
+            // Calculate force based on player's velocity
+            Vector3 playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().velocity;
+            Vector3 initialForce = hand.transform.forward * 5f + playerVelocity;
+
+            // Apply force to throw the item forward, adjusted by player speed
+            rb.AddForce(initialForce, ForceMode.Impulse);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Spawns item into inventory
     void SpawnNewItem(Item item, InventorySlot slot)
     {

@@ -36,6 +36,10 @@ public class PlayerInputHandler : MonoBehaviour
             inventoryManager.ToggleInventory();
         }
 
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            inventoryManager.DropItem();
+        }
+
         // Check for left mouse button down to use item
         if (Input.GetMouseButtonDown(0) && inventoryManager.mainInventoryGroup.activeInHierarchy == false) {
             useItem.TryUseItem();

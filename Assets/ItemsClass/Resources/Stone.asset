@@ -17,4 +17,8 @@ MonoBehaviour:
   actionType: 3
   stackable: 1
   image: {fileID: 21300000, guid: f1d328ece422dcc45900bd9b950eec66, type: 3}
-  prefab: {fileID: 919132149155446097, guid: 8dbeacb9c2373864883fed24117126c7, type: 3}
+  prefab: {fileID: 4988735600382051603, guid: 7a4d28ebe505ded41bef49339dbce6fd, type: 3}
+  damagePoints: 0
+  defencePoints: 0
+  healthRestored: 0
+  hungerRestored: 0
