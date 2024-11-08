@@ -34,16 +34,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            TakeDamage(20);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            IncreaseHunger(20);
-        }*/
+    
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         TakeDamage(20);
@@ -51,19 +44,15 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        currentHealth -= damage * damage / (damage + int.Parse(defenceStat.text));
         if (currentHealth < 0)
         {
             currentHealth = 0;
         }
         healthBar.SetHealth(currentHealth);
-        //Debug.Log("Player took damage, current health: " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            //Die();
-            //StopHealing();
-
             PlayerDeath.shouldDie = true;
         }
     }
@@ -88,7 +77,6 @@ public class Player : MonoBehaviour
             currentHealth = maxHealth;
         }
         healthBar.SetHealth(currentHealth);
-        //Debug.Log("Player healed, current health: " + currentHealth);
     }
 
     IEnumerator DecreaseHungerOverTime()
@@ -99,7 +87,6 @@ public class Player : MonoBehaviour
             {
                 currentHunger--;
                 hungerBar.SetHunger(currentHunger);
-                //Debug.Log("Hunger decreased, current hunger: " + currentHunger);
             }
             yield return new WaitForSeconds(hungerInterval);
         }
@@ -113,7 +100,6 @@ public class Player : MonoBehaviour
             currentHunger = maxHunger;
         }
         hungerBar.SetHunger(currentHunger);
-        //Debug.Log("Hunger increased, current hunger: " + currentHunger);
     }
 
     // Updates current defence

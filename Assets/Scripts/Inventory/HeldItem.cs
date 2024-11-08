@@ -15,7 +15,19 @@ public class HeldItem : MonoBehaviour
         }
         heldItem = newItem;
         if (heldItem != null) {
-            heldItemInstance = Instantiate(heldItem.prefab, transform); 
+            heldItemInstance = Instantiate(heldItem.prefab, transform);
+
+            Rigidbody rb = heldItemInstance.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Destroy(rb);
+            }
+            BoxCollider collider = heldItemInstance.GetComponent<BoxCollider>();
+            if (collider != null)
+            {
+                Destroy(collider);
+            }
+
             heldItemInstance.transform.SetParent(gameObject.transform);
         }
     }
