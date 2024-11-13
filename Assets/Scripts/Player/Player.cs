@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public HealthBar healthBar;
     public HungerBar hungerBar;
-    public TMP_Text defenceStat;
+    public DefenceUI defenceUI;
     public float respawnDelay = 1f;
     public float healInterval = 1f;
     public float hungerInterval = 1f;
@@ -44,7 +44,8 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage * damage / (damage + int.Parse(defenceStat.text));
+        Debug.Log("Damaged");
+        currentHealth -= damage * damage / (damage + defenceUI.defence);
         if (currentHealth < 0)
         {
             currentHealth = 0;
@@ -113,7 +114,7 @@ public class Player : MonoBehaviour
                 defence += itemInSlot.item.defencePoints;
             }
         }
-        defenceStat.SetText($"Defence: {defence}");
+        defenceUI.UpdateDefence(defence);
     }
 
     void Die()

@@ -9,6 +9,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     public Image image;
     public Color selectedColor, notSelectedColor;
     public SlotType slotType;
+    public InventoryManager inventoryManager;
 
     public enum SlotType
     {
@@ -19,8 +20,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         Boots,
         OffHand
     }
-
-    [HideInInspector] public InventoryManager inventoryManager;
 
     private void Awake()
     {
@@ -34,13 +33,141 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
-    // Changes selected slot to the slot clicked if in toolbar
+    // Changes selected slot on click or moves item on shift-click
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (transform.parent.name == "Toolbar") {
-            inventoryManager.ChangeSelectedSlot(transform.GetSiblingIndex());
+        bool isShiftClick = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        // Run either shift-click code or change the selected item
+        if (isShiftClick) {
+            InventoryItem clickedItem = GetItemInSlot();
+            if (clickedItem != null) {
+                HandleShiftClick(clickedItem);
+            }
+        }else {
+            if (transform.parent.name == "Toolbar") {
+                inventoryManager.ChangeSelectedSlot(transform.GetSiblingIndex());
+            }
         }
     }
+
+    // Handles shift-clicking
+    private void HandleShiftClick(InventoryItem clickedItem)
+    {
+        if (slotType == SlotType.OffHand) {
+            // If in the offhand slot, move it to the main inventory
+            TryMoveItemToMainInventory(clickedItem);
+        }else if (clickedItem.item.type == ItemType.Helmet || clickedItem.item.type == ItemType.Chestplate || clickedItem.item.type == ItemType.Leggings || clickedItem.item.type == ItemType.Boots) {
+            // If the item is armor, try moving it to the appropriate slot
+            if (!TryMoveArmorToSlot(clickedItem)) {
+                // If armor slot is full, switch between main and toolbar inventory
+                SwitchBetweenMainAndToolbar(clickedItem);
+            }
+        }else {
+            // For all other items, switch between main and toolbar
+            SwitchBetweenMainAndToolbar(clickedItem);
+        }
+    }
+
+
+
+
+
+
+
+    // Fix quick equipping armour not working
+    private bool TryMoveArmorToSlot(InventoryItem item)
+    {
+        SlotType armorSlotType = GetArmorSlotType(item.item.type);
+
+        foreach (GameObject slot in inventoryManager.armourSlots)
+        {
+            if (slot.GetComponent<InventorySlot>().slotType == armorSlotType && slot.GetComponent<InventorySlot>().GetItemInSlot() == null)
+            {
+                // Move item to the specific empty armour slot
+                item.transform.SetParent(slot.transform);
+                item.parentAfterDrag = slot.transform;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    private SlotType GetArmorSlotType(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Helmet: return SlotType.Helmet;
+            case ItemType.Chestplate: return SlotType.Chestplate;
+            case ItemType.Leggings: return SlotType.Leggings;
+            case ItemType.Boots: return SlotType.Boots;
+            default: return SlotType.None;
+        }
+    }
+
+    private void TryMoveItemToMainInventory(InventoryItem item)
+    {
+        foreach (InventorySlot slot in inventoryManager.inventorySlots)
+        {
+            if (slot.slotType == SlotType.None && slot.GetItemInSlot() == null)
+            {
+                // Move the item to an empty main inventory slot
+                item.transform.SetParent(slot.transform);
+                item.parentAfterDrag = slot.transform;
+                return;
+            }
+        }
+    }
+
+    private void SwitchBetweenMainAndToolbar(InventoryItem item)
+    {
+        bool isMainInventory = transform.parent.name == "MainInventory";
+
+        foreach (InventorySlot slot in inventoryManager.inventorySlots)
+        {
+            bool isToolbarSlot = slot.transform.parent.name == "Toolbar";
+            bool isEmptySlot = slot.GetItemInSlot() == null;
+
+            // Move item to an empty slot in the other inventory section
+            if (isMainInventory && isToolbarSlot && isEmptySlot)
+            {
+                item.transform.SetParent(slot.transform);
+                item.parentAfterDrag = slot.transform;
+                return;
+            }
+            else if (!isMainInventory && !isToolbarSlot && isEmptySlot)
+            {
+                item.transform.SetParent(slot.transform);
+                item.parentAfterDrag = slot.transform;
+                return;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Changes slot to selected colour
     public void Select()
