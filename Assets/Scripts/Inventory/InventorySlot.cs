@@ -69,13 +69,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
-
-
-
-
-
-
-    // Fix quick equipping armour not working
+    // Quick equips armour
     private bool TryMoveArmorToSlot(InventoryItem item)
     {
         SlotType armorSlotType = GetArmorSlotType(item.item.type);
@@ -93,17 +87,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-
+    // Helper function for HandleShiftClick() - returns the armour slot type
     private SlotType GetArmorSlotType(ItemType itemType)
     {
         switch (itemType)
@@ -116,6 +100,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    // Attempts to swap item to main inventory
     private void TryMoveItemToMainInventory(InventoryItem item)
     {
         foreach (InventorySlot slot in inventoryManager.inventorySlots)
@@ -130,6 +115,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
+    // Attempts to switch the item between the main inventory and toolbar
     private void SwitchBetweenMainAndToolbar(InventoryItem item)
     {
         bool isMainInventory = transform.parent.name == "MainInventory";
@@ -154,20 +140,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Changes slot to selected colour
     public void Select()
