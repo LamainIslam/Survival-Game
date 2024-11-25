@@ -6,11 +6,36 @@ using UnityEngine.UI;
 public class UseItem : MonoBehaviour
 {
     private InventoryManager inventoryManager;
+    public Player player;
+    public float baseDefence;
+    public float shieldDefence;
+    public bool startBlock;
+    
+    public DefenceUI defenceUI;
 
     void Start()
     {
         // Assign inventoryManager
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+
+        player = GameObject.Find("Player").GetComponent<Player>();
+        startBlock = false;
+
+        defenceUI = player.defenceUI;
+    }
+
+    void Update()
+    {
+        if(startBlock == true) {
+            player.defence = baseDefence + shieldDefence;
+            defenceUI.UpdateDefence(player.defence);
+            if(Input.GetMouseButtonUp(1)) {
+                player.defence = baseDefence;
+                startBlock = false;
+                player.UpdateDefence();
+                defenceUI.UpdateDefence(player.defence);
+            }
+        }
     }
 
     // Attempts to use selected item
@@ -66,11 +91,9 @@ public class UseItem : MonoBehaviour
                     toolbar.transform.GetChild(inventoryManager.selectedSlot).transform.GetChild(0).transform.SetParent(inventoryManager.armourSlots[3].transform);
                 }
                 inventoryManager.UpdateHeldItem();
-                Player player = GameObject.Find("Player").GetComponent<Player>();
                 player.UpdateDefence();
             } else if(usedItem.actionType == ActionType.Eat) {
                 // Food increases hunger
-                Player player = GameObject.Find("Player").GetComponent<Player>();
                 player.IncreaseHunger(usedItem.hungerRestored);
                 inventoryManager.ConsumeSelectedItem();
             } else {
@@ -94,6 +117,29 @@ public class UseItem : MonoBehaviour
                 if (passiveScript != null) {
                     passiveScript.TakeDamage(inventoryManager.punchDamage);
                 }
+            }
+        }
+    }
+
+    // Attempts to use offhand item
+    public void TryUseOffHandItem()
+    {
+        // Assign variables
+        Item usedItem = inventoryManager.GetOffHandItem();
+
+        if (usedItem != null) {
+            if(usedItem.actionType == ActionType.Eat) {
+                // Food increases hunger
+                player.IncreaseHunger(usedItem.hungerRestored);
+                inventoryManager.ConsumeOffHandItem();
+            }else if(usedItem.actionType == ActionType.Block) {
+                // Shields increase defence
+                baseDefence = player.defence;
+                shieldDefence = usedItem.defencePoints;
+                startBlock = true;
+            } else {
+                // Anything else (e.g. resources) do nothing
+                Debug.Log("Do Nothing");
             }
         }
     }

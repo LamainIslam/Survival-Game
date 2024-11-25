@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour
     public int stackSize = 10;
     public InventorySlot[] inventorySlots;
     public GameObject[] armourSlots;
+    public InventorySlot offHandSlot;
     public GameObject inventoryItemPrefab;
     public GameObject crossHair;
     public GameObject mainInventoryGroup;
@@ -92,16 +93,6 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
     // Drops held item
     public void DropItem()
     {
@@ -147,24 +138,12 @@ public class InventoryManager : MonoBehaviour
 
             // Calculate force based on player's velocity
             Vector3 playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().velocity;
-            Vector3 initialForce = hand.transform.forward * 5f + playerVelocity;
+            Vector3 initialForce = hand.transform.forward * 10f + playerVelocity;
 
             // Apply force to throw the item forward, adjusted by player speed
             rb.AddForce(initialForce, ForceMode.Impulse);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Spawns item into inventory
     void SpawnNewItem(Item item, InventorySlot slot)
@@ -203,6 +182,36 @@ public class InventoryManager : MonoBehaviour
         StartCoroutine(UpdateHeldItemNextFrame());
     }
 
+    // Returns selected item
+    public Item GetOffHandItem()
+    {
+        InventorySlot slot = offHandSlot;
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null) {
+            Item item = itemInSlot.item;
+            Debug.Log(itemInSlot.item);
+            return item;
+        }
+        return null;
+    }
+
+    // Decreases count of selected item by 1
+    public void ConsumeOffHandItem()
+    {
+        InventorySlot slot = offHandSlot;
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null) {
+            Item item = itemInSlot.item;
+            itemInSlot.count--;
+            if (itemInSlot.count <= 0) {
+                Destroy(itemInSlot.gameObject);
+            }else {
+                itemInSlot.RefreshCount();
+            }
+        }
+        StartCoroutine(UpdateHeldItemNextFrame());
+    }
+
     // Updates the held item to the current held item
     public void UpdateHeldItem()
     {
@@ -213,6 +222,14 @@ public class InventoryManager : MonoBehaviour
         }else {
             GameObject.Find("HeldItem").GetComponent<HeldItem>().heldItem = empty;
             GameObject.Find("HeldItem").GetComponent<HeldItem>().HoldItem(null);
+        }
+        // Repeat same thing for offhand item
+        if (offHandSlot.transform.childCount > 0) {
+            GameObject.Find("OffHandHeldItem").GetComponent<HeldItem>().heldItem = offHandSlot.transform.GetChild(0).GetComponent<InventoryItem>().item;
+            GameObject.Find("OffHandHeldItem").GetComponent<HeldItem>().HoldItem(GameObject.Find("OffHandHeldItem").GetComponent<HeldItem>().heldItem);
+        }else {
+            GameObject.Find("OffHandHeldItem").GetComponent<HeldItem>().heldItem = empty;
+            GameObject.Find("OffHandHeldItem").GetComponent<HeldItem>().HoldItem(null);
         }
     }
 

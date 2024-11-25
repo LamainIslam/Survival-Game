@@ -44,5 +44,10 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && inventoryManager.mainInventoryGroup.activeInHierarchy == false) {
             useItem.TryUseItem();
         }
+
+        // Check for right mouse button down to use offhand item
+        if (Input.GetMouseButtonDown(1) && inventoryManager.mainInventoryGroup.activeInHierarchy == false) {
+            useItem.TryUseOffHandItem();
+        }
     }
 }

@@ -10,6 +10,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     public Color selectedColor, notSelectedColor;
     public SlotType slotType;
     public InventoryManager inventoryManager;
+    public Player player;
 
     public enum SlotType
     {
@@ -31,6 +32,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
     {
         // Assign inventoryManager
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Changes selected slot on click or moves item on shift-click
@@ -63,10 +66,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
                 // If armor slot is full, switch between main and toolbar inventory
                 SwitchBetweenMainAndToolbar(clickedItem);
             }
+            player.UpdateDefence();
         }else {
             // For all other items, switch between main and toolbar
             SwitchBetweenMainAndToolbar(clickedItem);
         }
+        inventoryManager.UpdateHeldItem();
     }
 
     // Quick equips armour
@@ -231,6 +236,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         Transform originalParent = heldItem.parentAfterDrag;
         heldItem.parentAfterDrag = hoveredItem.transform.parent;
         hoveredItem.transform.SetParent(originalParent);
+        
     }
 
     // Merges the stakcs of items

@@ -40,5 +40,6 @@ public enum ActionType
     Attack,
     Equip,
     Eat,
+    Block,
     Nothing
 }
