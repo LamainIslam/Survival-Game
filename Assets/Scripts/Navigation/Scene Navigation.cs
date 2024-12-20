@@ -9,6 +9,8 @@ public class SceneNavigation : MonoBehaviour
 {
     public TMPro.TMP_Dropdown dropdown;
     private string selectedScene;
+    private static string lastSelectedScene;
+
 
     private void Start()
     {
@@ -17,8 +19,16 @@ public class SceneNavigation : MonoBehaviour
 
     public void Play()
     {
-        string selectedScene = dropdown.options[dropdown.value].text;
+        selectedScene = dropdown.options[dropdown.value].text;
+        lastSelectedScene = selectedScene;
         SceneManager.LoadScene(selectedScene);
+    }
+
+    public void replay() {
+        if (lastSelectedScene == null) { 
+            lastSelectedScene = dropdown.options[dropdown.value].text;
+        }
+        SceneManager.LoadScene(lastSelectedScene);
     }
 
     public void sceneSelector() {

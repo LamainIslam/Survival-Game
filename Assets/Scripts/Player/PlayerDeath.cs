@@ -26,6 +26,12 @@ public class PlayerDeath : MonoBehaviour
 
     // Code for killing player (for prototype it just resets scene)
     private void KillPlayer(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //resets anything thats need to reset
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        //loads into where needed
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("EndMenu");
     }
 }

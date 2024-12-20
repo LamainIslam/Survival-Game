@@ -29,5 +29,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/sg04.unity
     guid: 4fc85fb97355cac449ca07a333c7d609
+  - enabled: 1
+    path: Assets/Scenes/EndMenu.unity
+    guid: 7b3e988189661424f863262d41b94aab
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
