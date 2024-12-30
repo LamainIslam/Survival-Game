@@ -29,6 +29,9 @@ public class HeldItem : MonoBehaviour
             }
 
             heldItemInstance.transform.SetParent(gameObject.transform);
+
+            // Set held item to correct layer so it can be rendered by the camera
+            heldItemInstance.layer = LayerMask.NameToLayer("CharacterPreviewObjects");
         }
     }
 }
