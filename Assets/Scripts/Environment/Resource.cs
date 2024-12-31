@@ -7,7 +7,8 @@ public class Resource : MonoBehaviour
 {
     public float maxHealth;
     public float health;
-    public GameObject resource;
+    public GameObject[] resources;
+    public int tier;
 
     void Start ()
     {
@@ -19,7 +20,9 @@ public class Resource : MonoBehaviour
     {
         // Destroy gameobject and create resource when no health 
         if (health <= 0) {
-            Instantiate(resource, transform.position, transform.rotation);
+            for (int i = 0; i < resources.Length; i++) {
+                Instantiate(resources[i], transform.position, transform.rotation);
+            }
             Destroy(this.gameObject);
         }
 
