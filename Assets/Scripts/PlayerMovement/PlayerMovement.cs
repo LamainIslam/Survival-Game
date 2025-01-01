@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float runSpeed;
     public float drag;
-    private float moveSpeed;
+    public float moveSpeed;
     private float desiredSpeed;
     private float lastDesiredSpeed;
     
