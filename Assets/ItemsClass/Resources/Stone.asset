@@ -22,3 +22,4 @@ MonoBehaviour:
   defencePoints: 0
   healthRestored: 0
   hungerRestored: 0
+  tier: 0
