@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,128 +6,84 @@ public class YetiScript : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public Transform playerTarget; // Reference to the empty GameObject attached to the player
     public LayerMask whatIsGround, whatIsPlayer;
-    public float health;
-    public float maxHealth;
-    public Vector3 spawnLocation;
 
-    // Patrolling
-    public Vector3 walkPoint;
-    private bool walkPointSet;
-    public float walkPointRange;
+    // Health
+    public float maxHealth = 150f;
+    public float currentHealth;
 
-    // Jump Attack
-    public float timeBetweenAttacks; // Delay between jumps
-    private bool alreadyAttacked;
-    public float damage = 10f; // Damage dealt to the player on collision
-
-    // States
-    public float sightRange, attackRange;
+    // Detection and Attack
+    public float sightRange = 15f;
+    public float attackRange = 3f;
+    public float attackDamage = 45f;
+    public float attackCooldown = 2f;
     private bool playerInSightRange, playerInAttackRange;
+    private bool alreadyAttacked;
 
-    private Animator animator; // Reference to the Animator for jumping animation
+    // Player Interaction
+    private Vector3 lastKnownPlayerPosition;
+    private bool isChasingPlayer;
 
-    private void Awake()
+    private void Start()
     {
-        // Assign components and initialise variables
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        spawnLocation = transform.position;
-
-        // Find player and target references
-        GameObject playerObject = GameObject.Find("Player");
-        GameObject playerTargetObject = GameObject.Find("PlayerTarget");
-
-        if (playerObject != null) player = playerObject.transform;
-        if (playerTargetObject != null) playerTarget = playerTargetObject.transform;
-
-        gameObject.name = "Hostile Jumping Enemy";
-
-        if (player == null || playerTarget == null)
-        {
-            Debug.LogError("Player or PlayerTarget not found! Ensure both exist in the scene.");
-        }
+        currentHealth = maxHealth;
+        player = GameObject.Find("Player").transform;
     }
 
     private void Update()
     {
-        if (player == null) return; // Ensure player exists
-
-        // Update state checks
+        // Check for player in sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (!playerInSightRange && !playerInAttackRange) Patrol();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange) AttackPlayer();
     }
 
-    private void Patroling()
+    private void Patrol()
     {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet)
-        {
-            agent.SetDestination(walkPoint);
-
-            Vector3 distanceToWalkPoint = transform.position - walkPoint;
-            if (distanceToWalkPoint.magnitude < 1f)
-                walkPointSet = false; // Walk point reached
-        }
-    }
-
-    private void SearchWalkPoint()
-    {
-        // Generate random walk point within range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(spawnLocation.x + randomX, spawnLocation.y, spawnLocation.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-        {
-            walkPointSet = true;
-        }
+        // Yeti patrol behaviour can be implemented here if needed (e.g., wandering in a specific area)
+        agent.SetDestination(agent.transform.position); // Yeti stays idle when not chasing or attacking
     }
 
     private void ChasePlayer()
     {
-        if (player != null)
+        if (!isChasingPlayer)
         {
-            agent.SetDestination(player.position);
+            lastKnownPlayerPosition = player.position;
+            isChasingPlayer = true;
+        }
+
+        agent.SetDestination(lastKnownPlayerPosition);
+
+        // Stop chasing if reached last known player position
+        if (Vector3.Distance(transform.position, lastKnownPlayerPosition) < 1f)
+        {
+            isChasingPlayer = false;
         }
     }
 
     private void AttackPlayer()
     {
-        // Stop moving
+        // Stop moving when attacking
         agent.SetDestination(transform.position);
+
+        transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            JumpTowardPlayerTarget();
+            // Melee attack logic
+            Player playerScript = player.GetComponent<Player>();
+            if (playerScript != null)
+            {
+                playerScript.TakeDamage((int)attackDamage);
+            }
 
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Invoke(nameof(ResetAttack), attackCooldown);
         }
-    }
-
-    private void JumpTowardPlayerTarget()
-    {
-        if (playerTarget == null) return; // Ensure target exists
-
-        // Look at the player target
-        transform.LookAt(new Vector3(playerTarget.position.x, transform.position.y, playerTarget.position.z));
-
-        // Trigger jump animation
-        if (animator != null)
-        {
-            animator.SetTrigger("Jump");
-        }
-
-        // Move towards the player's position
-        agent.SetDestination(player.position);
     }
 
     private void ResetAttack()
@@ -138,24 +93,17 @@ public class YetiScript : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-
-        if (health <= 0)
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
-            Destroy(gameObject); // Destroy enemy when health is zero
+            Die();
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Die()
     {
-        if (collision.collider.CompareTag("Player"))
-        {
-            Player playerScript = collision.collider.GetComponent<Player>();
-            if (playerScript != null)
-            {
-                playerScript.TakeDamage((int)damage);
-            }
-        }
+        // Logic for enemy death
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()

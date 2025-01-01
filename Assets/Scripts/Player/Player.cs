@@ -37,11 +37,6 @@ public class Player : MonoBehaviour
     
     }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        TakeDamage(20);
-    }
-
     public void TakeDamage(int damage)
     {
         Debug.Log("Damaged");
