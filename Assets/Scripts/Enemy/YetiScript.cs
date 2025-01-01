@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +6,11 @@ public class YetiScript : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
+
+    // Patrol
+    public Vector3 walkPoint;
+    private bool walkPointSet;
+    public float walkPointRange = 10f;
 
     // Health
     public float maxHealth = 150f;
@@ -20,9 +24,9 @@ public class YetiScript : MonoBehaviour
     private bool playerInSightRange, playerInAttackRange;
     private bool alreadyAttacked;
 
-    // Player Interaction
-    private Vector3 lastKnownPlayerPosition;
-    private bool isChasingPlayer;
+    // Movement
+    public float patrolSpeed = 3f;
+    public float chaseSpeed = 5f;
 
     private void Start()
     {
@@ -44,30 +48,40 @@ public class YetiScript : MonoBehaviour
 
     private void Patrol()
     {
-        // Yeti patrol behaviour can be implemented here if needed (e.g., wandering in a specific area)
-        agent.SetDestination(agent.transform.position); // Yeti stays idle when not chasing or attacking
+        agent.speed = patrolSpeed;
+
+        if (!walkPointSet) SearchWalkPoint();
+
+        if (walkPointSet)
+            agent.SetDestination(walkPoint);
+
+        // Check if the walk point is reached
+        if (Vector3.Distance(transform.position, walkPoint) < 1f)
+            walkPointSet = false;
+    }
+
+    private void SearchWalkPoint()
+    {
+        // Generate a random point within the walk range
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        // Check if the point is valid
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            walkPointSet = true;
     }
 
     private void ChasePlayer()
     {
-        if (!isChasingPlayer)
-        {
-            lastKnownPlayerPosition = player.position;
-            isChasingPlayer = true;
-        }
-
-        agent.SetDestination(lastKnownPlayerPosition);
-
-        // Stop chasing if reached last known player position
-        if (Vector3.Distance(transform.position, lastKnownPlayerPosition) < 1f)
-        {
-            isChasingPlayer = false;
-        }
+        agent.speed = chaseSpeed;
+        agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
-        // Stop moving when attacking
+        // Stop moving to attack
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
@@ -83,6 +97,13 @@ public class YetiScript : MonoBehaviour
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), attackCooldown);
+        }
+
+        // After attacking, chase the player again if they are still in sight range
+        if (Vector3.Distance(transform.position, player.position) > attackRange)
+        {
+            alreadyAttacked = false;
+            ChasePlayer();
         }
     }
 
