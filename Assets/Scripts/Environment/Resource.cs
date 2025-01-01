@@ -7,7 +7,8 @@ public class Resource : MonoBehaviour
 {
     public float maxHealth;
     public float health;
-    public GameObject resource;
+    public List<ResourceData> resources;
+    public int tier;
 
     void Start ()
     {
@@ -19,7 +20,13 @@ public class Resource : MonoBehaviour
     {
         // Destroy gameobject and create resource when no health 
         if (health <= 0) {
-            Instantiate(resource, transform.position, transform.rotation);
+            // Create correct amount of items for each item type
+            for (int i = 0; i < resources.Count; i++) {
+                int amount = Random.Range(resources[i].min, resources[i].max - 1);
+                for (int j = 0; j < amount; j++) {
+                    Instantiate(resources[i].resource, transform.position, transform.rotation);
+                }
+            }
             Destroy(this.gameObject);
         }
 
@@ -30,4 +37,13 @@ public class Resource : MonoBehaviour
             slider.value = health;
         }
     }
+}
+
+
+[System.Serializable]
+public class ResourceData
+{
+    public GameObject resource;
+    public int min;
+    public int max;
 }

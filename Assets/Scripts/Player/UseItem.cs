@@ -51,14 +51,22 @@ public class UseItem : MonoBehaviour
         if (usedItem != null) {
             if (usedItem.actionType == ActionType.Attack) {
                 if (usedItem.type == ItemType.Pickaxe) {
-                    if (hit.collider.CompareTag("Rock")&& hit.distance <= resourceMaxDistance) {
+                    if (hit.collider.CompareTag("Rock") && hit.distance <= resourceMaxDistance) {
                         // Pickaxe does 2x damage to rocks
-                        hit.collider.GetComponent<Resource>().health -= usedItem.damagePoints * 2;
+                        if (hit.collider.GetComponent<Resource>().tier <= usedItem.tier) {
+                            hit.collider.GetComponent<Resource>().health -= usedItem.damagePoints * 2;
+                        }else {
+                            Debug.Log("Need Higher Tier Tool");
+                        }
                     }
                 } else if (usedItem.type == ItemType.Axe) {
                     if (hit.collider.CompareTag("Tree") && hit.distance <= resourceMaxDistance) {
                         // Axe does 2x damage to trees
-                        hit.collider.GetComponent<Resource>().health -= usedItem.damagePoints * 2;
+                        if (hit.collider.GetComponent<Resource>().tier <= usedItem.tier) {
+                            hit.collider.GetComponent<Resource>().health -= usedItem.damagePoints * 2;
+                        }else {
+                            Debug.Log("Need Higher Tier Tool");
+                        }
                     }
                 }
                 if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance) {

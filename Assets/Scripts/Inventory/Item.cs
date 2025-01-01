@@ -17,6 +17,7 @@ public class Item : ScriptableObject
     public float defencePoints;
     public float healthRestored;
     public float hungerRestored;
+    public int tier;
 }
 
 public enum ItemType
