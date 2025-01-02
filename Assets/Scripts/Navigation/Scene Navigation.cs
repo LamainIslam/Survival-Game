@@ -14,6 +14,16 @@ public class SceneNavigation : MonoBehaviour
 
     private void Start()
     {
+        if(SceneManager.GetActiveScene().buildIndex == 9)
+        {
+            if(lastSelectedScene != null) {
+                SceneManager.LoadScene(lastSelectedScene);
+            }
+            else {
+                SceneManager.LoadScene(0);
+            }
+            
+        }
         sceneSelector();
     }
 
@@ -21,7 +31,7 @@ public class SceneNavigation : MonoBehaviour
     {
         selectedScene = dropdown.options[dropdown.value].text;
         lastSelectedScene = selectedScene;
-        SceneManager.LoadScene(selectedScene);
+        SceneManager.LoadScene(9);
     }
 
     public void replay() {
