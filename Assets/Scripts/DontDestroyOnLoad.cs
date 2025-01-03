@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class DontDestroyOnLoad : MonoBehaviour
 {
-    public GameObject[] objects;
+    DDOLManager Manager;
+    GameObject[] objects;
     void Awake()
     {
-        for(int i = 0; i < objects.Length; i++)
+        Manager = GameObject.Find("DontDestroyOnLoadObjectManager").GetComponent<DDOLManager>();
+        objects = Manager.objects;
+        for (int i = 0; i < objects.Length; i++)
         {
             DontDestroyOnLoad(objects[i]);
         }

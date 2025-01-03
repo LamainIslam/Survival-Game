@@ -10,6 +10,7 @@ public class STPSceneTeleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        SceneNavigation.lastSelectedScene = 0.ToString();
         SceneManager.LoadScene(0);
         Debug.Log("blahblahblah");
     }
