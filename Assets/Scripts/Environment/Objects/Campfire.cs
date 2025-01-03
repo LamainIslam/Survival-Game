@@ -10,7 +10,6 @@ public class Campfire : MonoBehaviour
     public float fuelAmount;
     public GameObject campfireInternalUI;
 
-
     // Start is called before the first frame update
     void Start()
     {
