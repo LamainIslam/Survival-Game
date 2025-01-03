@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private PickupItem pickupItem;
+    private InteractWithItem interactWithItem;
     private UseItem useItem;
     private InventoryManager inventoryManager;
 
     void Start()
     {
         // Assign variables
-        pickupItem = GetComponent<PickupItem>();
+        interactWithItem = GetComponent<InteractWithItem>();
         useItem = GetComponent<UseItem>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
@@ -26,8 +26,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         // Check for the F key to pick up items
         if (Input.GetKeyDown(KeyCode.F)) {
-            if (pickupItem != null) {
-                pickupItem.TryPickupItem();
+            if (interactWithItem != null) {
+                interactWithItem.TryInteractWithItem();
             }
         }
 
