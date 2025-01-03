@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private PickupItem pickupItem;
+    private InteractWithItem interactWithItem;
     private UseItem useItem;
     private InventoryManager inventoryManager;
 
@@ -15,7 +15,7 @@ public class PlayerInputHandler : MonoBehaviour
     void Start()
     {
         // Assign variables
-        pickupItem = GetComponent<PickupItem>();
+        interactWithItem = GetComponent<InteractWithItem>();
         useItem = GetComponent<UseItem>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
@@ -27,10 +27,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     void HandleInput()
     {
-        // Pick up items
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            pickupItem?.TryPickupItem();
+        // Check for the F key to pick up items
+        if (Input.GetKeyDown(KeyCode.F)) {
+            if (interactWithItem != null) {
+                interactWithItem.TryInteractWithItem();
+            }
         }
 
         // Toggle inventory
