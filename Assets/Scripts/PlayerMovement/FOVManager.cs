@@ -15,7 +15,7 @@ public class FOVChanger : MonoBehaviour
     }
     void Update()
     {
-        float normalizedSpeed = Mathf.Clamp01(playerMovement.moveSpeed / playerMovement.runSpeed); // Normalize speed between 0 and 1
+        float normalizedSpeed = Mathf.Clamp01(playerMovement.playerSpeed / playerMovement.runSpeed); // Normalize speed between 0 and 1
         float targetFOV = Mathf.Lerp(defaultFOV, maxFOV, normalizedSpeed); // Linearly interpolate between default and max FOV
 
         // Smoothly interpolate the FOV to the target value

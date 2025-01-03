@@ -10,11 +10,15 @@ public class HeadBob : MonoBehaviour
     public float bobAmount = 0.05f; // Amplitude of the bobbing motion.
 
     private float timer = Mathf.PI / 2; // Start at the crest of the sine wave.
-
+    private bool dontHeadBob = false;
     void Update()
     {
+        if (PlayerMovement.movementState == PlayerMovement.MovementState.Crouching || 
+            PlayerMovement.movementState == PlayerMovement.MovementState.Sliding) {
+            dontHeadBob = true;
+        }
         // Check for movement input.
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !dontHeadBob)
         {
             // Increment the timer based on the bobSpeed.
             timer += bobSpeed * Time.deltaTime;
