@@ -89,7 +89,7 @@ public class Campfire : MonoBehaviour
                 fuel.count--;
                 fuel.RefreshCount();
             }else {
-                Destroy(input.gameObject);
+                Destroy(fuel.gameObject);
                 isBurning = true; // Start burning
             }
             UpdateFuelUI();
