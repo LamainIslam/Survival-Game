@@ -60,7 +60,7 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && isPrimaryHeld)
         {
             float damageMultiplier = Mathf.Min(1f + primaryHoldTime*4, maxMultiplier);
-            useItem.TryUsePrimaryWithMultiplier(damageMultiplier);
+            useItem.TryUseItem(damageMultiplier);
             isPrimaryHeld = false; // Reset state
         }
 
