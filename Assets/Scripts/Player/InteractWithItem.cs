@@ -40,15 +40,13 @@ public class InteractWithItem : MonoBehaviour
             // Open campfire internal UI if it doesn't already exist
             GameObject CampfireInternalUI = GameObject.Find("CampfireInternalCanvas");  
             if(CampfireInternalUI == null){
-                GameObject internalUI = Instantiate(hit.collider.GetComponent<Campfire>().campfireInternalUI);
-                internalUI.name = "CampfireInternalCanvas";
-                internalUI.transform.SetParent(GameObject.Find("Canvas").transform);
+                hit.collider.GetComponent<Campfire>().OpenUI();
+                
                 inventoryManager.ToggleInventory();
                 for (int i = 0; i < mainInventoryTop.Length; i++) {
                     mainInventoryTop[i].SetActive(false);
                 }
             }
-            
         }
     }
 }
