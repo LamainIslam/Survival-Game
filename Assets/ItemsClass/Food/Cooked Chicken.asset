@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6af4ed921f6de4d897be69322e5558, type: 3}
-  m_Name: RawSteak
+  m_Name: Cooked Chicken
   m_EditorClassIdentifier: 
-  itemName: Raw Steak
+  itemName: Cooked Chicken
   type: 9
   actionType: 2
   stackable: 1
-  image: {fileID: 21300000, guid: e94f33e53b6ac67429f6d769319aa1ff, type: 3}
-  prefab: {fileID: 2519055677932176361, guid: 2644610473e8fdb4d83410a6077dc546, type: 3}
+  image: {fileID: 21300000, guid: c9dd737f349bcde498932ef2a73eb2bb, type: 3}
+  prefab: {fileID: 4129943441022645947, guid: ea0751b0e86056e4289dc06bb50fbfcc, type: 3}
   damagePoints: 0
   defencePoints: 0
-  healthRestored: -5
-  hungerRestored: 5
+  healthRestored: 5
+  hungerRestored: 10
   tier: 0
   fuelValue: 0
