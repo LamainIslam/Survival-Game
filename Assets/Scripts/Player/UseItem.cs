@@ -40,64 +40,8 @@ public class UseItem : MonoBehaviour
         }
     }
 
-    // Use primary item with a multiplier
-    public void TryUsePrimaryWithMultiplier(float multiplier)
-    {
-        Item usedItem = inventoryManager.GetSelectedItem();
-        RaycastHit hit = GetComponent<DisplayObjectInfo>().hit;
-        float enemyMaxDistance = GetComponent<DisplayObjectInfo>().enemyMaxDistance;
-
-        if (usedItem != null && usedItem.actionType == ActionType.Attack)
-        {
-            if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance)
-            {
-                var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
-                if (hostileScript != null)
-                {
-                    hostileScript.TakeDamage(usedItem.damagePoints * multiplier);
-                    return;
-                }
-                var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
-                if (neutralScript != null)
-                {
-                    neutralScript.TakeDamage(usedItem.damagePoints * multiplier);
-                    return;
-                }
-                var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
-                if (passiveScript != null)
-                {
-                    passiveScript.TakeDamage(usedItem.damagePoints * multiplier);
-                }
-            }
-        }
-        else if (usedItem == null)
-        {
-            if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance)
-            {
-                var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
-                if (hostileScript != null)
-                {
-                    hostileScript.TakeDamage(inventoryManager.punchDamage * multiplier);
-                    return;
-                }
-                var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
-                if (neutralScript != null)
-                {
-                    neutralScript.TakeDamage(inventoryManager.punchDamage * multiplier);
-                    return;
-                }
-                var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
-                if (passiveScript != null)
-                {
-                    passiveScript.TakeDamage(inventoryManager.punchDamage * multiplier);
-                }
-            }
-        }
-    }
-
-
     // Attempts to use selected item
-    public void TryUseItem()
+    public void TryUseItem(float multiplier)
     {
         // Assign variables
         Item usedItem = inventoryManager.GetSelectedItem();
@@ -106,7 +50,7 @@ public class UseItem : MonoBehaviour
         float resourceMaxDistance = GetComponent<DisplayObjectInfo>().resourceMaxDistance;
 
         // Find what type of item is being used and do correct action
-        if (usedItem != null)
+        if (usedItem != null && hit.collider != null )
         {
             if (usedItem.actionType == ActionType.Attack)
             {
@@ -128,23 +72,22 @@ public class UseItem : MonoBehaviour
                 }
                 if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance)
                 {
-                    // Weapons damage enemies
                     var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
                     if (hostileScript != null)
                     {
-                        hostileScript.TakeDamage(usedItem.damagePoints);
+                        hostileScript.TakeDamage(usedItem.damagePoints * multiplier);
                         return;
                     }
                     var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
                     if (neutralScript != null)
                     {
-                        neutralScript.TakeDamage(usedItem.damagePoints);
+                        neutralScript.TakeDamage(usedItem.damagePoints * multiplier);
                         return;
                     }
                     var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
                     if (passiveScript != null)
                     {
-                        passiveScript.TakeDamage(usedItem.damagePoints);
+                        passiveScript.TakeDamage(usedItem.damagePoints * multiplier);
                     }
                 }
             }
@@ -186,24 +129,24 @@ public class UseItem : MonoBehaviour
         else
         {
             // Damage enemy when unarmed
-            if (hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance)
+            if (hit.collider != null && hit.collider.CompareTag("Enemy") && hit.distance <= enemyMaxDistance)
             {
                 var hostileScript = hit.collider.GetComponent<AIScriptHostile>();
                 if (hostileScript != null)
                 {
-                    hostileScript.TakeDamage(inventoryManager.punchDamage);
+                    hostileScript.TakeDamage(inventoryManager.punchDamage * multiplier);
                     return;
                 }
                 var neutralScript = hit.collider.GetComponent<AIScriptNeutral>();
                 if (neutralScript != null)
                 {
-                    neutralScript.TakeDamage(inventoryManager.punchDamage);
+                    neutralScript.TakeDamage(inventoryManager.punchDamage * multiplier);
                     return;
                 }
                 var passiveScript = hit.collider.GetComponent<AIScriptPassive>();
                 if (passiveScript != null)
                 {
-                    passiveScript.TakeDamage(inventoryManager.punchDamage);
+                    passiveScript.TakeDamage(inventoryManager.punchDamage * multiplier);
                 }
             }
         }
