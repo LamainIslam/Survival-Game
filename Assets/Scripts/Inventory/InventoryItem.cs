@@ -13,6 +13,19 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public int count = 1;
     public Transform parentAfterDrag;
 
+    public InventoryItem Clone()
+    {
+        GameObject cloneObject = Instantiate(this.gameObject);
+        InventoryItem clone = cloneObject.GetComponent<InventoryItem>();
+
+        // Copy data
+        clone.item = this.item;
+        clone.count = this.count;
+        clone.name = this.name;
+
+        return clone;
+    }
+
     // Initialises item
     public void InitialiseItem(Item newItem)
     {

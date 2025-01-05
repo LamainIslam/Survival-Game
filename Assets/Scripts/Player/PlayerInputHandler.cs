@@ -27,47 +27,49 @@ public class PlayerInputHandler : MonoBehaviour
 
     void HandleInput()
     {
-        // Check for the F key to pick up items
-        if (Input.GetKeyDown(KeyCode.F)) {
-            if (interactWithItem != null) {
-                interactWithItem.TryInteractWithItem();
-            }
-        }
-
         // Toggle inventory
         if (Input.GetKeyDown(KeyCode.E))
         {
             inventoryManager.ToggleInventory();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            inventoryManager.DropItem();
-        }
+        if (inventoryManager.inventoryOn == false) {
+            // Check for the F key to pick up items
+            if (Input.GetKeyDown(KeyCode.F)) {
+                if (interactWithItem != null) {
+                    interactWithItem.TryInteractWithItem();
+                }
+            }
 
-        // Handle primary attack
-        if (Input.GetMouseButtonDown(0) && !inventoryManager.mainInventoryGroup.activeInHierarchy)
-        {
-            isPrimaryHeld = true;
-            primaryHoldTime = 0f; // Reset hold time
-        }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                inventoryManager.DropItem();
+            }
 
-        if (Input.GetMouseButton(0) && isPrimaryHeld)
-        {
-            primaryHoldTime += Time.deltaTime;
-        }
+            // Handle primary attack
+            if (Input.GetMouseButtonDown(0) && !inventoryManager.mainInventoryGroup.activeInHierarchy)
+            {
+                isPrimaryHeld = true;
+                primaryHoldTime = 0f; // Reset hold time
+            }
 
-        if (Input.GetMouseButtonUp(0) && isPrimaryHeld)
-        {
-            float damageMultiplier = Mathf.Min(1f + primaryHoldTime*4, maxMultiplier);
-            useItem.TryUseItem(damageMultiplier);
-            isPrimaryHeld = false; // Reset state
-        }
+            if (Input.GetMouseButton(0) && isPrimaryHeld)
+            {
+                primaryHoldTime += Time.deltaTime;
+            }
 
-        // Handle offhand item
-        if (Input.GetMouseButtonDown(1) && !inventoryManager.mainInventoryGroup.activeInHierarchy)
-        {
-            useItem.TryUseOffHandItem();
+            if (Input.GetMouseButtonUp(0) && isPrimaryHeld)
+            {
+                float damageMultiplier = Mathf.Min(1f + primaryHoldTime*4, maxMultiplier);
+                useItem.TryUseItem(damageMultiplier);
+                isPrimaryHeld = false; // Reset state
+            }
+
+            // Handle offhand item
+            if (Input.GetMouseButtonDown(1) && !inventoryManager.mainInventoryGroup.activeInHierarchy)
+            {
+                useItem.TryUseOffHandItem();
+            }
         }
     }
 }
