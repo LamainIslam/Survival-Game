@@ -56,7 +56,7 @@ public class UseItem : MonoBehaviour
             {
                 if (usedItem.type == ItemType.Pickaxe)
                 {
-                    if (hit.collider.CompareTag("Rock") && hit.distance <= resourceMaxDistance)
+                    if (hit.collider.CompareTag("Rock") && hit.distance <= resourceMaxDistance && hit.collider.GetComponent<Resource>().tier <= usedItem.tier)
                     {
                         // Pickaxe does 2x damage to rocks
                         hit.collider.GetComponent<Resource>().health -= usedItem.damagePoints * 2;
@@ -64,7 +64,7 @@ public class UseItem : MonoBehaviour
                 }
                 else if (usedItem.type == ItemType.Axe)
                 {
-                    if (hit.collider.CompareTag("Tree") && hit.distance <= resourceMaxDistance)
+                    if (hit.collider.CompareTag("Tree") && hit.distance <= resourceMaxDistance && hit.collider.GetComponent<Resource>().tier <= usedItem.tier)
                     {
                         // Axe does 2x damage to trees
                         hit.collider.GetComponent<Resource>().health -= usedItem.damagePoints * 2;
@@ -125,6 +125,7 @@ public class UseItem : MonoBehaviour
             {
                 // Anything else (e.g. resources) do nothing
                 Debug.Log("Do Nothing");
+                
             }
         }
         else
@@ -149,6 +150,10 @@ public class UseItem : MonoBehaviour
                 {
                     passiveScript.TakeDamage(inventoryManager.punchDamage * multiplier);
                 }
+            }else if (hit.collider.CompareTag("Tree") && hit.distance <= resourceMaxDistance && hit.collider.GetComponent<Resource>().tier <= 1)
+            {
+                // Can break tier 1 trees with hands
+                hit.collider.GetComponent<Resource>().health -= 1;
             }
         }
     }

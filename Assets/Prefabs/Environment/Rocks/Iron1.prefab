@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: 526074890713440515, guid: 1f065f4b7de763943925171672243be5,
         type: 3}
       propertyPath: m_Name
-      value: Iron1 Variant
+      value: Iron1
       objectReference: {fileID: 0}
     - target: {fileID: 866713130079255481, guid: 1f065f4b7de763943925171672243be5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.939491
+      value: 14.525397
       objectReference: {fileID: 0}
     - target: {fileID: 866713130079255481, guid: 1f065f4b7de763943925171672243be5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3798809
+      value: 0.1281805
       objectReference: {fileID: 0}
     - target: {fileID: 866713130079255481, guid: 1f065f4b7de763943925171672243be5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.777323
+      value: -1.6943665
       objectReference: {fileID: 0}
     - target: {fileID: 866713130079255481, guid: 1f065f4b7de763943925171672243be5,
         type: 3}
@@ -72,7 +72,7 @@ PrefabInstance:
     - target: {fileID: 2286816519874090260, guid: 1f065f4b7de763943925171672243be5,
         type: 3}
       propertyPath: tier
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2286816519874090260, guid: 1f065f4b7de763943925171672243be5,
         type: 3}

@@ -42,17 +42,17 @@ PrefabInstance:
     - target: {fileID: 1184572166525179265, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.619709
+      value: 8.726658
       objectReference: {fileID: 0}
     - target: {fileID: 1184572166525179265, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000002861023
+      value: 0.12818241
       objectReference: {fileID: 0}
     - target: {fileID: 1184572166525179265, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.7372708
+      value: 5.8580055
       objectReference: {fileID: 0}
     - target: {fileID: 1184572166525179265, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
@@ -92,7 +92,7 @@ PrefabInstance:
     - target: {fileID: 1962340971227909947, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
       propertyPath: m_Name
-      value: Iron2 Variant
+      value: Iron2
       objectReference: {fileID: 0}
     - target: {fileID: 2873201517765286436, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
@@ -103,7 +103,7 @@ PrefabInstance:
     - target: {fileID: 7333751111061341638, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
       propertyPath: tier
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7333751111061341638, guid: 9d8f9ae3a554fbf46a9ce1fd8e392fa1,
         type: 3}
