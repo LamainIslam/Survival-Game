@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class SceneNavigation : MonoBehaviour
 {
     public TMPro.TMP_Dropdown dropdown;
@@ -12,15 +13,18 @@ public class SceneNavigation : MonoBehaviour
     public static string lastSelectedScene;
     public DDOLManager Whatever;
     public static bool isInitialized = false;
- 
+    public static bool isFirstLoad = true;
+
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         if (SceneManager.GetActiveScene().buildIndex == 9)
         {
             Debug.Log("in scene 9");
             Whatever = GameObject.Find("DontDestroyOnLoadObjectManager").GetComponent<DDOLManager>();
-            //GameObject[] SceneObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+
             if (Whatever != null)
             {
                 if (!isInitialized)
@@ -28,29 +32,21 @@ public class SceneNavigation : MonoBehaviour
                     Whatever.enable();
                     isInitialized = true;
                 }
-                else
-                {
-                  //  Whatever.destroyer(); // Destroy duplicate object
-                }
             }
-            if (lastSelectedScene != null) {
+
+            if (lastSelectedScene != null)
+            {
                 SceneManager.LoadScene(lastSelectedScene);
             }
-            else {
+            else
+            {
                 SceneManager.LoadScene(0);
             }
-            
         }
-        /*if (SceneManager.GetActiveScene().buildIndex == 7)
-        {
-            Whatever = GameObject.Find("DontDestroyOnLoadObjectManager").GetComponent<DDOLManager>(); ;
-            if (Whatever != null) {
-                Whatever.enable();
-            }
-        }*/
+
         sceneSelector();
     }
- 
+
     public void Play()
     {
         Debug.Log(isInitialized);
@@ -59,6 +55,7 @@ public class SceneNavigation : MonoBehaviour
         if (!isInitialized) { SceneManager.LoadScene(9); }
         else { SceneManager.LoadScene(lastSelectedScene); }
     }
+
     public void PlayOther()
     {
         selectedScene = dropdown.options[dropdown.value].text;
@@ -66,15 +63,19 @@ public class SceneNavigation : MonoBehaviour
         if (!isInitialized) { SceneManager.LoadScene(9); }
         else { SceneManager.LoadScene(lastSelectedScene); }
     }
-    public void replay() {
-        if (lastSelectedScene == null) { 
+
+    public void replay()
+    {
+        if (lastSelectedScene == null)
+        {
             lastSelectedScene = dropdown.options[dropdown.value].text;
         }
         if (!isInitialized) { SceneManager.LoadScene(9); }
         else { SceneManager.LoadScene(lastSelectedScene); }
     }
 
-    public void sceneSelector() {
+    public void sceneSelector()
+    {
         List<string> sceneNames = new List<string>();
         int sceneCount = EditorBuildSettings.scenes.Length;
 
@@ -94,9 +95,42 @@ public class SceneNavigation : MonoBehaviour
         }
     }
 
-    public void Quit() 
+    public void Quit()
     {
         Application.Quit();
         Debug.Log("Quit!");
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex != 9) // Skip handling for the loader scene
+        {
+            if (SceneNavigation.isFirstLoad && scene.buildIndex == 0) // Plains scene index
+            {
+                SceneNavigation.isFirstLoad = false; // Reset flag after first load
+                return; // Skip teleportation
+            }
+
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                Player playerScript = player.GetComponent<Player>();
+
+                GameObject teleportTarget = GameObject.Find("TeleportTarget");
+                if (teleportTarget != null)
+                {
+                    //playerScript.Teleport(teleportTarget);
+                }
+                else
+                {
+                    Debug.LogWarning("TeleportTarget GameObject not found in the scene.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Player GameObject not found in the scene.");
+            }
+        }
+    }
+
 }

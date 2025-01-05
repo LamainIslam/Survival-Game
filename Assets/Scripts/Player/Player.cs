@@ -36,11 +36,12 @@ public class Player : MonoBehaviour
     {
     
     }
-    
-    public void TakeDamage(int damage)
+
+    public void TakeDamage(int damage) 
     {
         Debug.Log("Damaged");
-        currentHealth -= damage * damage / (damage + defenceUI.defence);
+        float effectiveDefence = defenceUI.defence > 0 ? defenceUI.defence : 1; // Prevent division by 0
+        currentHealth -= damage * damage / (damage + effectiveDefence);
         if (currentHealth < 0)
         {
             currentHealth = 0;
@@ -52,7 +53,8 @@ public class Player : MonoBehaviour
             PlayerDeath.shouldDie = true;
         }
     }
-   
+
+
     IEnumerator HealOverTime()
     {
         while (true)
@@ -139,4 +141,19 @@ public class Player : MonoBehaviour
             hungerCoroutine = null;
         }
     }
+
+    /*public void Teleport(GameObject teleportTo)
+    {
+        if (teleportTo != null)
+        {
+            transform.position = teleportTo.transform.position;
+            Debug.Log($"Teleported to: {teleportTo.name}");
+        }
+        else
+        {
+            Debug.LogWarning("Teleport failed: Target GameObject is null.");
+        }
+    }*/
+
+
 }
