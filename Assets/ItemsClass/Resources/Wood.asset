@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Wood
   type: 10
-  actionType: 3
+  actionType: 4
   stackable: 1
   image: {fileID: 21300000, guid: 81fa0a16a0acbab49a65e0a934c0cd46, type: 3}
   prefab: {fileID: 8333028582084459102, guid: 554ec7aa4d83be64ea937cbfabc09566, type: 3}

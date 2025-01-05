@@ -73,6 +73,7 @@ public class DisplayObjectInfo : MonoBehaviour
             // Instantiate the canvas at the object's position
             activeCanvas = Instantiate(canvasPrefab, hit.transform.position + Vector3.up * 0.5f, Quaternion.identity);
             activeCanvas.transform.SetParent(hit.transform);
+            activeCanvas.transform.SetSiblingIndex(0);
 
             // Change canvas first text to object name
             activeCanvas.transform.GetChild(0).GetComponent<TMP_Text>().text = lastHitObject.name;
