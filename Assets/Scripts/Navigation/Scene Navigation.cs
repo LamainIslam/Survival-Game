@@ -18,7 +18,7 @@ public class SceneNavigation : MonoBehaviour
 
     private void Start()
     {
-        OnSceneLoaded(SceneManager.GetActiveScene());
+        //OnSceneLoaded(SceneManager.GetActiveScene());
 
         if (SceneManager.GetActiveScene().buildIndex == 9)
         {

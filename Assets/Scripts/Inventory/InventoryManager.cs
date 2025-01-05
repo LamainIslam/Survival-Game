@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public int selectedSlot = -1;
     public Item empty;
     public float punchDamage;
+    public bool inventoryOn;
 
     private void Start()
     {
@@ -244,16 +245,18 @@ public class InventoryManager : MonoBehaviour
     public void ToggleInventory()
     {
         if (mainInventoryGroup.activeInHierarchy == false) {
+            inventoryOn = true;
             mainInventoryGroup.SetActive(true);
             crossHair.SetActive(false);
-            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
+            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
         }else {
+            inventoryOn = false;
             for (int i = 0; i < mainInventoryGroup.transform.childCount; i++) {
                 mainInventoryGroup.transform.GetChild(i).gameObject.SetActive(true);
             }
             mainInventoryGroup.SetActive(false);
             crossHair.SetActive(true);
-            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
+            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
             // Delete campfire UI if it exists
             GameObject CampfireInternalUI = GameObject.Find("CampfireInternalCanvas");  
             if(CampfireInternalUI != null){
