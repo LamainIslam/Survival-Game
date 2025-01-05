@@ -24,6 +24,8 @@ public class AIScriptHostile : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    GameObject damagePrefab;
+
     private void Awake()
     {
 
@@ -31,6 +33,10 @@ public class AIScriptHostile : MonoBehaviour
         spawnLocation = this.gameObject.transform.position;
         player = GameObject.Find("Player").transform;
         this.gameObject.name = "Hostile Enemy"; //asigns enemy name
+
+        //finding damage prefab using Resources.Load
+        damagePrefab = (GameObject)Resources.Load("DamageTaken", typeof(GameObject)) as GameObject;
+        if (damagePrefab != null) { Debug.Log("found damagePrefab"); }
     }
 
     private void Update()
@@ -101,6 +107,10 @@ public class AIScriptHostile : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+
+        //display damage taken
+        GameObject damageTaken = Instantiate(damagePrefab, transform.position + Vector3.up * 0, Quaternion.identity);
+        damageTaken.GetComponent<FloatingDamageText>().Intialize(damage, Color.red);
     }
 
     private void OnDrawGizmosSelected()    

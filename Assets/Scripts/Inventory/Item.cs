@@ -18,6 +18,7 @@ public class Item : ScriptableObject
     public float healthRestored;
     public float hungerRestored;
     public int tier;
+    public float fuelValue;
 }
 
 public enum ItemType
