@@ -28,11 +28,9 @@ public class DDOLManager : MonoBehaviour
         for (int i = 0; i < objects.Length; i++)
         {
             objects[i].SetActive(true);
-            objects[i].transform.position = Vector3.zero; // Position at (0, 0, 0)
-            objects[i].transform.rotation = Quaternion.identity; // No rotation (identity quaternion)
-            objects[i].transform.localScale = Vector3.one; // Scale of (1, 1, 1)
-
-            Debug.Log("it did something");
+            //objects[i].transform.position = Vector3.zero; // Position at (0, 0, 0)
+            //objects[i].transform.rotation = Quaternion.identity; // No rotation (identity quaternion)
+            //objects[i].transform.localScale = Vector3.one; // Scale of (1, 1, 1)
         }
     }
 

@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage) 
     {
-        Debug.Log("Damaged");
         float effectiveDefence = defenceUI.defence > 0 ? defenceUI.defence : 1; // Prevent division by 0
         currentHealth -= damage * damage / (damage + effectiveDefence);
         if (currentHealth < 0)
@@ -142,7 +141,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    /*public void Teleport(GameObject teleportTo)
+    public void Teleport(GameObject teleportTo)
     {
         if (teleportTo != null)
         {
@@ -153,7 +152,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogWarning("Teleport failed: Target GameObject is null.");
         }
-    }*/
+    }
 
 
 }

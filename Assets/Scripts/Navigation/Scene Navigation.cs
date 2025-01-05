@@ -18,7 +18,7 @@ public class SceneNavigation : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        OnSceneLoaded(SceneManager.GetActiveScene());
 
         if (SceneManager.GetActiveScene().buildIndex == 9)
         {
@@ -101,35 +101,69 @@ public class SceneNavigation : MonoBehaviour
         Debug.Log("Quit!");
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene)
     {
-        if (scene.buildIndex != 9) // Skip handling for the loader scene
+        Debug.Log("Starting teleportation process...");
+
+        if (scene.buildIndex == 9)
         {
-            if (SceneNavigation.isFirstLoad && scene.buildIndex == 0) // Plains scene index
-            {
-                SceneNavigation.isFirstLoad = false; // Reset flag after first load
-                return; // Skip teleportation
-            }
+            Debug.Log("Loader scene detected; skipping teleportation.");
+            return; // Skip teleportation logic for the loader scene
+        }
 
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                Player playerScript = player.GetComponent<Player>();
+        GameObject player = FindPlayer();
 
-                GameObject teleportTarget = GameObject.Find("TeleportTarget");
-                if (teleportTarget != null)
-                {
-                    //playerScript.Teleport(teleportTarget);
-                }
-                else
-                {
-                    Debug.LogWarning("TeleportTarget GameObject not found in the scene.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Player GameObject not found in the scene.");
-            }
+        if (player == null)
+        {
+            Debug.LogWarning("Player not found on the first attempt. Retrying...");
+            StartCoroutine(FindPlayerWithDelay(1.0f));
+        }
+        else
+        {
+            HandleTeleportation(player);
+        }
+    }
+
+    private GameObject FindPlayer()
+    {
+        return GameObject.FindWithTag("Player");
+    }
+
+    private IEnumerator FindPlayerWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameObject player = FindPlayer();
+
+        if (player == null)
+        {
+            Debug.LogWarning("Player not found on the second attempt. Teleportation aborted.");
+            yield break; // Exit if no player is found after retrying
+        }
+
+        HandleTeleportation(player);
+    }
+
+    private void HandleTeleportation(GameObject player)
+    {
+        Debug.Log("Player found; attempting to teleport.");
+        Player playerScript = player.GetComponent<Player>();
+
+        if (playerScript == null)
+        {
+            Debug.LogWarning("Player script not found on the Player GameObject.");
+            return;
+        }
+
+        GameObject teleportTarget = GameObject.Find("TeleportTarget");
+
+        if (teleportTarget != null)
+        {
+            playerScript.Teleport(teleportTarget);
+            Debug.Log("Teleportation successful to target: " + teleportTarget.name);
+        }
+        else
+        {
+            Debug.LogWarning("TeleportTarget GameObject not found in the scene.");
         }
     }
 
