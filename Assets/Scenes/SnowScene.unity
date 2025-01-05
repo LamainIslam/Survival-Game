@@ -1141,10 +1141,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: portal
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6507167378486166628, guid: 0dcb493d721ba0c4dacbb17d60bd90d7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5265229605248922844, guid: 0dcb493d721ba0c4dacbb17d60bd90d7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 66304170}
   m_SourcePrefab: {fileID: 100100000, guid: 0dcb493d721ba0c4dacbb17d60bd90d7, type: 3}
 --- !u!1 &80603326
 GameObject:
@@ -16722,6 +16727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d34ad43e87c2e4895aea1c64a78800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Whatever: {fileID: 0}
 --- !u!82 &1073857168
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33897,3 +33903,4 @@ SceneRoots:
   - {fileID: 1534306963}
   - {fileID: 1227027241}
   - {fileID: 66304168}
+  - {fileID: 461747005}

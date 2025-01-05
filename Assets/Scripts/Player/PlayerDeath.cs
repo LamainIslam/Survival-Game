@@ -8,11 +8,13 @@ public class PlayerDeath : MonoBehaviour
     // Public variable to allow other scripts to kill player
     static public bool shouldDie;
     Rigidbody rb;
+    public DDOLManager Whatever;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         shouldDie = false;
+        Whatever = GameObject.Find("DontDestroyOnLoadObjectManager").GetComponent<DDOLManager>();
     }
 
     void Update()
@@ -32,6 +34,8 @@ public class PlayerDeath : MonoBehaviour
 
         //loads into where needed
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Whatever.disable();
         SceneManager.LoadScene("EndMenu");
+        shouldDie = false;
     }
 }
