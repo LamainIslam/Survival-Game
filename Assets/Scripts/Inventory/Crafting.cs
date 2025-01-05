@@ -22,10 +22,18 @@ public class Crafting : MonoBehaviour
     void Start()
     {
         //new recipe can added like below, the last item is the result item
-        AddRecipe("Stone", 1, "Wood", 2, "", 0, "Axe", 1);
-        AddRecipe("Stone", 2, "Wood", 1, "", 0, "Pickaxe", 1);
-        AddRecipe("Stone", 1, "Wood", 3, "", 0, "Torch", 1);
-        AddRecipe("Stone", 1, "Wood", 3, "", 0, "Shield", 1);
+        AddRecipe("Wood", 5, "", 0, "", 0, "Wood Axe", 1);
+        AddRecipe("Wood", 5, "", 0, "", 0, "Wood Pickaxe", 1);
+        AddRecipe("Wood", 2, "Coal", 1, "", 0, "Torch", 1);
+        AddRecipe("Wood", 5, "Stone", 5, "", 0, "Stone Axe", 1);
+        AddRecipe("Wood", 5, "Stone", 5, "", 0, "Stone Pickaxe", 1);
+        AddRecipe("Wood", 5, "Iron Ore", 5, "", 0, "Iron Pickaxe", 1);
+        AddRecipe("Wood", 5, "Iron Ore", 5, "", 0, "Iron Axe", 1);
+        AddRecipe("Wood", 5, "Iron Ore", 5, "", 0, "Shield", 1);
+        AddRecipe("Iron Ore", 5, "", 0, "", 0, "Helmet", 1);
+        AddRecipe("Iron Ore", 10, "", 0, "", 0, "Chestplate", 1);
+        AddRecipe("Iron Ore", 10, "", 0, "", 0, "Leggings", 1);
+        AddRecipe("Iron Ore", 5, "", 0, "", 0, "Boots", 1);
 
         left.onClick.AddListener(PreviousRecipe);
         right.onClick.AddListener(NextRecipe);

@@ -101,8 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   health: 0
-  resource: {fileID: 4988735600382051603, guid: 7a4d28ebe505ded41bef49339dbce6fd,
-    type: 3}
+  resources:
+  - resource: {fileID: 4988735600382051603, guid: 7a4d28ebe505ded41bef49339dbce6fd,
+      type: 3}
+    min: 2
+    max: 4
+  tier: 1
 --- !u!136 &2464984035523373440
 CapsuleCollider:
   m_ObjectHideFlags: 0
