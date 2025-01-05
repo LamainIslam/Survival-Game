@@ -248,7 +248,7 @@ public class InventoryManager : MonoBehaviour
             inventoryOn = true;
             mainInventoryGroup.SetActive(true);
             crossHair.SetActive(false);
-            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
+            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
         }else {
             inventoryOn = false;
             for (int i = 0; i < mainInventoryGroup.transform.childCount; i++) {
@@ -256,7 +256,7 @@ public class InventoryManager : MonoBehaviour
             }
             mainInventoryGroup.SetActive(false);
             crossHair.SetActive(true);
-            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
+            GameObject.Find("PlayerCameraHolder").transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
             // Delete campfire UI if it exists
             GameObject CampfireInternalUI = GameObject.Find("CampfireInternalCanvas");  
             if(CampfireInternalUI != null){
