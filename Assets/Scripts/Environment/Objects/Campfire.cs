@@ -20,7 +20,6 @@ public class Campfire : MonoBehaviour
     public Slider fuelSlider; // UI slider for fuel amount
     public Slider cookedSlider; // UI slider for cooking progress
 
-    private bool isBurning = false;
     private float cookedAmount = 0f; // Current cooking progress
     private float maxCookedAmount = 5f; // Maximum cooking progress
 
@@ -28,11 +27,14 @@ public class Campfire : MonoBehaviour
 
     public GameObject[] cookedFoodPrefabs;
 
+    public GameObject particles;
+
     void Start()
     {
         UpdateFuelUI();
         UpdateCookedUI();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        particles.SetActive(false);
     }
 
     void Update()
@@ -62,14 +64,17 @@ public class Campfire : MonoBehaviour
         // Handle fuel burning
         if (fuelAmount > 0)
         {
+            particles.SetActive(true);
+
             fuelAmount -= fuelDecreaseRate * Time.deltaTime;
             UpdateFuelUI();
 
             if (fuelAmount <= 0)
             {
                 fuelAmount = 0;
-                isBurning = false;
             }
+        }else{
+            particles.SetActive(false);
         }
 
         // Handle cooking process
@@ -90,7 +95,6 @@ public class Campfire : MonoBehaviour
                 fuel.RefreshCount();
             }else {
                 Destroy(fuel.gameObject);
-                isBurning = true; // Start burning
             }
             UpdateFuelUI();
         }
