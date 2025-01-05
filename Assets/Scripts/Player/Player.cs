@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +22,14 @@ public class Player : MonoBehaviour
     public float hungerInterval = 1f;
     private Coroutine healingCoroutine;
     private Coroutine hungerCoroutine;
+    GameObject teleportTarget;
+    private bool hasRun = false;
+
+    void Awake()
+    {
+        // Subscribe to scene change events
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
     void Start()
     {
@@ -34,12 +43,26 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-    
+        if (!hasRun) {
+            Debug.Log("PING!");
+            teleportTarget = GameObject.Find("TeleportTarget");
+            if (teleportTarget != null) {    
+                Teleport(teleportTarget);
+
+                Debug.Log("Teleportation successful to target: " + teleportTarget.name);
+                hasRun = true;
+            }
+            else
+            {
+                Debug.LogWarning("TeleportTarget GameObject not found in the scene.");
+            }
+        }
     }
     
     public void TakeDamage(int damage)
     {
         Debug.Log("Damaged");
+        float effectiveDefence = defenceUI.defence > 0 ? defenceUI.defence : 1; // Prevent division by 0
         currentHealth -= damage * damage / (damage + defenceUI.defence);
         if (currentHealth < 0)
         {
@@ -138,5 +161,24 @@ public class Player : MonoBehaviour
             StopCoroutine(hungerCoroutine);
             hungerCoroutine = null;
         }
+    }
+
+    public void Teleport(GameObject teleportTo)
+    {
+        if (teleportTo != null)
+        {
+            transform.position = teleportTo.transform.position;
+            Debug.Log($"Teleported to: {teleportTo.name}");
+        }
+        else
+        {
+            Debug.LogWarning("Teleport failed: Target GameObject is null.");
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reset the flag when a new scene is loaded
+        hasRun = false;
     }
 }

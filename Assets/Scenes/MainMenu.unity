@@ -3350,6 +3350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 806584010}
+  DDOLScript: {fileID: 0}
 --- !u!114 &1911515737
 MonoBehaviour:
   m_ObjectHideFlags: 0
