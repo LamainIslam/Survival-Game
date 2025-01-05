@@ -4563,13 +4563,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ed0b3a18ce277747a6d59beba953504, type: 2}
   - {fileID: 11400000, guid: cde8af849ea37c840be894c50a79fd67, type: 2}
   - {fileID: 11400000, guid: afbc13c9981b66a4f87de1059feb2fed, type: 2}
-  - {fileID: 11400000, guid: 566dfc79450dd704aa1f0e7f5aed4aee, type: 2}
-  - {fileID: 11400000, guid: 868a666e348e401439606d17909ff958, type: 2}
-  - {fileID: 11400000, guid: 8a8b17ec9e8657240ba36c75fb1802b3, type: 2}
+  - {fileID: 11400000, guid: c1829f9285b37c94d9a6ee5538933eb1, type: 2}
+  - {fileID: 11400000, guid: 3e0ac4edd0bc3fa4eb4d3d4173496eb7, type: 2}
+  - {fileID: 11400000, guid: 6470f707739473f4eb12c9a6c0ebe301, type: 2}
   - {fileID: 11400000, guid: 59fc859af057afb4288976d1b709ab6f, type: 2}
   - {fileID: 11400000, guid: cb292c7102fcb5b4cb10ab2ae49095cd, type: 2}
   - {fileID: 11400000, guid: 912064ab326de434ea7e576e4a52a673, type: 2}
-  - {fileID: 11400000, guid: 3cd446078cb71234aa67382384010c06, type: 2}
+  - {fileID: 11400000, guid: a10f03766b159a646a37937cba926519, type: 2}
+  - {fileID: 11400000, guid: 197fc828ea52ae143933b74a788c4b5a, type: 2}
+  - {fileID: 11400000, guid: e6e9283c7cace064b92376b095a4363d, type: 2}
+  - {fileID: 11400000, guid: ad6f401bc0f92bd47bb732451895325c, type: 2}
+  - {fileID: 11400000, guid: 868a666e348e401439606d17909ff958, type: 2}
+  - {fileID: 11400000, guid: 8a8b17ec9e8657240ba36c75fb1802b3, type: 2}
 --- !u!4 &667641600
 Transform:
   m_ObjectHideFlags: 0
@@ -6832,6 +6837,7 @@ MonoBehaviour:
   respawnDelay: 1
   healInterval: 1
   hungerInterval: 1
+  saveManager: {fileID: 0}
 --- !u!114 &1114249564
 MonoBehaviour:
   m_ObjectHideFlags: 0
