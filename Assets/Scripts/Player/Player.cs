@@ -185,19 +185,12 @@ public class Player : MonoBehaviour
     // Save game data
     public void SaveGame()
     {
-        if (saveManager != null)
-        {
-            saveManager.SaveGame(this);
-        }
+        SaveSystem.SaveGame(this);
     }
 
-    // Load game data
     public void LoadGame()
     {
-        if (saveManager != null)
-        {
-            saveManager.LoadGame(this);
-        }
+        SaveSystem.LoadGame(this);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
