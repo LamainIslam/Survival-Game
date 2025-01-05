@@ -10,11 +10,10 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float runSpeed;
     public float drag;
-    public float moveSpeed;
+    private float moveSpeed;
     private float desiredSpeed;
     private float lastDesiredSpeed;
-    public float playerSpeed;
-
+    
 
     [Header("Jump Adjusments")]
     public float jumpForce;
@@ -56,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     public TMP_Text speedText;
     
     public float maxSlopeAngle;
+
     
     private float horizontalInput;
     private float verticalInput;
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     
     Rigidbody rb;
 
-    public static MovementState movementState;
+    public MovementState movementState;
     public enum MovementState { 
         Walking,
         Sprinting,
@@ -105,8 +105,6 @@ public class PlayerMovement : MonoBehaviour
         MovementStateHandler();
         PlayerInput();
         SpeedCap();
-
-        playerSpeed = rb.velocity.magnitude;
     }
 
     private void PlayerInput() {

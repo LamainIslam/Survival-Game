@@ -25,7 +25,6 @@ public class Crafting : MonoBehaviour
         AddRecipe("Stone", 1, "Wood", 2, "", 0, "Axe", 1);
         AddRecipe("Stone", 2, "Wood", 1, "", 0, "Pickaxe", 1);
         AddRecipe("Stone", 1, "Wood", 3, "", 0, "Torch", 1);
-        AddRecipe("Stone", 1, "Wood", 3, "", 0, "Shield", 1);
 
         left.onClick.AddListener(PreviousRecipe);
         right.onClick.AddListener(NextRecipe);

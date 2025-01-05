@@ -19,18 +19,12 @@ public class AIScriptPassive : MonoBehaviour
     public float sightRange;
     public bool playerInSightRange;
 
-    GameObject damagePrefab;
-
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();  // Reference to NavMeshAgent for movement
         spawnLocation = this.gameObject.transform.position; // Store the spawn position for patrol reference
         player = GameObject.Find("Player").transform; // Locate and assign the player object
         this.gameObject.name = "Passive Enemy"; // Name for easier identification in the editor
-
-        //finding damage prefab using Resources.Load
-        damagePrefab = (GameObject)Resources.Load("DamageTaken", typeof(GameObject)) as GameObject;
-        if (damagePrefab != null) { Debug.Log("found damagePrefab"); }
     }
 
     private void Update()
@@ -88,9 +82,5 @@ public class AIScriptPassive : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;  // Reduce health by the amount of damage taken
-
-        //display damage taken
-        GameObject damageTaken = Instantiate(damagePrefab, transform.position + Vector3.up * 0, Quaternion.identity);
-        damageTaken.GetComponent<FloatingDamageText>().Intialize(damage, Color.red);
     }
 }

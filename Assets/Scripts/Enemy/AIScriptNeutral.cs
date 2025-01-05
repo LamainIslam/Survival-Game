@@ -26,8 +26,6 @@ public class AIScriptNeutral : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
-    GameObject damagePrefab;
-
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();  // Assign NavMeshAgent to control movement
@@ -35,10 +33,6 @@ public class AIScriptNeutral : MonoBehaviour
         aggressive = false;  // Neutral state by default
         player = GameObject.Find("Player").transform;  // Find and reference the player object
         this.gameObject.name = "Neutral Enemy";  // Name the game object for identification
-
-        //finding damage prefab using Resources.Load
-        damagePrefab = (GameObject)Resources.Load("DamageTaken", typeof(GameObject)) as GameObject;
-        if (damagePrefab != null) { Debug.Log("found damagePrefab"); }
     }
 
     private void Update()
@@ -119,10 +113,6 @@ public class AIScriptNeutral : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;  // Reduce health when damage is taken
-
-        //display damage taken
-        GameObject damageTaken = Instantiate(damagePrefab, transform.position + Vector3.up * 0, Quaternion.identity);
-        damageTaken.GetComponent<FloatingDamageText>().Intialize(damage, Color.red);
 
         // If the enemy was neutral, it becomes aggressive when damaged
         if (aggressive == false)

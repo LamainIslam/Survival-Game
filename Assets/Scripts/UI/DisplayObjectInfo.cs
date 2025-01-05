@@ -11,13 +11,11 @@ public class DisplayObjectInfo : MonoBehaviour
     public GameObject itemCanvasPrefab;
     public GameObject enemyCanvasPrefab;
     public GameObject resourceCanvasPrefab;
-    public GameObject campfireCanvasPrefab;
 
     // Max distances for different object types
     public float itemMaxDistance = 2.5f;
     public float enemyMaxDistance = 10f;
     public float resourceMaxDistance = 5f;
-    public float campfireMaxDistance = 5f;
 
     private GameObject activeCanvas;
     private GameObject lastHitObject;
@@ -53,8 +51,6 @@ public class DisplayObjectInfo : MonoBehaviour
                 ShowCanvas(hit, resourceCanvasPrefab, "Tree");
             } else if (hit.collider.CompareTag("Rock")&& hit.distance <= resourceMaxDistance) {
                 ShowCanvas(hit, resourceCanvasPrefab, "Rock");
-            } else if (hit.collider.CompareTag("Campfire")&& hit.distance <= campfireMaxDistance) {
-                ShowCanvas(hit, campfireCanvasPrefab, "Campfire");
             } else {
                 DestroyActiveCanvas();
             }

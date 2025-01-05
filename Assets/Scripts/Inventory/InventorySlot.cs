@@ -19,10 +19,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         Chestplate,
         Leggings,
         Boots,
-        OffHand,
-        Fuel,
-        Food,
-        Empty
+        OffHand
     }
 
     private void Awake()
@@ -189,15 +186,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
             case SlotType.OffHand:
                 HandleOffHandSlot(heldItem);
                 break;
-            case SlotType.Fuel:
-                HandleFuelSlot(heldItem);
-                break;
-            case SlotType.Food:
-                HandleFoodSlot(heldItem);
-                break;
-            case SlotType.Empty:
-                HandleEmptySlot(heldItem);
-                break;
         }
     }
 
@@ -242,52 +230,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         }
     }
 
-
-
-
-
-    private void HandleFuelSlot(InventoryItem heldItem)
-    {
-        if (heldItem.item.type == ItemType.Resource)
-        {
-            InventoryItem hoveredItem = GetItemInSlot();
-            if (hoveredItem == null)
-            {
-                heldItem.parentAfterDrag = transform;
-            }
-            else
-            {
-                SwapItems(heldItem, hoveredItem);
-            }
-        }
-    }
-
-    private void HandleFoodSlot(InventoryItem heldItem)
-    {
-        if (heldItem.item.type == ItemType.Food)
-        {
-            InventoryItem hoveredItem = GetItemInSlot();
-            if (hoveredItem == null)
-            {
-                heldItem.parentAfterDrag = transform;
-            }
-            else
-            {
-                SwapItems(heldItem, hoveredItem);
-            }
-        }
-    }
-
-    private void HandleEmptySlot(InventoryItem heldItem)
-    {
-        // Prevent any items from being dropped into this slot
-        Debug.Log("This slot is reserved and cannot hold items.");
-    }
-
-
-
-
-
     // Swaps any 2 items
     private void SwapItems(InventoryItem heldItem, InventoryItem hoveredItem)
     {
@@ -297,7 +239,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler
         
     }
 
-    // Merges the stacks of items
+    // Merges the stakcs of items
     private void MergeStacks(InventoryItem heldItem, InventoryItem hoveredItem)
     {
         if (heldItem.item.stackable && hoveredItem.count < inventoryManager.stackSize) {
