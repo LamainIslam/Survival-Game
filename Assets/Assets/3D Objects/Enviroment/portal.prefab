@@ -220,6 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6988890619269870330}
   - component: {fileID: 587310531889136541}
+  - component: {fileID: 6507167378486166628}
   m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
@@ -263,6 +264,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.234599, y: 3.5905323, z: 1}
   m_Center: {x: -0.097323276, y: 1.2952662, z: -0.00000003217402}
+--- !u!114 &6507167378486166628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265229605248922844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae0a8bf62ecb61419e95fd939ec7706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
 --- !u!1001 &2801135946835931214
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -324,7 +338,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b1b884c6d416d3846b3f1529dad5fe85,
         type: 3}
       propertyPath: m_Name
-      value: portal (1)
+      value: portal
       objectReference: {fileID: 0}
     - target: {fileID: 5958438921693756439, guid: b1b884c6d416d3846b3f1529dad5fe85,
         type: 3}
