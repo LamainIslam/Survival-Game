@@ -32,9 +32,11 @@ public class Resource : MonoBehaviour
 
         // Update slider values
         if (transform.childCount > 0) {
-            Slider slider = gameObject.transform.GetChild(0).transform.GetChild(1).GetComponent<Slider>();
-            slider.maxValue = maxHealth;
-            slider.value = health;
+            if (transform.GetChild(0).name == "ResourceCanvas(Clone)") {
+                Slider slider = gameObject.transform.GetChild(0).transform.GetChild(1).GetComponent<Slider>();
+                slider.maxValue = maxHealth;
+                slider.value = health;
+            }
         }
     }
 }
