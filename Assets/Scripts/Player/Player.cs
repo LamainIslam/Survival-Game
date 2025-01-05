@@ -31,12 +31,17 @@ public class Player : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    public SaveManager saveManager;
+
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHunger = maxHunger;
         hungerBar.SetMaxHunger(maxHunger);
+
+        saveManager = FindObjectOfType<SaveManager>();
+
         healingCoroutine = StartCoroutine(HealOverTime());
         hungerCoroutine = StartCoroutine(DecreaseHungerOverTime());
     }
@@ -58,7 +63,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+
     public void TakeDamage(int damage)
     {
         Debug.Log("Damaged");
@@ -75,7 +80,7 @@ public class Player : MonoBehaviour
             PlayerDeath.shouldDie = true;
         }
     }
-   
+
     IEnumerator HealOverTime()
     {
         while (true)
@@ -121,14 +126,15 @@ public class Player : MonoBehaviour
         hungerBar.SetHunger(currentHunger);
     }
 
-    // Updates current defence
     public void UpdateDefence()
     {
         InventoryManager inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         defence = 0;
-        for (int i = 0; i < inventoryManager.armourSlots.Length; i++) {
+        for (int i = 0; i < inventoryManager.armourSlots.Length; i++)
+        {
             InventoryItem itemInSlot = inventoryManager.armourSlots[i].GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null) {
+            if (itemInSlot != null)
+            {
                 defence += itemInSlot.item.defencePoints;
             }
         }
@@ -173,6 +179,24 @@ public class Player : MonoBehaviour
         else
         {
             Debug.LogWarning("Teleport failed: Target GameObject is null.");
+        }
+    }
+
+    // Save game data
+    public void SaveGame()
+    {
+        if (saveManager != null)
+        {
+            saveManager.SaveGame(this);
+        }
+    }
+
+    // Load game data
+    public void LoadGame()
+    {
+        if (saveManager != null)
+        {
+            saveManager.LoadGame(this);
         }
     }
 

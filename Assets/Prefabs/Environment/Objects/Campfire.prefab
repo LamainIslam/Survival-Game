@@ -9954,6 +9954,8 @@ MonoBehaviour:
   cookedFoodPrefabs:
   - {fileID: 8837271608277194406, guid: 2839604b01c81b24e8836404d35bc5c4, type: 3}
   - {fileID: 4991168410609296108, guid: a572b14638120764a8d31952e5a13d3e, type: 3}
+  particles: {fileID: 702178153716833383}
+  emptyItem: {fileID: 14555351133186028, guid: 36b6c19fa2a659d4dbca410edeb2326d, type: 3}
 --- !u!136 &3648926250401316383
 CapsuleCollider:
   m_ObjectHideFlags: 0

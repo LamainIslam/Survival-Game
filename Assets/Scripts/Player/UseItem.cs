@@ -118,6 +118,7 @@ public class UseItem : MonoBehaviour
             {
                 // Food increases hunger
                 player.IncreaseHunger(usedItem.hungerRestored);
+                player.Heal(usedItem.healthRestored);
                 inventoryManager.ConsumeSelectedItem();
             }
             else
