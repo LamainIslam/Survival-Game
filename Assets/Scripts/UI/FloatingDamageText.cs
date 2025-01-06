@@ -8,7 +8,6 @@ public class FloatingDamageText : MonoBehaviour
     public TMP_Text damageDoneText;
     public void Intialize(float damageDone, Color color) {
         Debug.Log($"Initialized with damage: {damageDone}, color: {color}");
-        Debug.Log("instialized!");
         Destroy(this.gameObject, 2.01f);
 
         damageDoneText.text = "";

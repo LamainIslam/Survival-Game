@@ -9,12 +9,13 @@ public class PlayerInputHandler : MonoBehaviour
     private InventoryManager inventoryManager;
 
     private bool isPrimaryHeld = false;
-    public float primaryHoldTime = 0f;
-    public float maxMultiplier = 50f; // Cap for damage multiplier
+    private float primaryHoldTime = 0f;
+    private const float maxMultiplier = 5f; // Cap for damage multiplier
+
+    [SerializeField] private Animator armAnimator; // Animator for the arm
 
     void Start()
     {
-        // Assign variables
         interactWithItem = GetComponent<InteractWithItem>();
         useItem = GetComponent<UseItem>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
@@ -27,18 +28,16 @@ public class PlayerInputHandler : MonoBehaviour
 
     void HandleInput()
     {
-        // Toggle inventory
         if (Input.GetKeyDown(KeyCode.E))
         {
             inventoryManager.ToggleInventory();
         }
 
-        if (inventoryManager.inventoryOn == false) {
-            // Check for the F key to pick up items
-            if (Input.GetKeyDown(KeyCode.F)) {
-                if (interactWithItem != null) {
-                    interactWithItem.TryInteractWithItem();
-                }
+        if (!inventoryManager.inventoryOn)
+        {
+            if (Input.GetKeyDown(KeyCode.F) && interactWithItem != null)
+            {
+                interactWithItem.TryInteractWithItem();
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -46,30 +45,70 @@ public class PlayerInputHandler : MonoBehaviour
                 inventoryManager.DropItem();
             }
 
-            // Handle primary attack
-            if (Input.GetMouseButtonDown(0) && !inventoryManager.mainInventoryGroup.activeInHierarchy)
-            {
-                isPrimaryHeld = true;
-                primaryHoldTime = 0f; // Reset hold time
-            }
+            HandlePrimaryAttack();
+            HandleOffhandItem();
+        }
+    }
 
-            if (Input.GetMouseButton(0) && isPrimaryHeld)
-            {
-                primaryHoldTime += Time.deltaTime;
-            }
+    void HandlePrimaryAttack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isPrimaryHeld = true;
+            primaryHoldTime = 0f;
+        }
 
-            if (Input.GetMouseButtonUp(0) && isPrimaryHeld)
-            {
-                float damageMultiplier = Mathf.Min(1f + primaryHoldTime*4, maxMultiplier);
-                useItem.TryUseItem(damageMultiplier);
-                isPrimaryHeld = false; // Reset state
-            }
+        if (Input.GetMouseButton(0) && isPrimaryHeld)
+        {
+            primaryHoldTime += Time.deltaTime;
+            float multiplier = Mathf.Min(1f + primaryHoldTime, maxMultiplier);
+            Debug.Log($"Multiplier: {armAnimator.GetFloat("Multiplier")}");
+            UpdateArmAnimation(multiplier);
+        }
 
-            // Handle offhand item
-            if (Input.GetMouseButtonDown(1) && !inventoryManager.mainInventoryGroup.activeInHierarchy)
-            {
-                useItem.TryUseOffHandItem();
+        if (Input.GetMouseButtonUp(0) && isPrimaryHeld)
+        {
+            float damageMultiplier = Mathf.Min(1f + primaryHoldTime * 4, maxMultiplier);
+            useItem.TryUseItem(damageMultiplier);
+
+            // Let the release animation play before resetting
+            StartCoroutine(ResetArmAnimationWithDelay(0.2f)); // Adjust delay as needed
+            isPrimaryHeld = false;
+        }
+    }
+
+    void HandleOffhandItem()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            useItem.TryUseOffHandItem();
+        }
+    }
+
+    void UpdateArmAnimation(float multiplier)
+    {
+        if (armAnimator != null)
+        {
+            float mult = multiplier / maxMultiplier;
+            // to stop animation for resetting(resets at 1)
+            if (mult > 0.99f) {
+                mult = 0.99f;
             }
+            armAnimator.SetFloat("Multiplier", mult);
+        }
+    }
+
+    IEnumerator ResetArmAnimationWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ResetArmAnimation();
+    }
+
+    void ResetArmAnimation()
+    {
+        if (armAnimator != null)
+        {
+            armAnimator.SetFloat("Multiplier", 0f);
         }
     }
 }
