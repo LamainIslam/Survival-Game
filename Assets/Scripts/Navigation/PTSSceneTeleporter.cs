@@ -10,8 +10,8 @@ public class PTSSceneTeleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SceneNavigation.lastSelectedScene = 8.ToString();
-        SceneManager.LoadScene(8);
+        SceneNavigation.lastSelectedScene = 3.ToString();
+        SceneManager.LoadScene(3);
     }
 
 
