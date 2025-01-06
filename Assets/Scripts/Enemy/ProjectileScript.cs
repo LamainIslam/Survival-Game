@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
 {
-    private int damage; // No need to set here, it will be set from the AI script
+    public float damage; // No need to set here, it will be set from the AI script
 
     // Method to set the damage value from the AI script
     public void SetDamage(int damageAmount)
