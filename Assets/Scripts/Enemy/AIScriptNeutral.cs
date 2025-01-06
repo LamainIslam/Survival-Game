@@ -21,6 +21,7 @@ public class AIScriptNeutral : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public float projectileDamage;
 
     // States
     public float sightRange, attackRange;
@@ -103,6 +104,7 @@ public class AIScriptNeutral : MonoBehaviour
         {
             // Instantiate projectile and add force for attack
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.gameObject.GetComponent<ProjectileScript>().damage = projectileDamage;
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);  // Forward force
             rb.AddForce(transform.up * 8f, ForceMode.Impulse);  // Upward force for trajectory
 
