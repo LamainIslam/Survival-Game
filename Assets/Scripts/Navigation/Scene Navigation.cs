@@ -58,7 +58,7 @@ public class SceneNavigation : MonoBehaviour
         Debug.Log(isInitialized);
         selectedScene = dropdown.options[dropdown.value].text;
         lastSelectedScene = selectedScene;
-        if (!isInitialized) { SceneManager.LoadScene(9); }
+        if (!isInitialized) { SceneManager.LoadScene(5); }
         else { SceneManager.LoadScene(lastSelectedScene); }
         
     }
