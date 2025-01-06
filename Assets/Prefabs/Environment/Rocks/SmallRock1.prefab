@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb8dc7edfa808c42ad864c4a034fe29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 30
   health: 0
   resources:
   - resource: {fileID: 4988735600382051603, guid: 7a4d28ebe505ded41bef49339dbce6fd,
