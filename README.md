@@ -16,7 +16,7 @@ Welcome to our survival game prototype. This project demonstrates the core mecha
 
 ### Picking Up Items
 - **Pick up Items**: When in range and looking at an item, press `F` to pick it up.
-  - Items include wood, stone, torches, and armor.
+  - Items include wood, stone, torches, tools and armor.
 
 ### Inventory Management
 - **Toolbar**: Use the scroll wheel to switch between items in your toolbar.
@@ -46,14 +46,13 @@ Welcome to our survival game prototype. This project demonstrates the core mecha
 
 ### Death
 - **Player Death**: Your character dies when health reaches zero or less, or falls off the map
-  - In this prototype, death resets the scene.
 
 ### Biomes and Environment
-- **Plains Biome**: Green surface with many trees and few rocks. Passive and neutral enemies spawn here.
+- **Plains Biome**: Green surface with many trees and few rocks. Passive, neutral and hostile enemies spawn here.
 - **Snow Biome**: White surface with mostly rocks and dead trees. Located farther from spawn, this area has more neutral and hostile enemies.
 
 ### Day/Night Cycle
-The game features a dynamic day and night cycle, where the light rotates to simulate time progression. For this prototype, the cycle is sped up.
+The game features a dynamic day and night cycle, where the light rotates to simulate time progression.
 
 ## Controls Summary
 - **Move**: `WASD`
