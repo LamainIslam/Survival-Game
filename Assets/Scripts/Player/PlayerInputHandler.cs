@@ -28,6 +28,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     void HandleInput()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameObject pauseManager = GameObject.Find("PauseManager");
+            if (pauseManager != null) {
+                pauseManager.GetComponent<PauseMenu>().TogglePause();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             inventoryManager.ToggleInventory();

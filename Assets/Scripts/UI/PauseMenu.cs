@@ -1,49 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pausemenu; // Reference to the Pause Menu GameObject
+    public GameObject pauseMenu; // Reference to the Pause Menu GameObject
     public bool isPaused = true;
+    public GameObject crossHair;
 
     // Start is called before the first frame update
     void Start()
     {
-        pausemenu.SetActive(false); // Correct reference
+        if (pauseMenu != null) {
+            pauseMenu.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
-        }
+        
+
     }
 
     public void PauseGame()
     {
-        pausemenu.SetActive(true); // Correct reference
+        pauseMenu.SetActive(true);
         isPaused = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        GameObject.Find("PlayerCameraHolder").transform.GetChild(0).transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = false;
+        crossHair.SetActive(false);
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        pausemenu.SetActive(false); // Correct reference
+        pauseMenu.SetActive(false);
         isPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        GameObject.Find("PlayerCameraHolder").transform.GetChild(0).transform.GetChild(0).GetComponent<PlayerCamera>().lockCursor = true;
+        crossHair.SetActive(true);
+        Time.timeScale = 1f;
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            ResumeGame();   
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    public void Quit() {
+        Application.Quit();
+    }
+
+    public void Menu() {
+        SceneManager.LoadScene("MainMenu");
     }
 }
