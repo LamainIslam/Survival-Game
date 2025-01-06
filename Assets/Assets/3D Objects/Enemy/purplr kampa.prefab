@@ -71,7 +71,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0aeadfaa199b7a24d836095ab05062d5,
         type: 3}
       propertyPath: m_Name
-      value: asdasasd (4) 1
+      value: purplr kampa
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0aeadfaa199b7a24d836095ab05062d5,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -222,8 +227,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67b09116d9e174284c8b9be5fb3575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyScript: {fileID: 0}
-  enemyDrop: {fileID: 0}
+  enemyScript: {fileID: 5699249972562974677}
+  enemyDrop: {fileID: 2519055677932176361, guid: 2644610473e8fdb4d83410a6077dc546,
+    type: 3}
   health: 0
   maxHealth: 0
 --- !u!1 &5138926580074833919 stripped
