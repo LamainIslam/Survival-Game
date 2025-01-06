@@ -41,5 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayerLoaderManager.unity
     guid: 843f963363d64bf40bcf137358be03ee
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: 8a496f3d23e70154787d19f2b8fba3ff
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

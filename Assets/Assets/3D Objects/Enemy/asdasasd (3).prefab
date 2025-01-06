@@ -141,6 +141,7 @@ MonoBehaviour:
   sightRange: 6
   playerInSightRange: 0
   playerInAttackRange: 0
+  animator: {fileID: 0}
 --- !u!195 &2277105686887160093
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -199,7 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7162969095672763532}
-  enemyDrop: {fileID: 0}
+  enemyDrop: {fileID: 4129943441022645947, guid: ea0751b0e86056e4289dc06bb50fbfcc,
+    type: 3}
   health: 20
   maxHealth: 20
 --- !u!95 &2522388961373581088
