@@ -22,10 +22,10 @@ AnimatorState:
   m_TimeParameterActive: 1
   m_Motion: {fileID: 7400000, guid: d34b9d74de95af646bde2c228bb69289, type: 2}
   m_Tag: 
-  m_SpeedParameter: multiplyer
+  m_SpeedParameter: Multiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: multiplyer
+  m_TimeParameter: Multiplier
 --- !u!1107 &-4683142205104681494
 AnimatorStateMachine:
   serializedVersion: 6
@@ -37,7 +37,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -4730291654442264707}
-    m_Position: {x: 250, y: 60, z: 0}
+    m_Position: {x: 300, y: 60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -4446505028045653528}
@@ -56,7 +56,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 3
+    m_ConditionEvent: Multiplier
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4730291654442264707}
   m_Solo: 0
@@ -80,7 +83,7 @@ AnimatorController:
   m_Name: Hand
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: multiplyer
+  - m_Name: Multiplier
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
