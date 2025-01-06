@@ -51,11 +51,16 @@ public class SceneNavigation : MonoBehaviour
 
     public void Play()
     {
+        GameObject whatever = GameObject.Find("DontDestroyOnLoadObjectManager");
+        if (whatever != null) {
+            whatever.GetComponent<DDOLManager>().enable();
+        }
         Debug.Log(isInitialized);
         selectedScene = dropdown.options[dropdown.value].text;
         lastSelectedScene = selectedScene;
         if (!isInitialized) { SceneManager.LoadScene(9); }
         else { SceneManager.LoadScene(lastSelectedScene); }
+        
     }
 
     public void PlayOther()
@@ -68,6 +73,10 @@ public class SceneNavigation : MonoBehaviour
 
     public void replay()
     {
+        GameObject whatever = GameObject.Find("DontDestroyOnLoadObjectManager");
+        if (whatever != null) {
+            whatever.GetComponent<DDOLManager>().enable();
+        }
         if (lastSelectedScene == null)
         {
             lastSelectedScene = dropdown.options[dropdown.value].text;
