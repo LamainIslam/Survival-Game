@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/InventoryTest.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/Plains.unity
     guid: 9515f9c4dee59584384197ef9cf13782
@@ -18,23 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: a4328c3f03e76e445b6c2f64d361c60b
   - enabled: 1
-    path: Assets/Scenes/sg-01.unity
-    guid: dee9287128c5a5244a253157408ed26d
-  - enabled: 1
-    path: Assets/Scenes/sg-5.unity
-    guid: a3986d9fa7c32df419fce1af2dec22fb
-  - enabled: 1
-    path: Assets/Scenes/sg02.unity
-    guid: 49ce04ae4eddcda40bf230367e5969bf
-  - enabled: 1
-    path: Assets/Scenes/sg04.unity
-    guid: 4fc85fb97355cac449ca07a333c7d609
-  - enabled: 1
     path: Assets/Scenes/EndMenu.unity
     guid: 7b3e988189661424f863262d41b94aab
-  - enabled: 0
-    path: Assets/Scenes/main 1.unity
-    guid: e06f3a30174026d4e9a8d429b1890036
   - enabled: 1
     path: Assets/Scenes/Snow.unity
     guid: 36bea54b2799bbe4ba3da48a904f6c4d
