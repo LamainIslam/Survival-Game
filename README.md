@@ -66,7 +66,7 @@ The game features a dynamic day and night cycle, where the light rotates to simu
 - **Crafting**: Use arrows to select recipes
 
 ## Assets
-Portal Model: https://sketchfab.com/3d-models/portal-a98bdbfc895e4b73b282c846ce5947e6 
-Yeti Animation: https://www.mixamo.com/#/?page=1&query=&type=Motion%2CMotionPack
-Stone Golem: https://3dexport.com/3dmodel-stone-golem-lowpoly-rigged-animation-269037.htm
-Penguin Model: https://assetstore.unity.com/packages/3d/characters/animals/animals-free-low-poly-asset-pack-by-ithappy-260727
+- Portal Model: https://sketchfab.com/3d-models/portal-a98bdbfc895e4b73b282c846ce5947e6
+- Yeti Animation: https://www.mixamo.com/#/?page=1&query=&type=Motion%2CMotionPack
+- Stone Golem: https://3dexport.com/3dmodel-stone-golem-lowpoly-rigged-animation-269037.htm
+- Penguin Model: https://assetstore.unity.com/packages/3d/characters/animals/animals-free-low-poly-asset-pack-by-ithappy-260727
