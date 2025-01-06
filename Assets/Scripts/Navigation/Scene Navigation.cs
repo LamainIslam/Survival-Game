@@ -20,7 +20,7 @@ public class SceneNavigation : MonoBehaviour
     {
         //OnSceneLoaded(SceneManager.GetActiveScene());
 
-        if (SceneManager.GetActiveScene().buildIndex == 5)
+        if (SceneManager.GetActiveScene().buildIndex == 4)
         {
             Debug.Log("in scene 5");
             DDOLScript = GameObject.Find("DontDestroyOnLoadObjectManager").GetComponent<DDOLManager>();
@@ -58,7 +58,7 @@ public class SceneNavigation : MonoBehaviour
         Debug.Log(isInitialized);
         selectedScene = dropdown.options[dropdown.value].text;
         lastSelectedScene = selectedScene;
-        if (!isInitialized) { SceneManager.LoadScene(5); }
+        if (!isInitialized) { SceneManager.LoadScene(4); }
         else { SceneManager.LoadScene(lastSelectedScene); }
         
     }
@@ -67,7 +67,7 @@ public class SceneNavigation : MonoBehaviour
     {
         selectedScene = dropdown.options[dropdown.value].text;
         lastSelectedScene = selectedScene;
-        if (!isInitialized) { SceneManager.LoadScene(5); }
+        if (!isInitialized) { SceneManager.LoadScene(4); }
         else { SceneManager.LoadScene(lastSelectedScene); }
     }
 
@@ -81,7 +81,7 @@ public class SceneNavigation : MonoBehaviour
         {
             lastSelectedScene = dropdown.options[dropdown.value].text;
         }
-        if (!isInitialized) { SceneManager.LoadScene(5); }
+        if (!isInitialized) { SceneManager.LoadScene(4); }
         else { SceneManager.LoadScene(lastSelectedScene); }
     }
 

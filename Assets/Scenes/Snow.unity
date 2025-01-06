@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276807, g: 0.21589197, b: 0.29782572, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3185,27 +3185,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (7)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 791.36926
+      value: 296.86115
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 129.1568
+      value: -70.96735
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 646.1011
+      value: 317.02798
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -3247,6 +3247,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &256535002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 256535001}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &257051106
 GameObject:
   m_ObjectHideFlags: 0
@@ -5213,27 +5219,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (4)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 380.8898
+      value: -113.61832
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 65.62393
+      value: -134.50021
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 769.4738
+      value: 440.40073
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -5275,6 +5281,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &391232753 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 391232752}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &392721906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6638,6 +6650,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502924806}
   m_CullTransparentMesh: 1
+--- !u!1 &505012048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 505012049}
+  m_Layer: 0
+  m_Name: Campfires
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &505012049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505012048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 494.50812, y: 200.12415, z: 329.0731}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1782615059}
+  - {fileID: 1886132436}
+  - {fileID: 1877239724}
+  - {fileID: 1258888035}
+  - {fileID: 391232753}
+  - {fileID: 1551396322}
+  - {fileID: 1814633493}
+  - {fileID: 256535002}
+  - {fileID: 1461946407}
+  - {fileID: 1674212718}
+  - {fileID: 1956836433}
+  - {fileID: 1722274498}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &513305900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12624,7 +12679,7 @@ GameObject:
   - component: {fileID: 1139761698}
   - component: {fileID: 1139761697}
   m_Layer: 3
-  m_Name: YetiFinalBoss (2)
+  m_Name: Yeti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13443,7 +13498,7 @@ GameObject:
   - component: {fileID: 1227027237}
   - component: {fileID: 1227027242}
   m_Layer: 3
-  m_Name: YetiFinalBoss
+  m_Name: Yeti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14071,27 +14126,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (3)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 178.67297
+      value: -315.83514
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 54.571198
+      value: -145.55295
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 833.71967
+      value: 504.64658
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -14133,6 +14188,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1258888035 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1258888034}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1259816216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15721,27 +15782,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (8)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 861.2163
+      value: 366.7082
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 167.04416
+      value: -33.079987
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 390.37686
+      value: 61.303772
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -15783,6 +15844,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1461946407 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1461946406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1472148059
 GameObject:
   m_ObjectHideFlags: 0
@@ -16720,27 +16787,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (5)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 519.21783
+      value: 24.709717
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 112.88501
+      value: -87.239136
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 853.82513
+      value: 524.7521
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -16782,6 +16849,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1551396322 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1551396321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1560705410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8714199148844441828, guid: 554ec7aa4d83be64ea937cbfabc09566,
@@ -22547,27 +22620,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (9)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 796.40454
+      value: 301.89642
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 154.8778
+      value: -45.246338
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 295.74796
+      value: -33.325134
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -22609,6 +22682,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1674212718 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1674212717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1706427954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22830,27 +22909,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (11)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 494.50812
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 200.12415
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 329.0731
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -22892,6 +22971,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1722274498 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1722274497}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1758339525
 GameObject:
   m_ObjectHideFlags: 0
@@ -23760,7 +23845,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -23770,17 +23855,17 @@ PrefabInstance:
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 132.58405
+      value: -361.92407
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25.096954
+      value: -175.02719
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 154.04253
+      value: -175.03056
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -23822,6 +23907,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1782615059 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1782615058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1784150426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24410,27 +24501,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (6)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 743.66223
+      value: 249.15411
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 110.10629
+      value: -90.01785
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 789.32086
+      value: 460.24777
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -24472,6 +24563,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1814633493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1814633492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1821963051
 GameObject:
   m_ObjectHideFlags: 0
@@ -24920,7 +25017,7 @@ GameObject:
   - component: {fileID: 1838568674}
   - component: {fileID: 1838568673}
   m_Layer: 3
-  m_Name: YetiFinalBoss (1)
+  m_Name: Yeti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25237,27 +25334,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (2)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 198.02368
+      value: -296.48444
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.538147
+      value: -186.586
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 615.62854
+      value: 286.55545
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -25299,6 +25396,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1877239724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1877239723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1877828447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25818,27 +25921,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (1)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 81.50866
+      value: -412.99945
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.693359
+      value: -190.43079
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 406.47662
+      value: 77.403534
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -25880,6 +25983,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1886132436 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1886132435}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1887270558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26829,27 +26938,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 505012049}
     m_Modifications:
     - target: {fileID: 2448718589740601784, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_Name
-      value: Campfire (10)
+      value: Campfire
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 665.0492
+      value: 170.54108
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 162.30563
+      value: -37.818512
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 133.05478
+      value: -196.01831
       objectReference: {fileID: 0}
     - target: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
         type: 3}
@@ -26891,6 +27000,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da0b8151eb39dd42ac07585442c6c54, type: 3}
+--- !u!4 &1956836433 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3076037959352453890, guid: 9da0b8151eb39dd42ac07585442c6c54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1956836432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1964869010
 GameObject:
   m_ObjectHideFlags: 0
@@ -29831,17 +29946,17 @@ PrefabInstance:
     - target: {fileID: 570992990906118096, guid: d6f6008ea51d7c74482f90b2c327239d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 59.07
+      value: 80.93
       objectReference: {fileID: 0}
     - target: {fileID: 570992990906118096, guid: d6f6008ea51d7c74482f90b2c327239d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 33.7
+      value: 33.5
       objectReference: {fileID: 0}
     - target: {fileID: 570992990906118096, guid: d6f6008ea51d7c74482f90b2c327239d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 84.37
+      value: 95.98
       objectReference: {fileID: 0}
     - target: {fileID: 570992990906118096, guid: d6f6008ea51d7c74482f90b2c327239d,
         type: 3}
@@ -29881,7 +29996,7 @@ PrefabInstance:
     - target: {fileID: 911771894276044138, guid: d6f6008ea51d7c74482f90b2c327239d,
         type: 3}
       propertyPath: m_Name
-      value: asdasasd (4)
+      value: Kampa
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29912,18 +30027,7 @@ SceneRoots:
   - {fileID: 1097340140}
   - {fileID: 1249147141}
   - {fileID: 942176226}
-  - {fileID: 1782615058}
-  - {fileID: 1886132435}
-  - {fileID: 1877239723}
-  - {fileID: 1258888034}
-  - {fileID: 391232752}
-  - {fileID: 1551396321}
-  - {fileID: 1814633492}
-  - {fileID: 256535001}
-  - {fileID: 1461946406}
-  - {fileID: 1674212717}
-  - {fileID: 1956836432}
-  - {fileID: 1722274497}
+  - {fileID: 505012049}
   - {fileID: 2276441665480594868}
   - {fileID: 875490951761216901}
   - {fileID: 1216345972}
