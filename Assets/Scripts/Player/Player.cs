@@ -64,16 +64,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        Debug.Log("Damaged");
-        float effectiveDefence = defenceUI.defence > 0 ? defenceUI.defence : 1; // Prevent division by 0
-        currentHealth -= damage * damage / (damage + defenceUI.defence);
+        float effectiveDefence = defence > 0 ? defence : 1; // Prevent division by 0
+        float damageTaken = damage * damage / (damage + effectiveDefence); // Formula for effective damage
+        currentHealth -= damageTaken;
+
         if (currentHealth < 0)
         {
             currentHealth = 0;
         }
+
         healthBar.SetHealth(currentHealth);
+        Debug.Log($"Player took {damageTaken:F2} damage. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
