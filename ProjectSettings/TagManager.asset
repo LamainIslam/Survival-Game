@@ -11,6 +11,8 @@ TagManager:
   - Rock
   - EnemyProjectile
   - Campfire
+  - HeightVoiceLineTrigger
+  - NearBoss
   layers:
   - Default
   - TransparentFX
